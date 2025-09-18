@@ -82,8 +82,8 @@ thead th {
 
 input[type="number"] {
     width: 45px;
-    padding: 0.2rem;
-    font-size: 0.7rem;
+    padding: 0.1rem;
+    font-size: 1rem;
     border: 1px solid #ff9191;
     border-radius: 4px;
 }
