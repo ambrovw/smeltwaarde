@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [silverPrice, setSilverPrice] = useState(null)
+    const [localTime, setLocalTime] = useState(null)
+    const [error, setError] = useState(null)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        async function fetchSilverPrice() {
+            try {
+                const response = await fetch('https://data-asg.goldprice.org/dbXRates/ZAR')
+                const data = await response.json()
+
+                const item = data.items?.[0]
+                if (item && item.xagPrice) {
+                    setSilverPrice(item.xagPrice.toFixed(2))
+
+                    const utcTimestamp = data.tsj
+                    const localDate = new Date(utcTimestamp)
+                    const formatted = localDate.toLocaleString(undefined, {
+                        weekday: 'short',
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                    })
+                    setLocalTime(formatted)
+                    setError(null)
+                } else {
+                    setError('Price data unavailable')
+                }
+            } catch (err) {
+                setError('Failed to fetch silver price')
+            }
+        }
+
+        fetchSilverPrice()
+        const interval = setInterval(fetchSilverPrice, 10000)
+
+        return () => clearInterval(interval)
+    }, [])
+
+    return (
+        <div className="container">
+            <h1>Live Silver Price</h1>
+            {error ? (
+                <p className="error">{error}</p>
+            ) : silverPrice ? (
+                <>
+                    <p className="price">R {silverPrice}</p>
+                    <p className="timestamp">Last updated: {localTime}</p>
+                </>
+            ) : (
+                <p>Loading...</p>
+            )}
+        </div>
+    )
 }
 
 export default App
