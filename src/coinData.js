@@ -45,7 +45,7 @@ export const coins = [
 
     // Era: 1951–1960 (Purity 0.5)
     {
-        name: 'Kroon (5S) / 50c',
+        name: 'Kroon (5S)',
         era: '1951–1960',
         purity: 0.5,
         weight: 28.28,
@@ -59,7 +59,7 @@ export const coins = [
         quantity: 0,
     },
     {
-        name: '2 Sjieling (2S) / 20c',
+        name: '2 Sjieling (2S)',
         era: '1951–1960',
         purity: 0.5,
         weight: 11.31,

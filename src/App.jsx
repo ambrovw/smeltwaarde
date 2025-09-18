@@ -68,6 +68,15 @@ function App() {
                     <p className="timestamp">{localTime}</p>
 
                     <table>
+                        <colgroup>
+                            <col style={{ width: '20%' }} />  {/* Coin name */}
+                            <col style={{ width: '12%' }} />  {/* Era */}
+                            <col style={{ width: '10%' }} />  {/* Purity */}
+                            <col style={{ width: '10%' }} />  {/* Weight */}
+                            <col style={{ width: '10%' }} />  {/* Qty */}
+                            <col style={{ width: '18%' }} />  {/* Fine Silver */}
+                            <col style={{ width: '20%' }} />  {/* Value */}
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>Munt</th>
