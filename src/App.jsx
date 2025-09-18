@@ -20,7 +20,7 @@ function App() {
 
                     const utcTimestamp = data.tsj
                     const localDate = new Date(utcTimestamp)
-                    const formatted = localDate.toLocaleString(undefined, {
+                    const formatted = localDate.toLocaleString('af-ZA', {
                         weekday: 'short',
                         year: 'numeric',
                         month: 'short',
@@ -59,12 +59,12 @@ function App() {
 
     return (
         <div className="container">
-            <h1>Silver Munt Waarde</h1>
+            <h1>Silver munt waarde</h1>
             {error ? (
                 <p className="error">{error}</p>
             ) : silverPrice ? (
                 <>
-                    <p className="price">Huidige Koers: R {silverPrice.toFixed(2)}/ozt</p>
+                    <p className="price">Huidige koers: R {silverPrice.toFixed(2)}/ozt</p>
                     <p className="timestamp">{localTime}</p>
 
                     <table>
@@ -84,7 +84,7 @@ function App() {
                             <th>Fynheid</th>
                             <th>Gewig (g)</th>
                             <th>Hoeveelheid</th>
-                            <th>Fyn Silver (g)</th>
+                            <th>Fyn silver (g)</th>
                             <th>Waarde (R)</th>
                         </tr>
                         </thead>
@@ -116,8 +116,11 @@ function App() {
                         </tbody>
                     </table>
 
-                    <h2>Totaal Fyn Silver: {totalFineSilverGrams.toFixed(2)} g</h2>
-                    <h2>Totale Waarde: R {totalValue.toFixed(2)}</h2>
+
+                    <div className="totals-row">
+                        <h2>Totaal fyn silver: {totalFineSilverGrams.toFixed(2)}g  </h2>
+                        <h2>Totale waarde: R {totalValue.toFixed(2)}</h2>
+                    </div>
                 </>
             ) : (
                 <p>Loading...</p>
