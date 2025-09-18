@@ -73,9 +73,9 @@ function App() {
                             <col style={{ width: '12%' }} />  {/* Era */}
                             <col style={{ width: '10%' }} />  {/* Purity */}
                             <col style={{ width: '10%' }} />  {/* Weight */}
-                            <col style={{ width: '10%' }} />  {/* Qty */}
+                            <col style={{ width: '13%' }} />  {/* Qty */}
                             <col style={{ width: '18%' }} />  {/* Fine Silver */}
-                            <col style={{ width: '20%' }} />  {/* Value */}
+                            <col style={{ width: '17%' }} />  {/* Value */}
                         </colgroup>
                         <thead>
                         <tr>
