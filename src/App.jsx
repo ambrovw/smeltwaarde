@@ -64,7 +64,7 @@ function App() {
                 <p className="error">{error}</p>
             ) : silverPrice ? (
                 <>
-                    <p className="price">Koers: R {silverPrice.toFixed(2)}/ozt</p>
+                    <p className="price">Huidige Koers: R {silverPrice.toFixed(2)}/ozt</p>
                     <p className="timestamp">{localTime}</p>
 
                     <table>
@@ -75,7 +75,7 @@ function App() {
                             <th>Fynheid</th>
                             <th>Gewig (g)</th>
                             <th>Hoeveelheid</th>
-                            <th>Fyn Silver (oz)</th>
+                            <th>Fyn Silver (g)</th>
                             <th>Waarde (R)</th>
                         </tr>
                         </thead>
@@ -99,7 +99,7 @@ function App() {
                                             style={{ width: '60px' }}
                                         />
                                     </td>
-                                    <td>{fineSilverOunces.toFixed(3)}</td>
+                                    <td>{fineSilverGrams.toFixed(2)}</td>
                                     <td>{value.toFixed(2)}</td>
                                 </tr>
                             )
@@ -107,7 +107,7 @@ function App() {
                         </tbody>
                     </table>
 
-                    <h2>Totaal Fyn Silver: {totalFineSilverOunces.toFixed(3)} oz</h2>
+                    <h2>Totaal Fyn Silver: {totalFineSilverGrams.toFixed(2)} g</h2>
                     <h2>Totale Waarde: R {totalValue.toFixed(2)}</h2>
                 </>
             ) : (
