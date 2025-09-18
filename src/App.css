@@ -1,45 +1,119 @@
 body {
     margin: 0;
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #f5f7fa;
+    background-color: #f4f6f8;
     color: #1a1a1a;
+    display: flex;
+    justify-content: center;
 }
 
-#root {
-    max-width: 600px;
-    margin: 4rem auto;
-    padding: 2rem;
-    text-align: center;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+.container {
+    width: 95%;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #333;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #222;
 }
 
 .price {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #007bff;
-    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #444;
+    text-align: center;
+    margin: 0.25rem 0;
 }
 
 .timestamp {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    color: #777;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    margin-bottom: 1.2rem;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid #ddd;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+thead th {
+    background-color: #dddddd;
+    font-weight: 600;
+}
+
+/* Softer, more distinct row colors by era */
+.row-19231950 {
+    background-color: #b9cdff;
+}
+
+.row-19511960 {
+    background-color: #ffe0bf;
+}
+
+.row-19611964 {
+    background-color: #bbffd7;
+}
+
+.row-1965 {
+    background-color: #ffb9ed;
+}
+
+input[type="number"] {
+    width: 45px;
+    padding: 0.2rem;
+    font-size: 0.7rem;
+    border: 1px solid #ff9191;
+    border-radius: 4px;
+}
+
+h2 {
+    font-size: 0.95rem;
+    text-align: center;
+    color: #005fa3;
+    margin-top: 1rem;
 }
 
 .error {
-    color: #d9534f;
+    color: #c0392b;
     font-weight: bold;
+    text-align: center;
 }
 
-.loading {
-    font-size: 1.2rem;
-    color: #999;
+input[type="number"] {
+    width: 45px;
+    height: 24px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Remove default spinner styling in Chrome */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: 16px;
+    width: 16px;
 }
