@@ -1,9 +1,14 @@
 version: 0.2
+
 phases:
+  install:
+    commands:
+      - npm ci
   build:
     commands:
-      - npm install
+      - npm run build
+
 artifacts:
   files:
     - '**/*'
-  base-directory: build
+  base-directory: dist
