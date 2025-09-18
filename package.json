@@ -1,0 +1,15 @@
+{
+  "name": "smeltwaarde",
+  "version": "1.0.0",
+  "description": "smeltwaarde",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git-codecommit.af-south-1.amazonaws.com/v1/repos/smeltwaarde"
+  },
+  "author": "Ambro van Wyk",
+  "license": "ISC"
+}
