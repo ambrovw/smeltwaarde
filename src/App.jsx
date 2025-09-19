@@ -15,12 +15,14 @@ function App() {
                 const data = await response.json()
                 const item = data.items?.[0]
 
-                if (item && item.xagPrice) {
+                if (item && item.xagPrice && data.date) {
                     setSilverPrice(item.xagPrice)
 
                     const utcTimestamp = data.tsj
-                    const localDate = new Date(utcTimestamp)
-                    const formatted = localDate.toLocaleString('af-ZA', {
+                    const utcDate = new Date(utcTimestamp)
+
+                    const saDate = utcDate.toLocaleString('af-ZA', {
+                        timeZone: 'Africa/Johannesburg',
                         weekday: 'short',
                         year: 'numeric',
                         month: 'short',
@@ -29,7 +31,7 @@ function App() {
                         minute: '2-digit',
                         second: '2-digit',
                     })
-                    setLocalTime(formatted)
+                    setLocalTime(saDate)
                     setError(null)
                 } else {
                     setError('Price data unavailable')
@@ -59,23 +61,32 @@ function App() {
 
     return (
         <div className="container">
-            <h1>Silver munt waarde</h1>
             {error ? (
                 <p className="error">{error}</p>
             ) : silverPrice ? (
                 <>
-                    <p className="price">Huidige koers: R {silverPrice.toFixed(2)}/ozt</p>
-                    <p className="timestamp">{localTime}</p>
+                    <div className="header-row">
+                        <img
+                            src="/smeltwaarde_logo_transparent_bgfill.png"
+                            alt="Smeltwaarde Logo"
+                            className="logo"
+                        />
+                        <div className="header-text">
+                            <h1>Silver munt waarde</h1>
+                            <p className="price">Huidige koers: R {silverPrice.toFixed(2)}/ozt</p>
+                            <p className="timestamp">{localTime}</p>
+                        </div>
+                    </div>
 
                     <table>
                         <colgroup>
-                            <col style={{ width: '20%' }} />  {/* Coin name */}
-                            <col style={{ width: '12%' }} />  {/* Era */}
-                            <col style={{ width: '10%' }} />  {/* Purity */}
-                            <col style={{ width: '10%' }} />  {/* Weight */}
-                            <col style={{ width: '13%' }} />  {/* Qty */}
-                            <col style={{ width: '18%' }} />  {/* Fine Silver */}
-                            <col style={{ width: '17%' }} />  {/* Value */}
+                            <col style={{ width: '20%' }} />
+                            <col style={{ width: '12%' }} />
+                            <col style={{ width: '10%' }} />
+                            <col style={{ width: '10%' }} />
+                            <col style={{ width: '13%' }} />
+                            <col style={{ width: '18%' }} />
+                            <col style={{ width: '17%' }} />
                         </colgroup>
                         <thead>
                         <tr>
@@ -116,10 +127,9 @@ function App() {
                         </tbody>
                     </table>
 
-
                     <div className="totals-row">
-                        <h2>Totaal fyn silver: {totalFineSilverGrams.toFixed(2)}g  </h2>
-                        <h2>Totale waarde: R {totalValue.toFixed(2)}</h2>
+                        <h2>🪙 Totaal fyn silver: {totalFineSilverGrams.toFixed(2)}g</h2>
+                        <h2>💰 Totale waarde: R {totalValue.toFixed(2)}</h2>
                     </div>
                 </>
             ) : (
