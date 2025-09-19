@@ -5,12 +5,14 @@ body {
     color: #e0e0e0;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
 }
 
 .container {
     width: 95%;
     max-width: 1200px;
-    margin: 2rem auto;
+    margin-top: 6rem;
     padding: 1.5rem;
     background: #1e1e1e;
     border-radius: 8px;
@@ -106,16 +108,65 @@ h1 {
     cursor: pointer;
     user-select: none;
     transition: color 0.3s ease;
+    border-radius: 8px;
 }
 
 .era-header:hover {
     color: #d8a85a;
+    background-color: #303030;
 }
+
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.nav-element {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.00rem 0;
+    color: #a88c4a;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-element.active {
+    background-color: #a88c4a;
+    color: white;
+    box-shadow: 0 0 8px rgba(168, 140, 74, 0.4);
+}
+
+.nav-element:hover {
+    color: white;
+    border: 1px solid rgba(168, 140, 74, 0.3);
+    box-shadow: 0 0 0 2px rgba(168, 140, 74, 0.1);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
 
 table {
     margin-top: 0.25rem;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+}
+
+.dynamic-cell {
+    background-color: transparent;
 }
 
 th, td {
