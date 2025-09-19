@@ -41,6 +41,6 @@ export const coins = {
         { name: "Sterling (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
         { name: "90% (g)", era: "-", purity: 0.9, weight: 1, quantity: 0 },
         { name: "80% (g)", era: "-", purity: 0.8, weight: 1, quantity: 0 },
-        { name: "50% (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
+        { name: "50% (g)", era: "-", purity: 0.5, weight: 1, quantity: 0 },
     ]
 }
