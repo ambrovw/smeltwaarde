@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react'
-import { coins as initialCoins } from './coinData'
+import { coins as groupedCoins } from './coinData'
 import './App.css'
 
 function App() {
     const [silverPrice, setSilverPrice] = useState(null)
     const [localTime, setLocalTime] = useState(null)
     const [error, setError] = useState(null)
-    const [coinList, setCoinList] = useState(initialCoins)
     const [randPerGram, setRandPerGram] = useState(null)
     const [flashPrice, setFlashPrice] = useState(false)
+    const initializedGroups = Object.fromEntries(
+        Object.entries(groupedCoins).map(([groupLabel, coins]) => [
+            groupLabel,
+            coins.map((coin) => ({ ...coin, quantity: 0 }))
+        ])
+    )
+    const [coinList, setCoinList] = useState(initializedGroups)
+    const [collapsedEras, setCollapsedEras] = useState(() => {
+        const initialState = {}
+        Object.keys(coinList).forEach((groupLabel, index) => {
+            initialState[groupLabel] = index !== 0 // first group expanded, rest collapsed
+        })
+        return initialState
+    })
+    const toggleEra = (groupLabel) => {
+        setCollapsedEras((prev) => ({
+            ...prev,
+            [groupLabel]: !prev[groupLabel]
+        }))
+    }
 
     useEffect(() => {
         async function fetchSilverPrice() {
@@ -51,18 +70,33 @@ function App() {
         return () => clearInterval(interval)
     }, [])
 
-    const handleQuantityChange = (index, newQty) => {
-        const updated = [...coinList]
-        updated[index].quantity = Number(newQty)
+    const handleQuantityChange = (targetCoin, newQty) => {
+        const updated = Object.fromEntries(
+            Object.entries(coinList).map(([groupLabel, coins]) => [
+                groupLabel,
+                coins.map((coin) =>
+                    coin.name === targetCoin.name && coin.era === targetCoin.era
+                        ? { ...coin, quantity: Number(newQty) }
+                        : coin
+                )
+            ])
+        )
         setCoinList(updated)
     }
 
-    const totalFineSilverGrams = coinList.reduce((sum, coin) => {
-        return sum + coin.purity * coin.weight * coin.quantity
-    }, 0)
+    const totalFineSilverGrams = Object.values(coinList)
+        .flat()
+        .reduce((sum, coin) => {
+            return sum + coin.purity * coin.weight * coin.quantity
+        }, 0)
 
-    const totalFineSilverOunces = totalFineSilverGrams / 31.1035
-    const totalValue = silverPrice ? totalFineSilverOunces * silverPrice : 0
+    const totalValue = Object.values(coinList)
+        .flat()
+        .reduce((sum, coin) => {
+            const fineSilverGrams = coin.purity * coin.weight * coin.quantity
+            const fineSilverOunces = fineSilverGrams / 31.1035
+            return sum + silverPrice * fineSilverOunces
+        }, 0)
 
     return (
         <div className="container">
@@ -85,54 +119,64 @@ function App() {
                         </div>
                     </div>
 
-                    <table>
-                        <colgroup>
-                            <col style={{ width: '20%' }} />
-                            <col style={{ width: '12%' }} />
-                            <col style={{ width: '10%' }} />
-                            <col style={{ width: '10%' }} />
-                            <col style={{ width: '13%' }} />
-                            <col style={{ width: '18%' }} />
-                            <col style={{ width: '17%' }} />
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th>Munt</th>
-                            <th>Era</th>
-                            <th>Fynheid</th>
-                            <th>Gewig (g)</th>
-                            <th>Hoeveelheid</th>
-                            <th>Fyn silver (g)</th>
-                            <th>Waarde (R)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {coinList.map((coin, index) => {
-                            const fineSilverGrams = coin.purity * coin.weight * coin.quantity
-                            const fineSilverOunces = fineSilverGrams / 31.1035
-                            const value = silverPrice * fineSilverOunces
-                            return (
-                                <tr key={index} className={`row-${coin.era.replace(/[^a-z0-9]/gi, '')}`}>
-                                    <td>{coin.name}</td>
-                                    <td>{coin.era}</td>
-                                    <td>{coin.purity}</td>
-                                    <td>{coin.weight}</td>
-                                    <td>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            value={coin.quantity}
-                                            onChange={(e) => handleQuantityChange(index, e.target.value)}
-                                            style={{ width: '60px' }}
-                                        />
-                                    </td>
-                                    <td>{fineSilverGrams.toFixed(2)}</td>
-                                    <td>{value.toFixed(2)}</td>
-                                </tr>
-                            )
-                        })}
-                        </tbody>
-                    </table>
+                    {Object.entries(coinList).map(([groupLabel, coins]) => (
+                        <div key={groupLabel}>
+                            <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
+                                {collapsedEras[groupLabel] ? '▸' : '▾'} {groupLabel}
+                            </h2>
+
+                            {!collapsedEras[groupLabel] && (
+                                <table>
+                                    <colgroup>
+                                        <col style={{ width: '20%' }} />
+                                        <col style={{ width: '12%' }} />
+                                        <col style={{ width: '10%' }} />
+                                        <col style={{ width: '10%' }} />
+                                        <col style={{ width: '13%' }} />
+                                        <col style={{ width: '18%' }} />
+                                        <col style={{ width: '17%' }} />
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>Munt</th>
+                                        <th>Era</th>
+                                        <th>Fynheid</th>
+                                        <th>Gewig (g)</th>
+                                        <th>Hoeveelheid</th>
+                                        <th>Fyn silver (g)</th>
+                                        <th>Waarde (R)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {coins.map((coin, index) => {
+                                        const fineSilverGrams = coin.purity * coin.weight * coin.quantity
+                                        const fineSilverOunces = fineSilverGrams / 31.1035
+                                        const value = silverPrice * fineSilverOunces
+                                        return (
+                                            <tr key={`${coin.era}-${index}`}>
+                                                <td>{coin.name}</td>
+                                                <td>{coin.era}</td>
+                                                <td>{coin.purity}</td>
+                                                <td>{coin.weight}</td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        value={coin.quantity}
+                                                        onChange={(e) => handleQuantityChange(coin, e.target.value)}
+                                                        style={{ width: '60px' }}
+                                                    />
+                                                </td>
+                                                <td>{fineSilverGrams.toFixed(2)}</td>
+                                                <td>{value.toFixed(2)}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                    ))}
 
                     <div className="totals-row">
                         <div className="totals-item">

@@ -91,12 +91,31 @@ h1 {
     margin-bottom: 1rem;
 }
 
+.era-section {
+    margin-top: 0.00rem;
+    margin-bottom: 0.00rem;
+    padding: 0.00rem 0;
+}
+
+.era-header {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.00rem 0;
+    padding: 0.00rem 0;
+    color: #a88c4a;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.era-header:hover {
+    color: #d8a85a;
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-    table-layout: fixed;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
 
 th, td {
@@ -117,27 +136,6 @@ thead th {
     background-color: #2c2c2c;
     color: #e0e0e0;
     font-weight: 600;
-}
-
-/* Distinct row colors by era */
-.row-19231950 {
-    background-color: #4a2b2b;
-}
-
-.row-19511960 {
-    background-color: #403f25;
-}
-
-.row-19611964 {
-    background-color: #2e4328;
-}
-
-.row-19651976 {
-    background-color: #272f42;
-}
-
-.row-1965 {
-    background-color: #4f3053;
 }
 
 input[type="number"] {
