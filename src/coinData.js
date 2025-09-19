@@ -24,9 +24,9 @@ export const coins = {
     ],
     "RSA 1965+": [
         { name: "R1", era: "1965–1976", purity: 0.8, weight: 15, quantity: 0 },
-        { name: "R1 - Protea", era: "1965+", purity: 0.925, weight: 15, quantity: 0 },
-        { name: "R2 - Commemorative Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 },
-        { name: "R5 - Commemorative Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 }
+        { name: "R1 - Herdenkings Silver / Protea", era: "1965+", purity: 0.925, weight: 15, quantity: 0 },
+        { name: "R2 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 },
+        { name: "R5 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 }
     ],
     "ZAR 1892-1898": [
         { name: "Kroon (5S)", era: "1892-1898", purity: 0.925, weight: 28.28, quantity: 0 },
