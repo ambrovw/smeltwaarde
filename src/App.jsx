@@ -7,6 +7,8 @@ function App() {
     const [localTime, setLocalTime] = useState(null)
     const [error, setError] = useState(null)
     const [coinList, setCoinList] = useState(initialCoins)
+    const [randPerGram, setRandPerGram] = useState(null)
+    const [flashPrice, setFlashPrice] = useState(false)
 
     useEffect(() => {
         async function fetchSilverPrice() {
@@ -16,7 +18,10 @@ function App() {
                 const item = data.items?.[0]
 
                 if (item && item.xagPrice && data.date) {
+                    setFlashPrice(true)
+                    setTimeout(() => setFlashPrice(false), 500) // Flash lasts 500ms
                     setSilverPrice(item.xagPrice)
+                    setRandPerGram(item.xagPrice / 31.1035)
 
                     const utcTimestamp = data.tsj
                     const utcDate = new Date(utcTimestamp)
@@ -42,7 +47,7 @@ function App() {
         }
 
         fetchSilverPrice()
-        const interval = setInterval(fetchSilverPrice, 10000)
+        const interval = setInterval(fetchSilverPrice, 30000)
         return () => clearInterval(interval)
     }, [])
 
@@ -73,7 +78,9 @@ function App() {
                         />
                         <div className="header-text">
                             <h1>Silver munt waarde</h1>
-                            <p className="price">Huidige koers: R {silverPrice.toFixed(2)}/ozt</p>
+                            <p className={`price ${flashPrice ? 'flash' : ''}`}>
+                                R{silverPrice.toFixed(2)}/ozt  -  R{randPerGram.toFixed(2)}/g
+                            </p>
                             <p className="timestamp">{localTime}</p>
                         </div>
                     </div>
@@ -128,9 +135,14 @@ function App() {
                     </table>
 
                     <div className="totals-row">
-                        <h2>🪙 Totaal fyn silver: {totalFineSilverGrams.toFixed(2)}g</h2>
-                        <h2>💰 Totale waarde: R {totalValue.toFixed(2)}</h2>
+                        <div className="totals-item">
+                            🪙 Totaal fyn silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                        </div>
+                        <div className="totals-item">
+                            💰 Totale waarde: <span>R {totalValue.toFixed(2)}</span>
+                        </div>
                     </div>
+
                 </>
             ) : (
                 <p>Loading...</p>

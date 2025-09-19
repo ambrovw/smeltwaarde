@@ -34,6 +34,42 @@ h1 {
     text-align: center;
 }
 
+.price {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #b29e68;
+    text-align: center;
+    margin: 0.25rem 0;
+}
+
+.price span {
+    color: #b29e68;
+    font-size: 0.8rem;
+}
+
+.price.flash {
+    animation: flash-red 0.5s ease-in-out;
+}
+
+@keyframes flash-red {
+    0% {
+        color: red;
+        transform: scale(1.07);
+    }
+    33% {
+        color: #e94f2d;
+        transform: scale(1.03);
+    }
+    67% {
+        color: #c87f47;
+        transform: scale(1.01);
+    }
+    100% {
+        color: #b29e68;
+        transform: scale(1.00);
+    }
+}
+
 .logo {
     width: 128px;
     height: 128px;
@@ -44,15 +80,6 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-
-.price {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: #90caf9;
-    text-align: center;
-    margin: 0.25rem 0;
 }
 
 .timestamp {
@@ -94,23 +121,23 @@ thead th {
 
 /* Distinct row colors by era */
 .row-19231950 {
-    background-color: #313b51;
+    background-color: #4a2b2b;
 }
 
 .row-19511960 {
-    background-color: #364237;
+    background-color: #403f25;
 }
 
 .row-19611964 {
-    background-color: #453a38;
+    background-color: #2e4328;
 }
 
 .row-19651976 {
-    background-color: #3b384c;
+    background-color: #272f42;
 }
 
 .row-1965 {
-    background-color: #4a4533;
+    background-color: #4f3053;
 }
 
 input[type="number"] {
@@ -133,18 +160,24 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .totals-row {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1.0rem;
 }
 
-.totals-row h2 {
+.totals-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.totals-item span {
     font-size: 1.6rem;
-    color: #90caf9;
-    margin: 0;
+    font-weight: 600;
+    color: #9ef990;
 }
 
 .error {
