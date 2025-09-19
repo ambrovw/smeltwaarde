@@ -37,10 +37,10 @@ export const coins = {
         { name: "Tiekie (3p)", era: "1892-1898", purity: 0.925, weight: 1.414, quantity: 0 },
     ],
     "Ander": [
-        { name: "Fynsilver (ozt)", era: "ander", purity: 0.999, weight: 31.1035, quantity: 0 },
-        { name: "Sterling (g)", era: "ander", purity: 0.925, weight: 1, quantity: 0 },
-        { name: "90% (g)", era: "ander", purity: 0.9, weight: 1, quantity: 0 },
-        { name: "80% (g)", era: "ander", purity: 0.8, weight: 1, quantity: 0 },
-        { name: "50% (g)", era: "ander", purity: 0.925, weight: 2.828, quantity: 0 },
+        { name: "Fynsilver (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
+        { name: "Sterling (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
+        { name: "90% (g)", era: "-", purity: 0.9, weight: 1, quantity: 0 },
+        { name: "80% (g)", era: "-", purity: 0.8, weight: 1, quantity: 0 },
+        { name: "50% (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
     ]
 }
