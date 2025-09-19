@@ -168,7 +168,8 @@ function App() {
                                                     />
                                                 </td>
                                                 <td>{fineSilverGrams.toFixed(2)}</td>
-                                                <td>{value.toFixed(2)}</td>
+                                                <td className={flashPrice ? 'flash' : ''}>{value.toFixed(2)}</td>
+
                                             </tr>
                                         )
                                     })}
@@ -183,7 +184,7 @@ function App() {
                             🪙 Totaal fyn silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
                         </div>
                         <div className="totals-item">
-                            💰 Totale waarde: <span>R {totalValue.toFixed(2)}</span>
+                            💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                         </div>
                     </div>
 
