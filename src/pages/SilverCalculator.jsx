@@ -83,6 +83,16 @@ function SilverCalculator() {
                 ])
             )
             setCoinList(updated)
+
+
+            // Trigger Google Analytics event
+            if (window.gtag) {
+                window.gtag('event', 'hoeveelheid_change', {
+                    event_category: 'Input',
+                    event_label: `${targetCoin.name} (${targetCoin.era})`,
+                    value: Number(newQty)
+                })
+            }
         }
 
         const totalFineSilverGrams = Object.values(coinList)
