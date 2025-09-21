@@ -90,6 +90,17 @@ function MuntHoeveelhede() {
     return (
         <div className="container">
             <h1>Munt Hoeveelhede</h1>
+            <p style={{ fontSize: '0.8rem', fontStyle: 'italic', color: '#b0b0b0', marginTop: '-0.5rem', textAlign: 'center' }}>
+                Bron:{' '}
+                <a
+                    href="https://en.numista.com/catalogue/south-africa-1.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#b0b0b0', textDecoration: 'underline' }}
+                >
+                    Numista, 2025
+                </a>
+            </p>
 
             <div className="era-section">
                 <h2 className="era-header" onClick={() => toggleEra('ZAR')}>
