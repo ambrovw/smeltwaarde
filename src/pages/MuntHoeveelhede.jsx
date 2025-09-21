@@ -111,21 +111,21 @@ function MuntHoeveelhede() {
 
             <div className="era-section">
                 <h2 className="era-header" onClick={() => toggleEra('Union')}>
-                    {collapsedEras.Union ? '▸' : '▾'} South African Union 1923–1960
+                    {collapsedEras.Union ? '▸' : '▾'} Suid Afrikaanse Unie (SAU) 1923–1960
                 </h2>
                 {!collapsedEras.Union && renderMatrixTable(unionCoins)}
             </div>
 
             <div className="era-section">
                 <h2 className="era-header" onClick={() => toggleEra('RSA1')}>
-                    {collapsedEras.RSA1 ? '▸' : '▾'} RSA 1st Decimal 1961–1964
+                    {collapsedEras.RSA1 ? '▸' : '▾'} RSA Eerste Desimale Reeks 1961–1964
                 </h2>
                 {!collapsedEras.RSA1 && renderMatrixTable(rsa1Coins)}
             </div>
 
             <div className="era-section">
                 <h2 className="era-header" onClick={() => toggleEra('RSA2')}>
-                    {collapsedEras.RSA2 ? '▸' : '▾'} RSA 2nd Decimal 1964–1990
+                    {collapsedEras.RSA2 ? '▸' : '▾'} RSA Tweede Desimale Reeks 1964–1990
                 </h2>
                 {!collapsedEras.RSA2 && renderMatrixTable(rsa2Coins)}
             </div>
