@@ -187,7 +187,7 @@ function SilverCalculator() {
                                             <th>Fynheid</th>
                                             <th>Gewig (g)</th>
                                             <th>Hoeveelheid</th>
-                                            <th>Fyn silver (g)</th>
+                                            <th>Silver (g)</th>
                                             <th>Waarde (R)</th>
                                         </tr>
                                         </thead>
@@ -225,7 +225,7 @@ function SilverCalculator() {
 
                         <div className="totals-row">
                             <div className="totals-item">
-                                🪙 Totaal fyn silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                                🪙 Totale silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
                             </div>
                             <div className="totals-item">
                                 💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
