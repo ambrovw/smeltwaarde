@@ -4,41 +4,46 @@ import '../App.css'
 
 function SilverCalculator() {
 
-        const [silverPrice, setSilverPrice] = useState(null)
-        const [adjustmentPercent, setAdjustmentPercent] = useState(0);
-        const adjustedSilverPrice = silverPrice
-            ? silverPrice * (1 + adjustmentPercent / 100)
-            : null;
-
-        const adjustedRandPerGram = adjustedSilverPrice
-            ? adjustedSilverPrice / 31.1035
-            : null;
-        const [localTime, setLocalTime] = useState(null)
-        const [error, setError] = useState(null)
-        const [randPerGram, setRandPerGram] = useState(null)
-        const [flashPrice, setFlashPrice] = useState(false)
-        const initializedGroups = Object.fromEntries(
-            Object.entries(groupedCoins).map(([groupLabel, coins]) => [
-                groupLabel,
-                coins.map((coin) => ({ ...coin, quantity: 0 }))
-            ])
-        )
-        const [coinList, setCoinList] = useState(initializedGroups)
-        const [collapsedEras, setCollapsedEras] = useState(() => {
-            const initialState = {}
-            Object.keys(coinList).forEach((groupLabel, index) => {
-                initialState[groupLabel] = index !== 0 // first group expanded, rest collapsed
-            })
-            return initialState
+    const [silverPrice, setSilverPrice] = useState(null)
+    const [adjustmentInput, setAdjustmentInput] = useState('0');
+    const [adjustmentPercent, setAdjustmentPercent] = useState(0);
+    const adjustedSilverPrice = silverPrice
+        ? silverPrice * (1 + adjustmentPercent / 100)
+        : null;
+    const [localTime, setLocalTime] = useState(null)
+    const [error, setError] = useState(null)
+    const [randPerGram, setRandPerGram] = useState(null)
+    const [flashPrice, setFlashPrice] = useState(false)
+    const initializedGroups = Object.fromEntries(
+        Object.entries(groupedCoins).map(([groupLabel, coins]) => [
+            groupLabel,
+            coins.map((coin) => ({ ...coin, quantity: 0 }))
+        ])
+    )
+    const [coinList, setCoinList] = useState(initializedGroups)
+    const [collapsedEras, setCollapsedEras] = useState(() => {
+        const initialState = {}
+        Object.keys(coinList).forEach((groupLabel, index) => {
+            initialState[groupLabel] = index !== 0 // first group expanded, rest collapsed
         })
-        const toggleEra = (groupLabel) => {
-            setCollapsedEras((prev) => ({
-                ...prev,
-                [groupLabel]: !prev[groupLabel]
-            }))
-        }
+        return initialState
+    })
+    const toggleEra = (groupLabel) => {
+        setCollapsedEras((prev) => ({
+            ...prev,
+            [groupLabel]: !prev[groupLabel]
+        }))
+    }
 
-        useEffect(() => {
+    useEffect(() => {
+        const parsed = parseFloat(adjustmentInput);
+        if (!isNaN(parsed)) {
+            setAdjustmentPercent(parsed);
+        }
+    }, [adjustmentInput]);
+
+
+    useEffect(() => {
             async function fetchSilverPrice() {
                 try {
                     const response = await fetch('https://data-asg.goldprice.org/dbXRates/ZAR')
@@ -152,8 +157,8 @@ function SilverCalculator() {
                                 id="adjustment"
                                 type="number"
                                 step="0.5"
-                                value={adjustmentPercent}
-                                onChange={(e) => setAdjustmentPercent(Number(e.target.value))}
+                                value={adjustmentInput}
+                                onChange={(e) => setAdjustmentInput(e.target.value)}
                                 style={{ width: '60px' }}
                             />
                         </div>
