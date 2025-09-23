@@ -36,6 +36,15 @@ h1 {
     text-align: center;
 }
 
+.highlight-row {
+    font-weight: 600;
+    background-color: #303030;
+}
+
+.highlight-cell {
+    color: #9ef990;
+}
+
 .price {
     font-size: 1.4rem;
     font-weight: 400;
