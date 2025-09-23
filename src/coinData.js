@@ -36,6 +36,9 @@ export const coins = {
         { name: "Sikspens (6p)", era: "1892-1898", purity: 0.925, weight: 2.828, quantity: 0 },
         { name: "Tiekie (3p)", era: "1892-1898", purity: 0.925, weight: 1.414, quantity: 0 },
     ],
+    "Internasionaal": [
+        { name: "Thaler", era: "1780+", purity: 0.8333, weight: 28.0668, quantity: 0 },
+    ],
     "Ander": [
         { name: "Fynsilver (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
         { name: "Sterling (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },

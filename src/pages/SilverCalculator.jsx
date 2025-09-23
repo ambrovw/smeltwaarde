@@ -5,6 +5,14 @@ import '../App.css'
 function SilverCalculator() {
 
         const [silverPrice, setSilverPrice] = useState(null)
+        const [adjustmentPercent, setAdjustmentPercent] = useState(0);
+        const adjustedSilverPrice = silverPrice
+            ? silverPrice * (1 + adjustmentPercent / 100)
+            : null;
+
+        const adjustedRandPerGram = adjustedSilverPrice
+            ? adjustedSilverPrice / 31.1035
+            : null;
         const [localTime, setLocalTime] = useState(null)
         const [error, setError] = useState(null)
         const [randPerGram, setRandPerGram] = useState(null)
@@ -106,7 +114,7 @@ function SilverCalculator() {
             .reduce((sum, coin) => {
                 const fineSilverGrams = coin.purity * coin.weight * coin.quantity
                 const fineSilverOunces = fineSilverGrams / 31.1035
-                return sum + silverPrice * fineSilverOunces
+                return sum + adjustedSilverPrice * fineSilverOunces
             }, 0)
 
         return (
@@ -128,6 +136,26 @@ function SilverCalculator() {
                                 </p>
                                 <p className="timestamp">{localTime}</p>
                             </div>
+                        </div>
+                        <div className="adjustment-row"
+                             style={{
+                                 display: 'flex',
+                                 justifyContent: 'center',
+                                 alignItems: 'center',
+                                 gap: '0.5rem',
+                                 marginTop: '-0.5rem'
+                        }}>
+                            <label htmlFor="adjustment" style={{ marginRight: '0.25rem' }} title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken.">
+                                💡 Premie (%):
+                            </label>
+                            <input
+                                id="adjustment"
+                                type="number"
+                                step="0.5"
+                                value={adjustmentPercent}
+                                onChange={(e) => setAdjustmentPercent(Number(e.target.value))}
+                                style={{ width: '60px' }}
+                            />
                         </div>
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => (
@@ -162,7 +190,7 @@ function SilverCalculator() {
                                         {coins.map((coin, index) => {
                                             const fineSilverGrams = coin.purity * coin.weight * coin.quantity
                                             const fineSilverOunces = fineSilverGrams / 31.1035
-                                            const value = silverPrice * fineSilverOunces
+                                            const value = adjustedSilverPrice * fineSilverOunces
                                             return (
                                                 <tr key={`${coin.era}-${index}`}>
                                                     <td>{coin.name}</td>
