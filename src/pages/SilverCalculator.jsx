@@ -151,7 +151,7 @@ function SilverCalculator() {
                                  marginTop: '-0.5rem'
                         }}>
                             <label htmlFor="adjustment" style={{ marginRight: '0.25rem' }} title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken.">
-                                💡 Premie (%):
+                                💡 Afslag/Premie (%):
                             </label>
                             <input
                                 id="adjustment"
