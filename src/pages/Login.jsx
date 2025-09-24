@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 
-export default function Login() {
+export default function Login({ setIsLoggedIn }) {
     const handleLoginSuccess = async (credentialResponse) => {
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/auth/google', {
             method: 'POST',
@@ -11,7 +11,7 @@ export default function Login() {
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('user', JSON.stringify(data));
-            alert(`Welkom, ${data.name || data.email}`);
+            setIsLoggedIn(true);
         } else {
             alert('Kon nie aanmeld nie');
         }
