@@ -1,15 +1,20 @@
-import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from 'react-router-dom'
-import SilverCalculator from './pages/SilverCalculator'
-import MuntHoeveelhede from './pages/MuntHoeveelhede'
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    NavLink,
+    useLocation
+} from 'react-router-dom';
+import SilverCalculator from './pages/SilverCalculator';
+import MuntHoeveelhede from './pages/MuntHoeveelhede';
 import Login from './pages/Login';
 import UserDetails from './pages/UserDetails';
 import { useState, useEffect } from 'react';
-
-import './App.css'
+import './App.css';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const location = useLocation();
+
     useEffect(() => {
         const user = localStorage.getItem('user');
         setIsLoggedIn(!!user);
@@ -17,13 +22,31 @@ function App() {
 
     return (
         <Router>
+            <InnerApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        </Router>
+    );
+}
+
+function InnerApp({ isLoggedIn, setIsLoggedIn }) {
+    const location = useLocation();
+
+    return (
+        <>
             <nav className="nav-header">
-                <NavLink to="/" className="nav-element" end>Waarde Berekening</NavLink>
-                <NavLink to="/muntHoeveelhede" className="nav-element">Munt Hoeveelhede (onvoltooid)</NavLink>
+                <NavLink to="/" className="nav-element" end>
+                    Waarde Berekening
+                </NavLink>
+                <NavLink to="/muntHoeveelhede" className="nav-element">
+                    Munt Hoeveelhede (onvoltooid)
+                </NavLink>
                 {isLoggedIn ? (
-                    <NavLink to="/userDetails" className="nav-element">Gebruiker</NavLink>
+                    <NavLink to="/userDetails" className="nav-element">
+                        Gebruiker
+                    </NavLink>
                 ) : (
-                    <NavLink to="/login" className="nav-element">Aanmelding</NavLink>
+                    <NavLink to="/login" className="nav-element">
+                        Aanmelding
+                    </NavLink>
                 )}
             </nav>
 
@@ -35,8 +58,8 @@ function App() {
                     <Route path="/userDetails" element={<UserDetails />} />
                 </Routes>
             </div>
-        </Router>
-    )
+        </>
+    );
 }
 
-export default App
+export default App;
