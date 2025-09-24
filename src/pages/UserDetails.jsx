@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 export default function UserDetails() {
     const navigate = useNavigate();
-    const [user, setUser] = useState({ name: '', email: '' });
+    const [user, setUser] = useState({ name: '', email: '', role: '' });
 
     useEffect(() => {
         const stored = localStorage.getItem('user');
         if (stored) {
             const parsed = JSON.parse(stored);
-            setUser({ name: parsed.name || '', email: parsed.email || '' });
+            setUser({
+                name: parsed.name || '',
+                email: parsed.email || '',
+                role: parsed.role || 'user'
+            });
         }
     }, []);
 

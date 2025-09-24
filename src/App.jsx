@@ -45,7 +45,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn }) {
                     </NavLink>
                 ) : (
                     <NavLink to="/login" className="nav-element">
-                        Aanmelding
+                        Meld aan
                     </NavLink>
                 )}
             </nav>

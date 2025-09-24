@@ -14,7 +14,13 @@ export default function Login({ setIsLoggedIn }) {
 
             const data = await res.json();
             if (data.success) {
-                localStorage.setItem('user', JSON.stringify(data));
+                // ✅ Store role along with name and email
+                localStorage.setItem('user', JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    role: data.role || 'user' // fallback to 'user' if missing
+                }));
+
                 setIsLoggedIn(true);
                 navigate('/userDetails');
             } else {
