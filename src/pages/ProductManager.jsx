@@ -13,7 +13,7 @@ export default function ProductManager() {
     });
 
     useEffect(() => {
-        fetch('/api/products/all')
+        fetch('https://kajuit.smeltwaarde.co.za/api/products/all')
             .then(res => res.json())
             .then(data => setProducts(data.products || []));
     }, []);
