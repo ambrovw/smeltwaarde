@@ -34,7 +34,7 @@ export default function ProductManager() {
             images: form.images.split(',').map(s => s.trim())
         };
 
-        const res = await fetch('/api/products/create', {
+        const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
