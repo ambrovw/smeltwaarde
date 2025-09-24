@@ -59,7 +59,7 @@ export default function ProductManager() {
     };
 
     const toggleEnabled = async (id, current) => {
-        const res = await fetch(`/api/products/${id}`, {
+        const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ enabled: !current })
