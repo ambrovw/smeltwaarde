@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import SilverCalculator from './pages/SilverCalculator'
 import MuntHoeveelhede from './pages/MuntHoeveelhede'
 import Login from './pages/Login';
@@ -9,6 +9,7 @@ import './App.css'
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const location = useLocation();
     useEffect(() => {
         const user = localStorage.getItem('user');
         setIsLoggedIn(!!user);
@@ -26,7 +27,7 @@ function App() {
                 )}
             </nav>
 
-            <div className="tab-content">
+            <div className="tab-content" key={location.pathname}>
                 <Routes>
                     <Route path="/" element={<SilverCalculator />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
