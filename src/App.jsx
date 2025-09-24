@@ -31,6 +31,7 @@ function App() {
                     <Route path="/" element={<SilverCalculator />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
                     <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                    <Route path="/userDetails" element={<UserDetails />} />
                 </Routes>
             </div>
         </Router>
