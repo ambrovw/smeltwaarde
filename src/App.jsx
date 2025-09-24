@@ -3,10 +3,11 @@ import {
     Routes,
     Route,
     NavLink,
-    useLocation
+    useLocation, Navigate
 } from 'react-router-dom';
 import SilverCalculator from './pages/SilverCalculator';
 import MuntHoeveelhede from './pages/MuntHoeveelhede';
+import ProductManager from './pages/ProductManager';
 import Login from './pages/Login';
 import UserDetails from './pages/UserDetails';
 import { useState, useEffect } from 'react';
@@ -29,24 +30,26 @@ function App() {
 
 function InnerApp({ isLoggedIn, setIsLoggedIn }) {
     const location = useLocation();
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : {};
+    const role = user?.role || 'guest';
 
     return (
         <>
             <nav className="nav-header">
-                <NavLink to="/" className="nav-element" end>
-                    Waarde Berekening
-                </NavLink>
-                <NavLink to="/muntHoeveelhede" className="nav-element">
-                    Munt Hoeveelhede (onvoltooid)
-                </NavLink>
+
+                <NavLink to="/" className="nav-element" end> Waarde Berekening </NavLink>
+
+                <NavLink to="/muntHoeveelhede" className="nav-element"> Munt Hoeveelhede (onvoltooid) </NavLink>
+
+                {role === 'admin' && (
+                    <NavLink to="/products" className="nav-element">Produkte</NavLink>
+                )}
+
                 {isLoggedIn ? (
-                    <NavLink to="/userDetails" className="nav-element">
-                        Gebruiker
-                    </NavLink>
+                    <NavLink to="/userDetails" className="nav-element"> Gebruiker </NavLink>
                 ) : (
-                    <NavLink to="/login" className="nav-element">
-                        Meld aan
-                    </NavLink>
+                    <NavLink to="/login" className="nav-element"> Meld aan </NavLink>
                 )}
             </nav>
 
@@ -56,6 +59,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn }) {
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
                     <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="/userDetails" element={<UserDetails />} />
+                    <Route path="/products" element={user.role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
                 </Routes>
             </div>
         </>
