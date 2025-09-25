@@ -37,7 +37,7 @@ export default function Login({ setIsLoggedIn }) {
             <GoogleLogin
                 onSuccess={handleLoginSuccess}
                 onError={() => alert('Google-aanmelding het misluk')}
-                useOneTap
+                ux_mode="popup"
             />
         </div>
     );
