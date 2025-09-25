@@ -74,36 +74,44 @@ export default function ProductManager() {
     };
 
     return (
-        <div className="product-manager">
-            <h2>Produkbestuur</h2>
+        <div className="container">
+            <h1>Produkbestuur</h1>
 
             <div className="form-section">
-                <input name="name" placeholder="Naam" value={form.name} onChange={handleChange} />
-                <input name="category" placeholder="Kategorie" value={form.category} onChange={handleChange} />
-                <textarea name="description" placeholder="Beskrywing" value={form.description} onChange={handleChange} />
-                <input name="price" type="number" step="0.01" placeholder="Prys" value={form.price} onChange={handleChange} />
-                <input name="quantity" type="number" placeholder="Hoeveelheid" value={form.quantity} onChange={handleChange} />
-                <input name="images" placeholder="Beeld URLs (komma geskei)" value={form.images} onChange={handleChange} />
-                <label>
-                    <input name="enabled" type="checkbox" checked={form.enabled} onChange={handleChange} />
-                    Aktief
-                </label>
-                <button onClick={handleSubmit}>Stoor Produk</button>
+                {/* Form inputs */}
             </div>
 
             <hr />
 
-            <h3>Bestaande Produkte</h3>
-            <ul className="product-list">
+            <h3 className="section-header">Bestaande Produkte</h3>
+            <table className="product-table">
+                <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Kategorie</th>
+                    <th>Prys</th>
+                    <th>Hoeveelheid</th>
+                    <th>Status</th>
+                    <th>Beheer</th>
+                </tr>
+                </thead>
+                <tbody>
                 {products.map(p => (
-                    <li key={p._id}>
-                        <strong>{p.name}</strong> – {p.price} ZAR – {p.enabled ? '✅ Aktief' : '🚫 Nie sigbaar nie'}
-                        <button onClick={() => toggleEnabled(p._id, p.enabled)}>
-                            {p.enabled ? 'Deaktiveer' : 'Aktiveer'}
-                        </button>
-                    </li>
+                    <tr key={p._id} className={p.enabled ? 'highlight-row' : ''}>
+                        <td>{p.name}</td>
+                        <td>{p.category}</td>
+                        <td className="price">{p.price.toFixed(2)} ZAR</td>
+                        <td>{p.quantity}</td>
+                        <td className="highlight-cell">{p.enabled ? '✅ Aktief' : '🚫 Nie sigbaar nie'}</td>
+                        <td>
+                            <button className="action-button" onClick={() => toggleEnabled(p._id, p.enabled)}>
+                                {p.enabled ? 'Deaktiveer' : 'Aktiveer'}
+                            </button>
+                        </td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }
