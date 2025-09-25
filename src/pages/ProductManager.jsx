@@ -73,15 +73,86 @@ export default function ProductManager() {
         }
     };
 
+    const deleteProduct = async (id) => {
+        if (!window.confirm('Is jy seker jy wil hierdie produk verwyder?')) return;
+
+        const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert('Produk verwyder!');
+            setProducts(prev => prev.filter(p => p._id !== id));
+        } else {
+            alert('Kon nie verwyder nie: ' + data.error);
+        }
+    };
+
+    const [editingProduct, setEditingProduct] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const handleEditClick = (product) => {
+        setEditingProduct(product);
+        setForm({
+            name: product.name,
+            category: product.category,
+            description: product.description,
+            price: product.price.toString(),
+            quantity: product.quantity.toString(),
+            images: product.images.join(', '),
+            enabled: product.enabled
+        });
+        setShowModal(true);
+    };
+    const handleUpdate = async () => {
+        const payload = {
+            ...form,
+            price: parseFloat(form.price).toFixed(2),
+            quantity: parseInt(form.quantity),
+            images: form.images.split(',').map(s => s.trim())
+        };
+
+        const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert('Produk opgedateer!');
+            setProducts(prev =>
+                prev.map(p => (p._id === editingProduct._id ? data.product : p))
+            );
+            setShowModal(false);
+            setEditingProduct(null);
+        } else {
+            alert('Kon nie opdateer nie: ' + data.error);
+        }
+    };
+
+    const handleNewClick = () => {
+        setEditingProduct(null); // no product being edited
+        setForm({
+            name: '',
+            category: '',
+            description: '',
+            price: '',
+            quantity: '',
+            images: '',
+            enabled: true
+        });
+        setShowModal(true);
+    };
+
     return (
         <div className="container">
             <h1>Produkbestuur</h1>
 
-            <div className="form-section">
-                {/* Form inputs */}
-            </div>
-
             <hr />
+
+            <button className="action-button save" onClick={handleNewClick}>Nuwe produk</button>
 
             <h3 className="section-header">Bestaande Produkte</h3>
             <table className="product-table">
@@ -91,7 +162,7 @@ export default function ProductManager() {
                     <th>Kategorie</th>
                     <th>Prys</th>
                     <th>Hoeveelheid</th>
-                    <th>Status</th>
+                    <th>Sigbaarheid</th>
                     <th>Beheer</th>
                 </tr>
                 </thead>
@@ -100,18 +171,73 @@ export default function ProductManager() {
                     <tr key={p._id} className={p.enabled ? 'highlight-row' : ''}>
                         <td>{p.name}</td>
                         <td>{p.category}</td>
-                        <td className="price">{p.price.toFixed(2)} ZAR</td>
+                        <td>R{p.price.toFixed(2)}</td>
                         <td>{p.quantity}</td>
-                        <td className="highlight-cell">{p.enabled ? '✅ Aktief' : '🚫 Nie sigbaar nie'}</td>
+                        <td className="highlight-cell">{p.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
                         <td>
-                            <button className="action-button" onClick={() => toggleEnabled(p._id, p.enabled)}>
-                                {p.enabled ? 'Deaktiveer' : 'Aktiveer'}
+                            <button className="action-button save" onClick={() => handleEditClick(p)}>
+                                Wysig
+                            </button>
+                            <button className="action-button delete" onClick={() => deleteProduct(p._id)} style={{ marginLeft: '0.5rem' }}>
+                                Verwyder
                             </button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+
+            {showModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content form-section add-product-form">
+                        <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
+
+                        <div className="form-row">
+                            <label htmlFor="name">Naam</label>
+                            <input id="name" name="name" value={form.name} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="category">Kategorie</label>
+                            <input id="category" name="category" value={form.category} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="price">Prys</label>
+                            <input id="price" name="price" type="number" step="0.01" value={form.price} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="quantity">Hoeveelheid</label>
+                            <input id="quantity" name="quantity" type="number" value={form.quantity} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="images">Foto Skakels</label>
+                            <input id="images" name="images" value={form.images} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="description">Beskrywing</label>
+                            <textarea id="description" name="description" value={form.description} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row checkbox-row">
+                            <label htmlFor="enabled">Sigbaar</label>
+                            <input id="enabled" name="enabled" type="checkbox" checked={form.enabled} onChange={handleChange} />
+                        </div>
+
+                        <div className="form-row">
+                            <button className="action-button save" onClick={editingProduct ? handleUpdate : handleSubmit} >
+                                {editingProduct ? 'Stoor Veranderinge' : 'Stoor Produk'}
+                            </button>
+                            <button className="action-button delete" onClick={() => setShowModal(false)}>Kanselleer</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
+
     );
 }

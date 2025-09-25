@@ -325,3 +325,98 @@ input[type="number"]::-webkit-outer-spin-button {
     background-color: #a88c4a;
     color: white;
 }
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-row input,
+.form-row textarea {
+    flex: 1;
+}
+
+.add-product-form {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.add-product-form .form-row {
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.add-product-form input,
+.add-product-form textarea {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.action-button.delete {
+    background-color: transparent;
+    border: 1px solid #ef5350;
+    color: #ef5350;
+}
+
+.action-button.delete:hover {
+    background-color: #ef5350;
+    color: white;
+}
+
+.action-button.save {
+    background-color: transparent;
+    border: 1px solid #a88c4a;
+    color: #a88c4a;
+}
+.action-button.save:hover {
+    background-color: #a88c4a;
+    color: white;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content label {
+    color: white;
+}
+
+.add-product-form .form-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.add-product-form .form-row label {
+    width: 120px;
+    color: white;
+    font-weight: bold;
+}
+
+.add-product-form .form-row input,
+.add-product-form .form-row textarea {
+    flex: 1;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+}
