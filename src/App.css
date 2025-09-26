@@ -58,6 +58,19 @@ h1 {
     font-size: 0.8rem;
 }
 
+.rateChange {
+    font-size: 0.75rem;
+    margin-left: 0.4rem;
+}
+
+.rateChange.up {
+    color: green;
+}
+
+.rateChange.down {
+    color: red;
+}
+
 .flash {
     animation: flash-red 0.5s ease-in-out;
 }

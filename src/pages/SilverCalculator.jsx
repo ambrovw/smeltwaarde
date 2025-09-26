@@ -4,6 +4,7 @@ import '../App.css'
 
 function SilverCalculator() {
 
+    const [chgXag, setChgXag] = useState(null);
     const [silverPrice, setSilverPrice] = useState(null)
     const [adjustmentInput, setAdjustmentInput] = useState('0');
     const [adjustmentPercent, setAdjustmentPercent] = useState(0);
@@ -50,11 +51,12 @@ function SilverCalculator() {
                     const data = await response.json()
                     const item = data.items?.[0]
 
-                    if (item && item.xagPrice && data.date) {
+                    if (item && item.xagPrice && item.chgXag && data.date) {
                         setFlashPrice(true)
                         setTimeout(() => setFlashPrice(false), 500) // Flash lasts 500ms
                         setSilverPrice(item.xagPrice)
                         setRandPerGram(item.xagPrice / 31.1035)
+                        setChgXag(item.chgXag);
 
                         const utcTimestamp = data.tsj
                         const utcDate = new Date(utcTimestamp)
@@ -129,15 +131,12 @@ function SilverCalculator() {
                 ) : silverPrice ? (
                     <>
                         <div className="header-row">
-                            <img
-                                src="/smeltwaarde_logo_transparent_bgfill.png"
-                                alt="Smeltwaarde Logo"
-                                className="logo"
-                            />
+                            <img src="/smeltwaarde_logo_transparent_bgfill.png" alt="Smeltwaarde Logo" className="logo" />
                             <div className="header-text">
                                 <h1>Silver munt waarde</h1>
                                 <p className={`price ${flashPrice ? 'flash' : ''}`}>
-                                    R{silverPrice.toFixed(2)}/ozt  -  R{randPerGram.toFixed(2)}/g
+                                    R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
+                                    <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>{chgXag >= 0 ? '▲' : '▼'}R{Math.abs(chgXag).toFixed(2)}/ozt</span>
                                 </p>
                                 <p className="timestamp">{localTime}</p>
                             </div>
