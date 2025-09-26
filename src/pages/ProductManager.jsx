@@ -44,15 +44,20 @@ export default function ProductManager() {
         if (data.success) {
             alert('Produk gestoor!');
             setProducts(prev => [...prev, data.product]);
-            setForm({
-                name: '',
-                category: '',
-                description: '',
-                price: '',
-                quantity: '',
-                images: '',
-                enabled: true
-            });
+            setForm({ name: '', category: '', description: '', price: '', quantity: '', images: '', enabled: true });
+
+            // ✅ Now upload images using returned product ID
+            if (uploadedFiles.length > 0) {
+                const imageForm = new FormData();
+                uploadedFiles.forEach(file => imageForm.append('images', file));
+
+                await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${data.product._id}/images`, {
+                    method: 'POST',
+                    body: imageForm
+                });
+            }
+
+            setUploadedFiles([]);
         } else {
             alert('Kon nie stoor nie: ' + data.error);
         }
@@ -146,6 +151,16 @@ export default function ProductManager() {
         setShowModal(true);
     };
 
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+
+    const handleFileUpload = (e) => {
+        const files = Array.from(e.target.files);
+        setUploadedFiles(files);
+
+        // Optional: preview or upload logic here
+        // Example: convert to base64 or send to backend
+    };
+
     return (
         <div className="container">
             <h1>Produkbestuur</h1>
@@ -216,6 +231,19 @@ export default function ProductManager() {
                             <label htmlFor="images">Foto Skakels</label>
                             <input id="images" name="images" value={form.images} onChange={handleChange} />
                         </div>
+
+                        <div className="form-row">
+                            <label htmlFor="photoUpload">Laai Foto Op</label>
+                            <input id="photoUpload" type="file" accept="image/*" multiple onChange={handleFileUpload} />
+                        </div>
+
+                        {uploadedFiles.length > 0 && (
+                            <div className="image-preview-row">
+                                {uploadedFiles.map((file, index) => (
+                                    <img key={index} src={URL.createObjectURL(file)} alt={`Preview ${index + 1}`} className="image-preview" />
+                                ))}
+                            </div>
+                        )}
 
                         <div className="form-row">
                             <label htmlFor="description">Beskrywing</label>

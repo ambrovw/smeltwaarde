@@ -433,3 +433,17 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 0.85rem;
     box-sizing: border-box;
 }
+
+.image-preview-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.image-preview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
