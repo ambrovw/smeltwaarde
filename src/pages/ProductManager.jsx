@@ -105,35 +105,84 @@ export default function ProductManager() {
             description: product.description,
             price: product.price.toString(),
             quantity: product.quantity.toString(),
-            images: product.images.join(', '),
+            images: Array.isArray(product.images) ? product.images.filter(img => img.trim() !== '') : [],
             enabled: product.enabled
         });
         setShowModal(true);
     };
+
     const handleUpdate = async () => {
-        const payload = {
-            ...form,
-            price: parseFloat(form.price).toFixed(2),
-            quantity: parseInt(form.quantity),
-            images: form.images.split(',').map(s => s.trim())
-        };
+        try {
+            // Step 1: Update product metadata
+            const payload = {
+                ...form,
+                price: parseFloat(form.price).toFixed(2),
+                quantity: parseInt(form.quantity),
+                images: Array.isArray(form.images)
+                    ? form.images.filter(img => img.trim() !== '')
+                    : []
+            };
 
-        const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+            const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
 
-        const data = await res.json();
-        if (data.success) {
+            const data = await res.json();
+            if (!data.success) {
+                alert('Kon nie opdateer nie: ' + data.error);
+                return;
+            }
+
+            // Step 2: Upload new images (if any)
+            if (uploadedFiles.length > 0) {
+                const formData = new FormData();
+                uploadedFiles.forEach(file => formData.append('images', file));
+
+                const imageRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}/images`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const imageData = await imageRes.json();
+                if (!imageData.success) {
+                    alert('Foto-oplaai het misluk: ' + imageData.error);
+                    return;
+                }
+
+                // ✅ Re-fetch updated product to sync images
+                const updatedRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/all`);
+                const updatedProduct = await updatedRes.json();
+
+                // ✅ Update local state with fresh product
+                setProducts(prev =>
+                    prev.map(p => (p._id === editingProduct._id ? updatedProduct : p))
+                );
+                setEditingProduct(updatedProduct);
+                setForm(prev => ({
+                    ...prev,
+                    images: updatedProduct.images
+                }));
+            } else {
+                // No new images — just update product state
+                setProducts(prev =>
+                    prev.map(p => (p._id === editingProduct._id ? data.product : p))
+                );
+                setEditingProduct(data.product);
+                setForm(prev => ({
+                    ...prev,
+                    images: data.product.images
+                }));
+            }
+
+            // Finalize UI updates
             alert('Produk opgedateer!');
-            setProducts(prev =>
-                prev.map(p => (p._id === editingProduct._id ? data.product : p))
-            );
             setShowModal(false);
-            setEditingProduct(null);
-        } else {
-            alert('Kon nie opdateer nie: ' + data.error);
+            setUploadedFiles([]);
+        } catch (err) {
+            console.error('Update error:', err);
+            alert('Onverwagte fout tydens opdatering');
         }
     };
 
@@ -229,13 +278,31 @@ export default function ProductManager() {
 
                         <div className="form-row">
                             <label htmlFor="images">Foto Skakels</label>
-                            <input id="images" name="images" value={form.images} onChange={handleChange} />
+                            <input id="images" name="images" value={form.images.join(', ')}
+                                onChange={(e) => setForm({ ...form, images: e.target.value.split(',').map(s => s.trim()) }) }
+                            />
                         </div>
 
                         <div className="form-row">
                             <label htmlFor="photoUpload">Laai Foto Op</label>
                             <input id="photoUpload" type="file" accept="image/*" multiple onChange={handleFileUpload} />
                         </div>
+
+                        {Array.isArray(editingProduct?.images) &&
+                            !(editingProduct.images.length === 1 && editingProduct.images[0].trim() === '') && (
+                                <div className="image-preview-row">
+                                    {editingProduct.images.map((filename, index) => (
+                                        filename.trim() !== '' && (
+                                            <img
+                                                key={index}
+                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
+                                                alt={`Bestaande Foto ${index + 1}`}
+                                                className="image-preview"
+                                            />
+                                        )
+                                    ))}
+                                </div>
+                            )}
 
                         {uploadedFiles.length > 0 && (
                             <div className="image-preview-row">
