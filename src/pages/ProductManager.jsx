@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 export default function ProductManager() {
     const [products, setProducts] = useState([]);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [showRemovedPopup, setShowRemovedPopup] = useState(false);
     const [form, setForm] = useState({
         name: '',
         category: '',
@@ -31,7 +33,9 @@ export default function ProductManager() {
             ...form,
             price: parseFloat(form.price).toFixed(2),
             quantity: parseInt(form.quantity),
-            images: form.images.split(',').map(s => s.trim())
+            images: Array.isArray(form.images)
+                ? form.images.filter(s => s.trim() !== '')
+                : []
         };
 
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
@@ -41,41 +45,46 @@ export default function ProductManager() {
         });
 
         const data = await res.json();
-        if (data.success) {
-            alert('Produk gestoor!');
-            setProducts(prev => [...prev, data.product]);
-            setForm({ name: '', category: '', description: '', price: '', quantity: '', images: '', enabled: true });
-
-            // ✅ Now upload images using returned product ID
-            if (uploadedFiles.length > 0) {
-                const imageForm = new FormData();
-                uploadedFiles.forEach(file => imageForm.append('images', file));
-
-                await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${data.product._id}/images`, {
-                    method: 'POST',
-                    body: imageForm
-                });
-            }
-
-            setUploadedFiles([]);
-        } else {
+        if (!data.success) {
             alert('Kon nie stoor nie: ' + data.error);
+            return;
         }
-    };
 
-    const toggleEnabled = async (id, current) => {
-        const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ enabled: !current })
+        let newProduct = data.product;
+
+        if (uploadedFiles.length > 0) {
+            const imageForm = new FormData();
+            uploadedFiles.forEach(file => imageForm.append('images', file));
+
+            const imageRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${newProduct._id}/images`, {
+                method: 'POST',
+                body: imageForm
+            });
+
+            const imageData = await imageRes.json();
+            if (imageData.success) { newProduct.images = imageData.images; }
+        }
+
+        setProducts(prev => [newProduct, ...prev]);
+        setForm({
+            name: '',
+            category: '',
+            description: '',
+            price: '',
+            quantity: '',
+            images: [],
+            enabled: true
         });
-
-        const data = await res.json();
-        if (data.success) {
-            setProducts(prev =>
-                prev.map(p => (p._id === id ? { ...p, enabled: !current } : p))
-            );
-        }
+        setUploadedFiles([]);
+        setShowModal(false);
+        setShowSuccessPopup(true);
+        setTimeout(() => {
+            const popup = document.querySelector('.success-popup');
+            if (popup) popup.classList.add('fade-out');
+        }, 800); // Start fade-out halfway through
+        setTimeout(() => {
+            setShowSuccessPopup(false);
+        }, 1600); // Unmount after animation completes
     };
 
     const deleteProduct = async (id) => {
@@ -88,7 +97,15 @@ export default function ProductManager() {
 
         const data = await res.json();
         if (data.success) {
-            alert('Produk verwyder!');
+            setShowRemovedPopup(true);
+            setTimeout(() => {
+                const popup = document.querySelector('.success-popup');
+                if (popup) popup.classList.add('fade-out');
+            }, 800); // Start fade-out halfway through
+            setTimeout(() => {
+                setShowRemovedPopup(false);
+            }, 1600); // Unmount after animation completes
+
             setProducts(prev => prev.filter(p => p._id !== id));
         } else {
             alert('Kon nie verwyder nie: ' + data.error);
@@ -113,7 +130,6 @@ export default function ProductManager() {
 
     const handleUpdate = async () => {
         try {
-            // Step 1: Update product metadata
             const payload = {
                 ...form,
                 price: parseFloat(form.price).toFixed(2),
@@ -135,7 +151,8 @@ export default function ProductManager() {
                 return;
             }
 
-            // Step 2: Upload new images (if any)
+            let updatedProduct = data.product;
+
             if (uploadedFiles.length > 0) {
                 const formData = new FormData();
                 uploadedFiles.forEach(file => formData.append('images', file));
@@ -151,33 +168,29 @@ export default function ProductManager() {
                     return;
                 }
 
-                // ✅ Re-fetch updated product to sync images
-                const updatedRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/all`);
-                const updatedProduct = await updatedRes.json();
-
-                // ✅ Update local state with fresh product
-                setProducts(prev =>
-                    prev.map(p => (p._id === editingProduct._id ? updatedProduct : p))
-                );
-                setEditingProduct(updatedProduct);
-                setForm(prev => ({
-                    ...prev,
-                    images: updatedProduct.images
-                }));
-            } else {
-                // No new images — just update product state
-                setProducts(prev =>
-                    prev.map(p => (p._id === editingProduct._id ? data.product : p))
-                );
-                setEditingProduct(data.product);
-                setForm(prev => ({
-                    ...prev,
-                    images: data.product.images
-                }));
+                updatedProduct.images = [
+                    ...(updatedProduct.images || []).filter(img => img.trim() !== ''),
+                    ...imageData.images
+                ];
             }
 
-            // Finalize UI updates
-            alert('Produk opgedateer!');
+            setShowSuccessPopup(true);
+            setTimeout(() => {
+                const popup = document.querySelector('.success-popup');
+                if (popup) popup.classList.add('fade-out');
+            }, 800); // Start fade-out halfway through
+            setTimeout(() => {
+                setShowSuccessPopup(false);
+            }, 1600); // Unmount after animation completes
+
+            setProducts(prev =>
+                prev.map(p => (p._id === editingProduct._id ? updatedProduct : p))
+            );
+            setEditingProduct(updatedProduct);
+            setForm(prev => ({
+                ...prev,
+                images: updatedProduct.images
+            }));
             setShowModal(false);
             setUploadedFiles([]);
         } catch (err) {
@@ -187,27 +200,25 @@ export default function ProductManager() {
     };
 
     const handleNewClick = () => {
-        setEditingProduct(null); // no product being edited
+        setEditingProduct(null);
         setForm({
             name: '',
             category: '',
             description: '',
             price: '',
             quantity: '',
-            images: '',
+            images: [],
             enabled: true
         });
+        setUploadedFiles([]);
         setShowModal(true);
     };
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const handleFileUpload = (e) => {
-        const files = Array.from(e.target.files);
-        setUploadedFiles(files);
-
-        // Optional: preview or upload logic here
-        // Example: convert to base64 or send to backend
+        const newFiles = Array.from(e.target.files);
+        setUploadedFiles(prev => [...prev, ...newFiles]);
     };
 
     return (
@@ -278,8 +289,19 @@ export default function ProductManager() {
 
                         <div className="form-row">
                             <label htmlFor="images">Foto Skakels</label>
-                            <input id="images" name="images" value={form.images.join(', ')}
-                                onChange={(e) => setForm({ ...form, images: e.target.value.split(',').map(s => s.trim()) }) }
+                            <input
+                                id="images"
+                                name="images"
+                                value={Array.isArray(form.images) ? form.images.join(', ') : ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        images: e.target.value
+                                            .split(',')
+                                            .map(s => s.trim())
+                                            .filter(s => s !== '') // optional: remove empty entries
+                                    })
+                                }
                             />
                         </div>
 
@@ -288,10 +310,10 @@ export default function ProductManager() {
                             <input id="photoUpload" type="file" accept="image/*" multiple onChange={handleFileUpload} />
                         </div>
 
-                        {Array.isArray(editingProduct?.images) &&
-                            !(editingProduct.images.length === 1 && editingProduct.images[0].trim() === '') && (
+                        {Array.isArray(form.images) &&
+                            !(form.images.length === 1 && form.images[0].trim() === '') && (
                                 <div className="image-preview-row">
-                                    {editingProduct.images.map((filename, index) => (
+                                    {form.images.map((filename, index) => (
                                         filename.trim() !== '' && (
                                             <img
                                                 key={index}
@@ -302,7 +324,8 @@ export default function ProductManager() {
                                         )
                                     ))}
                                 </div>
-                            )}
+                            )
+                        }
 
                         {uploadedFiles.length > 0 && (
                             <div className="image-preview-row">
@@ -329,6 +352,18 @@ export default function ProductManager() {
                             <button className="action-button delete" onClick={() => setShowModal(false)}>Kanselleer</button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {showSuccessPopup && (
+                <div className="success-popup">
+                    ✅ Produk gestoor!
+                </div>
+            )}
+
+            {showRemovedPopup && (
+                <div className="success-popup">
+                    ✅ Produk verwyder!
                 </div>
             )}
 
