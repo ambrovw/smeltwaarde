@@ -324,6 +324,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: transparent;
     color: #a88c4a;
     border: 1px solid #a88c4a;
@@ -332,6 +335,9 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-align: center;
+    line-height: 1.2;
+    vertical-align: middle;
 }
 
 .action-button:hover {
@@ -441,11 +447,35 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .image-preview {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 4px;
     border: 1px solid #ccc;
+}
+
+.remove-image-icon {
+    margin-top: 0.5rem;
+    background-color: transparent !important;
+    color: #f44336 !important;
+    border: 1px solid #f44336 !important;
+    padding: 0.1rem 0.2rem !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.remove-image-icon:hover {
+    background-color: #f44336 !important;
+    color: #ccc !important;
+}
+
+.image-preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1rem;
 }
 
 .success-popup {
@@ -493,4 +523,61 @@ input[type="number"]::-webkit-outer-spin-button {
         transform: translate(-50%, -50%) scale(0.95);
         filter: blur(2px);
     }
+}
+
+.drop-zone {
+    border: 2px dashed #a88c4a;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.drop-zone:hover {
+    background-color: #2a2a2a;
+    border-color: #d4b15f;
+}
+
+.drop-zone.drag-over {
+    background-color: #333;
+    border-color: #ffd966;
+    color: #ffd966;
+    cursor: crosshair;
+}
+
+.image-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    cursor: zoom-out;
+}
+
+.image-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.full-image {
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+    cursor: grab;
+    display: block;
+    border-radius: 4px;
 }

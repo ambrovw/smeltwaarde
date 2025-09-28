@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useRef} from 'react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import 'react-medium-image-zoom/dist/styles.css';
 
 export default function ProductManager() {
     const [products, setProducts] = useState([]);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [showRemovedPopup, setShowRemovedPopup] = useState(false);
+    const fileInputRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [form, setForm] = useState({
         name: '',
         category: '',
@@ -18,6 +23,16 @@ export default function ProductManager() {
         fetch('https://kajuit.smeltwaarde.co.za/api/products/all')
             .then(res => res.json())
             .then(data => setProducts(data.products || []));
+    }, []);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setShowModal(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
     const handleChange = (e) => {
@@ -77,14 +92,18 @@ export default function ProductManager() {
         });
         setUploadedFiles([]);
         setShowModal(false);
-        setShowSuccessPopup(true);
+        triggerPopup(setShowSuccessPopup);
+    };
+
+    const triggerPopup = (setter) => {
+        setter(true);
         setTimeout(() => {
             const popup = document.querySelector('.success-popup');
             if (popup) popup.classList.add('fade-out');
-        }, 800); // Start fade-out halfway through
+        }, 800);
         setTimeout(() => {
-            setShowSuccessPopup(false);
-        }, 1600); // Unmount after animation completes
+            setter(false);
+        }, 1600);
     };
 
     const deleteProduct = async (id) => {
@@ -97,14 +116,7 @@ export default function ProductManager() {
 
         const data = await res.json();
         if (data.success) {
-            setShowRemovedPopup(true);
-            setTimeout(() => {
-                const popup = document.querySelector('.success-popup');
-                if (popup) popup.classList.add('fade-out');
-            }, 800); // Start fade-out halfway through
-            setTimeout(() => {
-                setShowRemovedPopup(false);
-            }, 1600); // Unmount after animation completes
+            triggerPopup(setShowRemovedPopup);
 
             setProducts(prev => prev.filter(p => p._id !== id));
         } else {
@@ -174,14 +186,7 @@ export default function ProductManager() {
                 ];
             }
 
-            setShowSuccessPopup(true);
-            setTimeout(() => {
-                const popup = document.querySelector('.success-popup');
-                if (popup) popup.classList.add('fade-out');
-            }, 800); // Start fade-out halfway through
-            setTimeout(() => {
-                setShowSuccessPopup(false);
-            }, 1600); // Unmount after animation completes
+            triggerPopup(setShowSuccessPopup);
 
             setProducts(prev =>
                 prev.map(p => (p._id === editingProduct._id ? updatedProduct : p))
@@ -221,6 +226,30 @@ export default function ProductManager() {
         setUploadedFiles(prev => [...prev, ...newFiles]);
     };
 
+    const handleRemoveImage = (indexToRemove) => {
+        setForm(prev => ({
+            ...prev,
+            images: prev.images.filter((_, index) => index !== indexToRemove)
+        }));
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const droppedFiles = Array.from(e.dataTransfer.files);
+        setUploadedFiles(prev => [...prev, ...droppedFiles]);
+    };
+
     return (
         <div className="container">
             <h1>Produkbestuur</h1>
@@ -242,18 +271,18 @@ export default function ProductManager() {
                 </tr>
                 </thead>
                 <tbody>
-                {products.map(p => (
-                    <tr key={p._id} className={p.enabled ? 'highlight-row' : ''}>
-                        <td>{p.name}</td>
-                        <td>{p.category}</td>
-                        <td>R{p.price.toFixed(2)}</td>
-                        <td>{p.quantity}</td>
-                        <td className="highlight-cell">{p.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
+                {products.map((product) => (
+                    <tr key={product._id} className={product.enabled ? 'highlight-row' : ''}>
+                        <td>{product.name}</td>
+                        <td>{product.category}</td>
+                        <td>R{product.price.toFixed(2)}</td>
+                        <td>{product.quantity}</td>
+                        <td className="highlight-cell">{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
                         <td>
-                            <button className="action-button save" onClick={() => handleEditClick(p)}>
+                            <button className="action-button save" onClick={() => handleEditClick(product)}>
                                 Wysig
                             </button>
-                            <button className="action-button delete" onClick={() => deleteProduct(p._id)} style={{ marginLeft: '0.5rem' }}>
+                            <button className="action-button delete" onClick={() => deleteProduct(product._id)} style={{ marginLeft: '0.5rem' }}>
                                 Verwyder
                             </button>
                         </td>
@@ -263,7 +292,7 @@ export default function ProductManager() {
             </table>
 
             {showModal && (
-                <div className="modal-overlay">
+                <div className="modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="modal-content form-section add-product-form">
                         <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
 
@@ -306,31 +335,61 @@ export default function ProductManager() {
                         </div>
 
                         <div className="form-row">
-                            <label htmlFor="photoUpload">Laai Foto Op</label>
-                            <input id="photoUpload" type="file" accept="image/*" multiple onChange={handleFileUpload} />
+                            <label htmlFor="photoUpload">Fotos</label>
+                            <div
+                                className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
+                                <p>Sleep foto's hierheen of klik om te kies</p>
+                                <input
+                                    id="photoUpload"
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleFileUpload}
+                                    style={{ display: 'none' }}
+                                    ref={fileInputRef}
+                                />
+                                <button onClick={() => fileInputRef.current.click()} className="action-button">
+                                    Kies Foto's
+                                </button>
+                            </div>
                         </div>
 
-                        {Array.isArray(form.images) &&
-                            !(form.images.length === 1 && form.images[0].trim() === '') && (
-                                <div className="image-preview-row">
-                                    {form.images.map((filename, index) => (
-                                        filename.trim() !== '' && (
+                        {Array.isArray(form.images) && form.images.length > 0 && (
+                            <div className="image-preview-row">
+                                {form.images.map((filename, index) => (
+                                    filename.trim() !== '' && (
+                                        <div key={index} className="image-preview-wrapper">
                                             <img
-                                                key={index}
                                                 src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
                                                 alt={`Bestaande Foto ${index + 1}`}
                                                 className="image-preview"
+                                                onClick={() => setSelectedImage(`https://kajuit.smeltwaarde.co.za/uploads/${filename}`)}
                                             />
-                                        )
-                                    ))}
-                                </div>
-                            )
-                        }
+                                            <button
+                                                className="remove-image-icon"
+                                                onClick={() => handleRemoveImage(index)}
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        )}
 
                         {uploadedFiles.length > 0 && (
                             <div className="image-preview-row">
                                 {uploadedFiles.map((file, index) => (
-                                    <img key={index} src={URL.createObjectURL(file)} alt={`Preview ${index + 1}`} className="image-preview" />
+                                    <img key={index}
+                                         src={URL.createObjectURL(file)}
+                                         alt={`Preview ${index + 1}`}
+                                         className="image-preview"
+                                         onClick={() => setSelectedImage(URL.createObjectURL(file))}
+                                    />
                                 ))}
                             </div>
                         )}
@@ -364,6 +423,18 @@ export default function ProductManager() {
             {showRemovedPopup && (
                 <div className="success-popup">
                     ✅ Produk verwyder!
+                </div>
+            )}
+
+            {selectedImage && (
+                <div className="image-modal-overlay" onClick={() => setSelectedImage(null)}>
+                    <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <TransformWrapper>
+                            <TransformComponent>
+                                <img src={selectedImage} alt="Volgroot Foto" className="full-image" />
+                            </TransformComponent>
+                        </TransformWrapper>
+                    </div>
                 </div>
             )}
 
