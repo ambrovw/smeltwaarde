@@ -3,6 +3,7 @@ import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login({ setIsLoggedIn, setUser }) {
     const navigate = useNavigate();
+    console.log('setUser is:', setUser);
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
