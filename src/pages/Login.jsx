@@ -6,23 +6,20 @@ export default function Login({ setIsLoggedIn }) {
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
-            localStorage.setItem('token', credentialResponse.credential);
+            const token = credentialResponse.credential;
+            localStorage.setItem('token', token);
+
             const res = await fetch('https://kajuit.smeltwaarde.co.za/api/auth/google', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: credentialResponse.credential })
+                body: JSON.stringify({ token })
             });
 
             const data = await res.json();
             if (data.success) {
-                localStorage.setItem('user', JSON.stringify({
-                    name: data.name,
-                    email: data.email,
-                    role: data.role || 'user',
-                    token: credentialResponse.credential
-                }));
-
+                localStorage.setItem('user', JSON.stringify(data));
                 setIsLoggedIn(true);
+                setUser(data);
                 navigate('/userDetails');
             } else {
                 alert('Aanmelding het misluk: ' + data.error);
