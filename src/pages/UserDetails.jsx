@@ -52,7 +52,7 @@ export default function UserDetails({ user, setUser, setIsLoggedIn }) {
 
     return (
         <div className="container">
-            <h2 style={{ color: 'white' }}>Gebruiker Inligting</h2>
+            <h2 style={{ color: 'white', textAlign: 'center' }}>Gebruiker Inligting</h2>
             <form className="add-product-form" onSubmit={handleSave}>
                 <div className="form-row">
                     <label>Naam:</label>
