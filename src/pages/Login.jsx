@@ -6,7 +6,7 @@ export default function Login({ setIsLoggedIn }) {
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
-            localStorage.setItem('token', credentialResponse.token);
+            localStorage.setItem('token', credentialResponse.credential);
             const res = await fetch('https://kajuit.smeltwaarde.co.za/api/auth/google', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
