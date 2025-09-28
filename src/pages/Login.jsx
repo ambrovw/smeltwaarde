@@ -6,6 +6,7 @@ export default function Login({ setIsLoggedIn }) {
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
+            localStorage.setItem('token', credentialResponse.token);
             const res = await fetch('https://kajuit.smeltwaarde.co.za/api/auth/google', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -14,7 +15,6 @@ export default function Login({ setIsLoggedIn }) {
 
             const data = await res.json();
             if (data.success) {
-                localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify({
                     name: data.name,
                     email: data.email,
