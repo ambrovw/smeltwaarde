@@ -2,8 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 export default function ProductManager() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = user?.token;
+    const token = localStorage.getItem('token');
     const [products, setProducts] = useState([]);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [showRemovedPopup, setShowRemovedPopup] = useState(false);

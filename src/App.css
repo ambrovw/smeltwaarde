@@ -581,3 +581,10 @@ input[type="number"]::-webkit-outer-spin-button {
     display: block;
     border-radius: 4px;
 }
+
+.user-details textarea,
+.user-details input {
+    background: #3c3c3c;
+    border-radius: 8px;
+    color: #e0e0e0;
+}
