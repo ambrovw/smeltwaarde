@@ -33,20 +33,38 @@ export default function UserDetails() {
     };
 
     return (
-        <div className="user-details-form">
-            <h2>Jou Profiel</h2>
-            <label>
-                Naam:
-                <input type="text" name="name" value={user.name} onChange={handleChange} />
-            </label>
-            <label>
-                E-pos:
-                <input type="email" name="email" value={user.email} onChange={handleChange} />
-            </label>
+        <div className="container">
+            <div className="form-section user-profile-form">
+                <h3 className="section-header">Jou Profiel</h3>
 
-            <div style={{ marginTop: '2rem' }}>
-                <button onClick={handleSave}>Stoor</button>
-                <button onClick={handleLogout} style={{ marginLeft: '1rem' }}>Teken uit</button>
+                <div className="form-row">
+                    <label htmlFor="name">Naam</label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        value={user.name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-row">
+                    <label htmlFor="email">E-pos</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={user.email}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-row">
+                    <button className="action-button save" onClick={handleSave}>Stoor</button>
+                    <button className="action-button delete" onClick={handleLogout} style={{ marginLeft: '1rem' }}>
+                        Teken uit
+                    </button>
+                </div>
             </div>
         </div>
     );

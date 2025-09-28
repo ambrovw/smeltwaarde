@@ -3,7 +3,8 @@ import {
     Routes,
     Route,
     NavLink,
-    useLocation, Navigate
+    useLocation,
+    Navigate
 } from 'react-router-dom';
 import SilverCalculator from './pages/SilverCalculator';
 import MuntHoeveelhede from './pages/MuntHoeveelhede';
@@ -15,41 +16,68 @@ import './App.css';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState({ name: '', email: '', role: 'guest' });
 
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        setIsLoggedIn(!!user);
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        fetch('https://kajuit.smeltwaarde.co.za/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setUser(data.user);
+                    setIsLoggedIn(true);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                } else {
+                    setIsLoggedIn(false);
+                }
+            })
+            .catch(() => setIsLoggedIn(false));
     }, []);
 
     return (
         <Router>
-            <InnerApp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <InnerApp
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+                user={user}
+            />
         </Router>
     );
 }
 
-function InnerApp({ isLoggedIn, setIsLoggedIn }) {
+function InnerApp({ isLoggedIn, setIsLoggedIn, user }) {
     const location = useLocation();
-    const storedUser = localStorage.getItem('user');
-    const user = storedUser ? JSON.parse(storedUser) : {};
     const role = user?.role || 'guest';
 
     return (
         <>
             <nav className="nav-header">
+                <NavLink to="/" className="nav-element" end>
+                    Waarde Berekening
+                </NavLink>
 
-                <NavLink to="/" className="nav-element" end> Waarde Berekening </NavLink>
-
-                <NavLink to="/muntHoeveelhede" className="nav-element"> Munt Hoeveelhede (onvoltooid) </NavLink>
+                <NavLink to="/muntHoeveelhede" className="nav-element">
+                    Munt Hoeveelhede (onvoltooid)
+                </NavLink>
 
                 {role === 'admin' && (
-                    <NavLink to="/products" className="nav-element">Produkte</NavLink>
+                    <NavLink to="/products" className="nav-element">
+                        Produkte
+                    </NavLink>
                 )}
 
                 {isLoggedIn ? (
-                    <NavLink to="/userDetails" className="nav-element"> Gebruiker </NavLink>
+                    <NavLink to="/userDetails" className="nav-element">
+                        Gebruiker
+                    </NavLink>
                 ) : (
-                    <NavLink to="/login" className="nav-element"> Meld aan </NavLink>
+                    <NavLink to="/login" className="nav-element">
+                        Meld aan
+                    </NavLink>
                 )}
             </nav>
 
@@ -59,7 +87,11 @@ function InnerApp({ isLoggedIn, setIsLoggedIn }) {
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
                     <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="/userDetails" element={<UserDetails />} />
-                    <Route path="/products" element={user.role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
+                    <Route
+                        path="/products"
+                        element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />}
+                    />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </div>
         </>
