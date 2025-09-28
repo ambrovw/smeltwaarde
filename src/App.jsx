@@ -98,7 +98,16 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                         path="/login"
                         element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />}
                     />
-                    <Route path="/userDetails" element={<UserDetails user={user} />} />
+                    <Route
+                        path="/userDetails"
+                        element={
+                            <UserDetails
+                                user={user}
+                                setUser={setUser}
+                                setIsLoggedIn={setIsLoggedIn}
+                            />
+                        }
+                    />
                     <Route
                         path="/products"
                         element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />}
