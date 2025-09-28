@@ -16,13 +16,13 @@ import './App.css';
 
 function App() {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState({ name: '', email: '', role: 'guest' });
+    const [user, setUser] = useState(null); // null means not logged in
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            setLoading(false); // ✅ exit loading if no token
+            setLoading(false);
             return;
         }
 
@@ -35,15 +35,11 @@ function App() {
                     setUser(data.user);
                     setIsLoggedIn(true);
                 } else {
-                    setIsLoggedIn(false);
                     localStorage.removeItem('token');
                 }
             })
-            .catch(() => {
-                setIsLoggedIn(false);
-                localStorage.removeItem('token');
-            })
-            .finally(() => setLoading(false)); // ✅ always exit loading
+            .catch(() => localStorage.removeItem('token'))
+            .finally(() => setLoading(false));
     }, []);
 
     return (
@@ -98,8 +94,11 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                 <Routes>
                     <Route path="/" element={<SilverCalculator />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
-                    <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />} />
-                    <Route path="/userDetails" element={<UserDetails />} />
+                    <Route
+                        path="/login"
+                        element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />}
+                    />
+                    <Route path="/userDetails" element={<UserDetails user={user} />} />
                     <Route
                         path="/products"
                         element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />}

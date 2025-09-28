@@ -3,7 +3,6 @@ import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login({ setIsLoggedIn, setUser }) {
     const navigate = useNavigate();
-    console.log('setUser is:', setUser);
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
@@ -18,9 +17,8 @@ export default function Login({ setIsLoggedIn, setUser }) {
 
             const data = await res.json();
             if (data.success) {
-                localStorage.setItem('user', JSON.stringify(data));
+                setUser(data.user);
                 setIsLoggedIn(true);
-                setUser(data);
                 navigate('/userDetails');
             } else {
                 alert('Aanmelding het misluk: ' + data.error);
