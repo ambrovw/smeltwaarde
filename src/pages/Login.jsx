@@ -17,7 +17,7 @@ export default function Login({ setIsLoggedIn, setUser }) {
 
             const data = await res.json();
             if (data.success) {
-                setUser(data.user);
+                setUser(data);
                 setIsLoggedIn(true);
                 navigate('/userDetails');
             } else {
