@@ -311,7 +311,7 @@ export default function ProductManager() {
 
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal-content form-section add-product-form">
+                    <div className="modal-content form-section add-product-form" onClick={(e) => e.stopPropagation()}>
                         <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
 
                         <div className="form-row">
