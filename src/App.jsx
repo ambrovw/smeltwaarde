@@ -25,7 +25,7 @@ function App() {
             setLoading(false);
             return;
         }
-
+        console.log('🔍 Checking token and calling /me');
         fetch('https://kajuit.smeltwaarde.co.za/api/auth/me', {
             headers: { Authorization: `Bearer ${token}` }
         })
