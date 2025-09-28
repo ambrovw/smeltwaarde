@@ -57,7 +57,6 @@ export default function ProductManager() {
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(payload)
@@ -119,7 +118,6 @@ export default function ProductManager() {
         const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         });
@@ -164,7 +162,6 @@ export default function ProductManager() {
             const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(payload)
@@ -185,7 +182,6 @@ export default function ProductManager() {
                 const imageRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}/images`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
                     body: formData
