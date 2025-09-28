@@ -19,6 +19,33 @@ function App() {
     const [user, setUser] = useState({ name: '', email: '', role: 'guest' });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setLoading(false); // ✅ exit loading if no token
+            return;
+        }
+
+        fetch('https://kajuit.smeltwaarde.co.za/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    setUser(data.user);
+                    setIsLoggedIn(true);
+                } else {
+                    setIsLoggedIn(false);
+                    localStorage.removeItem('token');
+                }
+            })
+            .catch(() => {
+                setIsLoggedIn(false);
+                localStorage.removeItem('token');
+            })
+            .finally(() => setLoading(false)); // ✅ always exit loading
+    }, []);
+
     return (
         <Router>
             {loading ? (
