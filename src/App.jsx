@@ -55,13 +55,14 @@ function App() {
                     isLoggedIn={isLoggedIn}
                     setIsLoggedIn={setIsLoggedIn}
                     user={user}
+                    setUser={setUser}
                 />
             )}
         </Router>
     );
 }
 
-function InnerApp({ isLoggedIn, setIsLoggedIn, user }) {
+function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
     const location = useLocation();
     const role = user?.role || 'guest';
 
