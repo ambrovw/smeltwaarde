@@ -11,6 +11,7 @@ import MuntHoeveelhede from './pages/MuntHoeveelhede';
 import ProductManager from './pages/ProductManager';
 import Login from './pages/Login';
 import UserDetails from './pages/UserDetails';
+import Shop from './pages/Shop.jsx';
 import { useState, useEffect } from 'react';
 import './App.css';
 
@@ -73,6 +74,10 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                     Munt Hoeveelhede (onvoltooid)
                 </NavLink>
 
+                <NavLink to="/shop" className="nav-element">
+                    Winkel
+                </NavLink>
+
                 {role === 'admin' && (
                     <NavLink to="/products" className="nav-element">
                         Produkte
@@ -108,6 +113,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                             />
                         }
                     />
+                    <Route path="/shop" element={<Shop />} />
                     <Route
                         path="/products"
                         element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />}
