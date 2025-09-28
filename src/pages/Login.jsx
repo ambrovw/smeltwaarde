@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 
-export default function Login({ setIsLoggedIn }) {
+export default function Login({ setIsLoggedIn, setUser }) {
     const navigate = useNavigate();
 
     const handleLoginSuccess = async (credentialResponse) => {

@@ -97,7 +97,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user }) {
                 <Routes>
                     <Route path="/" element={<SilverCalculator />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
-                    <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                    <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />} />
                     <Route path="/userDetails" element={<UserDetails />} />
                     <Route
                         path="/products"
