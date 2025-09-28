@@ -18,7 +18,8 @@ export default function Login({ setIsLoggedIn }) {
                 localStorage.setItem('user', JSON.stringify({
                     name: data.name,
                     email: data.email,
-                    role: data.role || 'user' // fallback to 'user' if missing
+                    role: data.role || 'user',
+                    token: credentialResponse.credential
                 }));
 
                 setIsLoggedIn(true);

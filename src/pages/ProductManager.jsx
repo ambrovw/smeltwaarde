@@ -1,8 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import 'react-medium-image-zoom/dist/styles.css';
 
 export default function ProductManager() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user?.token;
     const [products, setProducts] = useState([]);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [showRemovedPopup, setShowRemovedPopup] = useState(false);
@@ -55,7 +56,10 @@ export default function ProductManager() {
 
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(payload)
         });
 
@@ -73,6 +77,10 @@ export default function ProductManager() {
 
             const imageRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${newProduct._id}/images`, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: imageForm
             });
 
@@ -111,7 +119,10 @@ export default function ProductManager() {
 
         const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${id}`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         const data = await res.json();
@@ -153,7 +164,10 @@ export default function ProductManager() {
 
             const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(payload)
             });
 
@@ -171,6 +185,10 @@ export default function ProductManager() {
 
                 const imageRes = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}/images`, {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: formData
                 });
 
