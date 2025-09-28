@@ -14,7 +14,7 @@ export default function Login({ setIsLoggedIn }) {
 
             const data = await res.json();
             if (data.success) {
-                // ✅ Store role along with name and email
+                localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify({
                     name: data.name,
                     email: data.email,
