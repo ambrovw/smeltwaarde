@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 export default function ProductManager() {
     const token = localStorage.getItem('token');
@@ -374,24 +375,28 @@ export default function ProductManager() {
 
                         {Array.isArray(form.images) && form.images.length > 0 && (
                             <div className="image-preview-row">
-                                {form.images.map((filename, index) => (
-                                    filename.trim() !== '' && (
-                                        <div key={index} className="image-preview-wrapper">
-                                            <img
-                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
-                                                alt={`Bestaande Foto ${index + 1}`}
-                                                className="image-preview"
-                                                onClick={() => setSelectedImage(`https://kajuit.smeltwaarde.co.za/uploads/${filename}`)}
-                                            />
-                                            <button
-                                                className="remove-image-icon"
-                                                onClick={() => handleRemoveImage(index)}
-                                            >
-                                                &times;
-                                            </button>
-                                        </div>
-                                    )
-                                ))}
+                                <PhotoProvider>
+                                    {form.images.map((filename, index) => (
+                                        filename.trim() !== '' && (
+                                            <div key={index} className="image-preview-wrapper">
+                                                <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}>
+                                                    <img
+                                                        src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
+                                                        alt={`Bestaande Foto ${index + 1}`}
+                                                        className="image-preview"
+                                                        style={{ cursor: 'zoom-in' }}
+                                                    />
+                                                </PhotoView>
+                                                <button
+                                                    className="remove-image-icon"
+                                                    onClick={() => handleRemoveImage(index)}
+                                                >
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        )
+                                    ))}
+                                </PhotoProvider>
                             </div>
                         )}
 
@@ -439,19 +444,6 @@ export default function ProductManager() {
                     ✅ Produk verwyder!
                 </div>
             )}
-
-            {selectedImage && (
-                <div className="image-modal-overlay" onClick={() => setSelectedImage(null)}>
-                    <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <TransformWrapper>
-                            <TransformComponent>
-                                <img src={selectedImage} alt="Volgroot Foto" className="full-image" />
-                            </TransformComponent>
-                        </TransformWrapper>
-                    </div>
-                </div>
-            )}
-
         </div>
 
     );
