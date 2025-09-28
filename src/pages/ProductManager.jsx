@@ -57,6 +57,7 @@ export default function ProductManager() {
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(payload)
