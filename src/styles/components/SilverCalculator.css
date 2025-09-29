@@ -28,8 +28,9 @@
 }
 
 .price {
-    font-size: 1.1rem;
-    margin: 0.25rem 0 0.25rem 0;
+    font-size: 1.4rem;
+    margin: 0.25rem 0;
+    color: var(--accent);
 }
 
 .rateChange {
@@ -189,7 +190,7 @@
     25% { color: #e94f2d; transform: scale(1.04); }
     50% { color: #c87f47; transform: scale(1.02); }
     75% { color: #b29e68; transform: scale(1.01); }
-    100% { color: var(--fg, inherit); transform: scale(1); }
+    100% { color: var(--accent, inherit); transform: scale(1); }
 }
 
 @keyframes flash-red-dark {
@@ -197,7 +198,7 @@
     25% { color: #ff6b4a; transform: scale(1.04); }
     50% { color: #ff9e7a; transform: scale(1.02); }
     75% { color: #ffd1aa; transform: scale(1.01); }
-    100% { color: var(--fg, inherit); transform: scale(1); }
+    100% { color: var(--accent, inherit); transform: scale(1); }
 }
 
 /* TOTALS SECTION */

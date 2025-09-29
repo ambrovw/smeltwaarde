@@ -145,18 +145,34 @@ function SilverCalculator() {
                         </div>
 
                         <div className="adjustment-row">
-                            <label htmlFor="adjustment" className="adjustment-label" title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken.">
+                            <label
+                                htmlFor="adjustment"
+                                className="adjustment-label"
+                                title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
+                            >
                                 💡 Afslag/Premie:
                             </label>
-                            <div className="adjustment-input-group">
+                            <div className="quantity-control">
+                                <button
+                                    type="button"
+                                    onClick={() => setAdjustmentInput(prev => Math.max(Number(prev) - 0.5, -100))}
+                                >
+                                    -
+                                </button>
                                 <input
                                     id="adjustment"
                                     type="number"
                                     step="0.5"
                                     value={adjustmentInput}
                                     onChange={(e) => setAdjustmentInput(e.target.value)}
-                                    className="adjustment-input"
+                                    className="quantity-input"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setAdjustmentInput(prev => Math.min(Number(prev) + 0.5, 100))}
+                                >
+                                    +
+                                </button>
                                 <span className="adjustment-percent">%</span>
                             </div>
                         </div>
