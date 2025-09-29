@@ -120,7 +120,7 @@
 
 .quantity-control button {
     background-color: var(--highlight);
-    color: #fff;
+    color: var(--fg);
     border: none;
     padding: 0.2rem 0.5rem;
     font-size: 0.85rem;
@@ -130,7 +130,8 @@
 }
 
 .quantity-control button:hover {
-    background-color: var(--accent);
+    background-color: var(--fg);
+    color: var(--highlight);
 }
 
 .quantity-input {
