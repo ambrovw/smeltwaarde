@@ -86,29 +86,31 @@ function SilverCalculator() {
             return () => clearInterval(interval)
         }, [])
 
-        const handleQuantityChange = (targetCoin, newQty) => {
-            const updated = Object.fromEntries(
-                Object.entries(coinList).map(([groupLabel, coins]) => [
-                    groupLabel,
-                    coins.map((coin) =>
-                        coin.name === targetCoin.name && coin.era === targetCoin.era
-                            ? { ...coin, quantity: Number(newQty) }
-                            : coin
-                    )
-                ])
-            )
-            setCoinList(updated)
+    const handleQuantityChange = (targetCoin, newQty) => {
+        const parsedQty = newQty === '' ? '' : Math.max(Number(newQty), 0);
 
+        const updated = Object.fromEntries(
+            Object.entries(coinList).map(([groupLabel, coins]) => [
+                groupLabel,
+                coins.map((coin) =>
+                    coin.name === targetCoin.name && coin.era === targetCoin.era
+                        ? { ...coin, quantity: parsedQty }
+                        : coin
+                )
+            ])
+        );
 
-            // Trigger Google Analytics event
-            if (window.gtag) {
-                window.gtag('event', 'hoeveelheid_change', {
-                    event_category: 'Input',
-                    event_label: `${targetCoin.name} (${targetCoin.era})`,
-                    value: Number(newQty)
-                })
-            }
+        setCoinList(updated);
+
+        // Trigger Google Analytics event
+        if (window.gtag) {
+            window.gtag('event', 'hoeveelheid_change', {
+                event_category: 'Input',
+                event_label: `${targetCoin.name} (${targetCoin.era})`,
+                value: parsedQty === '' ? 0 : parsedQty
+            });
         }
+    };
 
         const totalFineSilverGrams = Object.values(coinList)
             .flat()
@@ -164,7 +166,10 @@ function SilverCalculator() {
                                     type="number"
                                     step="0.5"
                                     value={adjustmentInput}
-                                    onChange={(e) => setAdjustmentInput(e.target.value)}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        setAdjustmentInput(val === '' ? '' : Number(val));
+                                    }}
                                     className="quantity-input"
                                 />
                                 <button
@@ -218,15 +223,36 @@ function SilverCalculator() {
                                                     <td>{coin.weight}</td>
                                                     <td>
                                                         <div className="quantity-control">
-                                                            <button type="button" onClick={() => handleQuantityChange(coin, coin.quantity - 1)}>-</button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                    handleQuantityChange(coin, Math.max(current - 1, 0));
+                                                                }}
+                                                            >
+                                                                -
+                                                            </button>
+
                                                             <input
                                                                 type="number"
                                                                 min="0"
                                                                 value={coin.quantity}
-                                                                onChange={(e) => handleQuantityChange(coin, e.target.value)}
+                                                                onChange={(e) => {
+                                                                    const val = e.target.value;
+                                                                    handleQuantityChange(coin, val === '' ? '' : Number(val));
+                                                                }}
                                                                 className="quantity-input"
                                                             />
-                                                            <button type="button" onClick={() => handleQuantityChange(coin, coin.quantity + 1)}>+</button>
+
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                    handleQuantityChange(coin, current + 1);
+                                                                }}
+                                                            >
+                                                                +
+                                                            </button>
                                                         </div>
                                                     </td>
                                                     <td>{fineSilverGrams.toFixed(2)}</td>
