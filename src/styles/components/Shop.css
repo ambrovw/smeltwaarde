@@ -1,6 +1,5 @@
 /* Container styling */
 .container {
-    padding: 1rem;
     background-color: var(--card-bg);
     color: var(--fg);
 }
