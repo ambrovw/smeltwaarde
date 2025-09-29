@@ -1,0 +1,55 @@
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+/* Each nav link */
+.nav-element {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+    .nav-header {
+        background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    }
+
+    .nav-element {
+        color: #a88c4a;
+    }
+
+    .nav-element:hover {
+        background-color: #303030;
+        color: #fff;
+    }
+}
+
+/* LIGHT MODE */
+@media (prefers-color-scheme: light) {
+    .nav-header {
+        background-color: #F5E9DC;
+        border-bottom: 1px solid #A67C52;
+    }
+
+    .nav-element {
+        color: #5C4432;
+    }
+
+    .nav-element:hover {
+        background-color: #A67C52;
+        color: #fff;
+    }
+}

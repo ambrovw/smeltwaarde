@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { coins as groupedCoins } from '../coinData'
-import '../App.css'
+import { coins as groupedCoins } from '../coinData.js'
+import '../styles/components/SilverCalculator.css';
 
 function SilverCalculator() {
 
@@ -136,42 +136,30 @@ function SilverCalculator() {
                                 <h1>Silver munt waarde</h1>
                                 <p className={`price ${flashPrice ? 'flash' : ''}`}>
                                     R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
-                                    <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>{chgXag >= 0 ? '▲' : '▼'}R{Math.abs(chgXag).toFixed(2)}/ozt</span>
+                                    <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>
+                            {chgXag >= 0 ? '▲' : '▼'}R{Math.abs(chgXag).toFixed(2)}/ozt
+                        </span>
                                 </p>
                                 <p className="timestamp">{localTime}</p>
                             </div>
                         </div>
-                        <div
-                            className="adjustment-row"
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                marginTop: '-0.5rem'
-                            }}
-                        >
-                            <label
-                                htmlFor="adjustment"
-                                style={{ marginRight: '0.25rem' }}
-                                title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
-                            >
+
+                        <div className="adjustment-row">
+                            <label htmlFor="adjustment" className="adjustment-label" title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken.">
                                 💡 Afslag/Premie:
                             </label>
-
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <div className="adjustment-input-group">
                                 <input
                                     id="adjustment"
                                     type="number"
                                     step="0.5"
                                     value={adjustmentInput}
                                     onChange={(e) => setAdjustmentInput(e.target.value)}
-                                    style={{ width: '60px', marginRight: '4px' }}
+                                    className="adjustment-input"
                                 />
-                                <span style={{ fontSize: '0.9rem', color: '#f9f9f9' }}>%</span>
+                                <span className="adjustment-percent">%</span>
                             </div>
                         </div>
-
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => (
                             <div key={groupLabel}>
@@ -180,15 +168,15 @@ function SilverCalculator() {
                                 </h2>
 
                                 {!collapsedEras[groupLabel] && (
-                                    <table>
+                                    <table className="coin-table">
                                         <colgroup>
-                                            <col style={{ width: '20%' }} />
-                                            <col style={{ width: '12%' }} />
-                                            <col style={{ width: '10%' }} />
-                                            <col style={{ width: '10%' }} />
-                                            <col style={{ width: '13%' }} />
-                                            <col style={{ width: '18%' }} />
-                                            <col style={{ width: '17%' }} />
+                                            <col className="col-name" />
+                                            <col className="col-era" />
+                                            <col className="col-purity" />
+                                            <col className="col-weight" />
+                                            <col className="col-quantity" />
+                                            <col className="col-silver" />
+                                            <col className="col-value" />
                                         </colgroup>
                                         <thead>
                                         <tr>
@@ -203,30 +191,34 @@ function SilverCalculator() {
                                         </thead>
                                         <tbody>
                                         {coins.map((coin, index) => {
-                                            const fineSilverGrams = coin.purity * coin.weight * coin.quantity
-                                            const fineSilverOunces = fineSilverGrams / 31.1035
-                                            const value = adjustedSilverPrice * fineSilverOunces
+                                            const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
+                                            const fineSilverOunces = fineSilverGrams / 31.1035;
+                                            const value = adjustedSilverPrice * fineSilverOunces;
                                             return (
-                                                <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'highlight-row' : ''} >
-                                                <td>{coin.name}</td>
+                                                <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'highlight-row' : ''}>
+                                                    <td>{coin.name}</td>
                                                     <td>{coin.era}</td>
                                                     <td>{coin.purity}</td>
                                                     <td>{coin.weight}</td>
                                                     <td>
-                                                        <input
-                                                            type="number"
-                                                            min="0"
-                                                            value={coin.quantity}
-                                                            onChange={(e) => handleQuantityChange(coin, e.target.value)}
-                                                            style={{ width: '60px' }}
-                                                        />
+                                                        <div className="quantity-control">
+                                                            <button type="button" onClick={() => handleQuantityChange(coin, coin.quantity - 1)}>-</button>
+                                                            <input
+                                                                type="number"
+                                                                min="0"
+                                                                value={coin.quantity}
+                                                                onChange={(e) => handleQuantityChange(coin, e.target.value)}
+                                                                className="quantity-input"
+                                                            />
+                                                            <button type="button" onClick={() => handleQuantityChange(coin, coin.quantity + 1)}>+</button>
+                                                        </div>
                                                     </td>
                                                     <td>{fineSilverGrams.toFixed(2)}</td>
-                                                    <td className={`${coin.quantity !== 0 ? 'highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`.trim()}>
+                                                    <td className={`value-cell ${coin.quantity !== 0 ? 'highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
                                                         {value.toFixed(2)}
                                                     </td>
                                                 </tr>
-                                            )
+                                            );
                                         })}
                                         </tbody>
                                     </table>
@@ -242,7 +234,6 @@ function SilverCalculator() {
                                 💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                             </div>
                         </div>
-
                     </>
                 ) : (
                     <p>Loading...</p>

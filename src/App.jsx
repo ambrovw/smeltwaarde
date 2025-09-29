@@ -2,22 +2,21 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    NavLink,
-    useLocation,
-    Navigate
+    Navigate,
+    useLocation
 } from 'react-router-dom';
-import SilverCalculator from './pages/SilverCalculator';
-import MuntHoeveelhede from './pages/MuntHoeveelhede';
-import ProductManager from './pages/ProductManager';
-import Login from './pages/Login';
-import UserDetails from './pages/UserDetails';
-import Shop from './pages/Shop.jsx';
+import SilverCalculator from './components/SilverCalculator.jsx';
+import MuntHoeveelhede from './components/MuntHoeveelhede.jsx';
+import ProductManager from './components/ProductManager.jsx';
+import Login from './components/Login.jsx';
+import UserDetails from './components/UserDetails.jsx';
+import Shop from './components/Shop.jsx';
 import { useState, useEffect } from 'react';
-import './App.css';
+import NavHeader from './components/NavHeader';
 
 function App() {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(null); // null means not logged in
+    const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -46,7 +45,7 @@ function App() {
     return (
         <Router>
             {loading ? (
-                <div className="loading">Laai gebruiker...</div>
+                <div>Laai gebruiker...</div>
             ) : (
                 <InnerApp
                     isLoggedIn={isLoggedIn}
@@ -64,64 +63,20 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
     const role = user?.role || 'guest';
 
     return (
-        <>
-            <nav className="nav-header">
-                <NavLink to="/" className="nav-element" end>
-                    Waarde Berekening
-                </NavLink>
-
-                <NavLink to="/muntHoeveelhede" className="nav-element">
-                    Munt Hoeveelhede (onvoltooid)
-                </NavLink>
-
-                <NavLink to="/shop" className="nav-element">
-                    Winkel
-                </NavLink>
-
-                {role === 'admin' && (
-                    <NavLink to="/products" className="nav-element">
-                        Produkte
-                    </NavLink>
-                )}
-
-                {isLoggedIn ? (
-                    <NavLink to="/userDetails" className="nav-element">
-                        Gebruiker
-                    </NavLink>
-                ) : (
-                    <NavLink to="/login" className="nav-element">
-                        Meld aan
-                    </NavLink>
-                )}
-            </nav>
-
-            <div className="tab-content" key={location.pathname}>
+        <div>
+            <NavHeader role={role} isLoggedIn={isLoggedIn} />
+            <div key={location.pathname}>
                 <Routes>
                     <Route path="/" element={<SilverCalculator />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
-                    <Route
-                        path="/login"
-                        element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />}
-                    />
-                    <Route
-                        path="/userDetails"
-                        element={
-                            <UserDetails
-                                user={user}
-                                setUser={setUser}
-                                setIsLoggedIn={setIsLoggedIn}
-                            />
-                        }
-                    />
+                    <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />} />
+                    <Route path="/userDetails" element={<UserDetails user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="/shop" element={<Shop />} />
-                    <Route
-                        path="/products"
-                        element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />}
-                    />
+                    <Route path="/products" element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </div>
-        </>
+        </div>
     );
 }
 

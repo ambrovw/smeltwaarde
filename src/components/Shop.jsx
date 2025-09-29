@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
+import '../styles/components/Shop.css';
 
 export default function Shop() {
     const [products, setProducts] = useState([]);

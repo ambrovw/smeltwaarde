@@ -1,0 +1,54 @@
+/* Container styling */
+.container {
+    padding: 1rem;
+    background-color: var(--card-bg);
+    color: var(--fg);
+}
+
+/* Page title */
+.container h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Section header */
+.section-header {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 1rem 0 0.5rem;
+    color: var(--accent);
+}
+
+/* Product table */
+.product-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0.15rem;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+.product-table th,
+.product-table td {
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    background-color: var(--card-bg);
+}
+
+/* Image preview */
+.image-preview {
+    width: 80px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Highlighted row */
+.highlight-row {
+    background-color: var(--highlight-plus);
+    transition: background-color 0.3s ease;
+}

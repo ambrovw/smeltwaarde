@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
+import '../styles/components/ProductManager.css';
 
 export default function ProductManager() {
     const token = localStorage.getItem('token');

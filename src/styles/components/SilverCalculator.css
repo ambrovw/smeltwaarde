@@ -1,0 +1,242 @@
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    font-size: 1.4rem;
+}
+
+.header-text h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.price {
+    font-size: 1.1rem;
+    margin: 0.25rem 0 0.25rem 0;
+}
+
+.rateChange {
+    margin-left: 1rem;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.timestamp {
+    font-size: 0.75rem;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* ADJUSTMENT SECTION */
+.adjustment-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: -0.5rem;
+}
+
+.adjustment-label {
+    margin-right: 0.25rem;
+}
+
+.adjustment-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.adjustment-input {
+    width: 60px;
+    margin-right: 4px;
+}
+
+.adjustment-percent {
+    font-size: 0.9rem;
+    color: #f9f9f9;
+}
+
+.era-header {
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0.3rem 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.era-header:hover {
+    background-color: var(--highlight);
+}
+
+.coin-table {
+    width: 100%;
+    margin: 0.2rem;
+    font-size: 0.85rem;
+    border-collapse: separate;
+    border-spacing: 0.15rem;
+}
+
+.coin-table th {
+    font-size: 1rem;
+}
+
+.coin-table th,
+.coin-table td {
+    padding: 0.1rem 0.2rem;
+    text-align: center;
+    border: 1px solid var(--highlight-plus);
+    background-color: var(--card-bg);
+    border-radius: 6px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.quantity-control button {
+    background-color: var(--highlight);
+    color: #fff;
+    border: none;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.quantity-control button:hover {
+    background-color: var(--accent);
+}
+
+.quantity-input {
+    background-color: var(--highlight);
+    color: var(--fg);
+    width: 60px;
+    text-align: center;
+    padding: 0.2rem;
+    font-size: 0.85rem;
+}
+
+.highlight-row {
+    background-color: var(--highlight);
+}
+
+.highlight-cell {
+    font-weight: bold;
+}
+
+/* FLASH ANIMATION */
+.flash {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    will-change: transform, color;
+}
+
+@media (prefers-color-scheme: light) {
+    .rateChange.up,
+    .highlight-cell,
+    .totals-item span {
+        color: green;
+    }
+
+    .flash {
+        animation-name: flash-red-light;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .rateChange.up,
+    .highlight-cell,
+    .totals-item span {
+        color: lightgreen;
+    }
+
+    .flash {
+        animation-name: flash-red-dark;
+    }
+}
+
+.rateChange.down {
+    color: red;
+}
+
+@keyframes flash-red-light {
+    0% { color: red; transform: scale(1.07); }
+    25% { color: #e94f2d; transform: scale(1.04); }
+    50% { color: #c87f47; transform: scale(1.02); }
+    75% { color: #b29e68; transform: scale(1.01); }
+    100% { color: var(--fg, inherit); transform: scale(1); }
+}
+
+@keyframes flash-red-dark {
+    0% { color: red; transform: scale(1.07); }
+    25% { color: #ff6b4a; transform: scale(1.04); }
+    50% { color: #ff9e7a; transform: scale(1.02); }
+    75% { color: #ffd1aa; transform: scale(1.01); }
+    100% { color: var(--fg, inherit); transform: scale(1); }
+}
+
+/* TOTALS SECTION */
+.totals-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--card-bg);
+    border-top: 2px solid var(--accent);
+    font-size: 1.1rem;
+}
+
+.totals-item {
+    font-weight: 500;
+}
+
+.totals-item span {
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .header-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-text {
+        text-align: center;
+        align-items: center;
+    }
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-input {
+    -moz-appearance: textfield;
+}

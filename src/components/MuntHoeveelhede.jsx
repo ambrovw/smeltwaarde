@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { zarCoins, unionCoins, rsa1Coins, rsa2Coins } from '../muntHoeveelhedeData'
-import '../App.css'
+import { zarCoins, unionCoins, rsa1Coins, rsa2Coins } from '../muntHoeveelhedeData.js'
+import '../styles/components/MuntHoeveelhede.css';
 
 function MuntHoeveelhede() {
     const [collapsedEras, setCollapsedEras] = useState({
@@ -89,14 +89,14 @@ function MuntHoeveelhede() {
 
     return (
         <div className="container">
-            <h1>Munt Hoeveelhede</h1>
-            <p style={{ fontSize: '0.8rem', fontStyle: 'italic', color: '#b0b0b0', marginTop: '-0.5rem', textAlign: 'center' }}>
-                Bron:{' '}
+            <h1 className="page-title">Munt Hoeveelhede</h1>
+            <p className="source-note">
+                <span>Bron:</span>
                 <a
                     href="https://en.numista.com/catalogue/south-africa-1.html"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: '#b0b0b0', textDecoration: 'underline' }}
+                    className="source-link"
                 >
                     Numista, 2025
                 </a>
