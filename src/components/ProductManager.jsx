@@ -288,12 +288,12 @@ export default function ProductManager() {
                 </thead>
                 <tbody>
                 {products.map((product) => (
-                    <tr key={product._id} className={product.enabled ? 'highlight-row' : ''}>
+                    <tr key={product._id}>
                         <td>{product.name}</td>
                         <td>{product.category}</td>
                         <td>R{product.price.toFixed(2)}</td>
                         <td>{product.quantity}</td>
-                        <td className="highlight-cell">{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
+                        <td>{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
                         <td>
                             <button className="action-button save" onClick={() => handleEditClick(product)}>
                                 Wysig

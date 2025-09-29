@@ -35,6 +35,7 @@ function SilverCalculator() {
             [groupLabel]: !prev[groupLabel]
         }))
     }
+    const [hideColumns, setHideColumns] = useState(true);
 
     useEffect(() => {
         const parsed = parseFloat(adjustmentInput);
@@ -180,6 +181,14 @@ function SilverCalculator() {
                                 </button>
                                 <span className="adjustment-percent">%</span>
                             </div>
+
+                            <button
+                                className="action-button"
+                                onClick={() => setHideColumns(prev => !prev)}
+                            >
+                                {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
+                            </button>
+
                         </div>
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => (
@@ -202,11 +211,11 @@ function SilverCalculator() {
                                         <thead>
                                         <tr>
                                             <th>Munt</th>
-                                            <th>Era</th>
-                                            <th>Fynheid</th>
-                                            <th>Gewig (g)</th>
+                                            {!hideColumns && <th>Era</th>}
+                                            {!hideColumns && <th>Fynheid</th>}
+                                            {!hideColumns && <th>Gewig (g)</th>}
                                             <th>Hoeveelheid</th>
-                                            <th>Silver (g)</th>
+                                            {!hideColumns && <th>Silver (g)</th>}
                                             <th>Waarde (R)</th>
                                         </tr>
                                         </thead>
@@ -215,24 +224,19 @@ function SilverCalculator() {
                                             const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
                                             const fineSilverOunces = fineSilverGrams / 31.1035;
                                             const value = adjustedSilverPrice * fineSilverOunces;
+
                                             return (
-                                                <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'highlight-row' : ''}>
+                                                <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
                                                     <td>{coin.name}</td>
-                                                    <td>{coin.era}</td>
-                                                    <td>{coin.purity}</td>
-                                                    <td>{coin.weight}</td>
+                                                    {!hideColumns && <td>{coin.era}</td>}
+                                                    {!hideColumns && <td>{coin.purity}</td>}
+                                                    {!hideColumns && <td>{coin.weight}</td>}
                                                     <td>
                                                         <div className="quantity-control">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
-                                                                    handleQuantityChange(coin, Math.max(current - 1, 0));
-                                                                }}
-                                                            >
-                                                                -
-                                                            </button>
-
+                                                            <button type="button" onClick={() => {
+                                                                const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                handleQuantityChange(coin, Math.max(current - 1, 0));
+                                                            }}>-</button>
                                                             <input
                                                                 type="number"
                                                                 min="0"
@@ -243,20 +247,14 @@ function SilverCalculator() {
                                                                 }}
                                                                 className="quantity-input"
                                                             />
-
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
-                                                                    handleQuantityChange(coin, current + 1);
-                                                                }}
-                                                            >
-                                                                +
-                                                            </button>
+                                                            <button type="button" onClick={() => {
+                                                                const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                handleQuantityChange(coin, current + 1);
+                                                            }}>+</button>
                                                         </div>
                                                     </td>
-                                                    <td>{fineSilverGrams.toFixed(2)}</td>
-                                                    <td className={`value-cell ${coin.quantity !== 0 ? 'highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
+                                                    {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
+                                                    <td className={`value-cell ${coin.quantity !== 0 ? 'calc-highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
                                                         {value.toFixed(2)}
                                                     </td>
                                                 </tr>

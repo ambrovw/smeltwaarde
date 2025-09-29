@@ -142,11 +142,11 @@
     font-size: 0.85rem;
 }
 
-.highlight-row {
+.calc-highlight-row {
     background-color: var(--highlight);
 }
 
-.highlight-cell {
+.calc-highlight-cell {
     font-weight: bold;
 }
 
@@ -159,7 +159,7 @@
 
 @media (prefers-color-scheme: light) {
     .rateChange.up,
-    .highlight-cell,
+    .calc-highlight-cell,
     .totals-item span {
         color: green;
     }
@@ -171,7 +171,7 @@
 
 @media (prefers-color-scheme: dark) {
     .rateChange.up,
-    .highlight-cell,
+    .calc-highlight-cell,
     .totals-item span {
         color: lightgreen;
     }
