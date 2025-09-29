@@ -186,18 +186,18 @@
 }
 
 @keyframes flash-red-light {
-    0% { color: red; transform: scale(1.07); }
-    25% { color: #e94f2d; transform: scale(1.04); }
-    50% { color: #c87f47; transform: scale(1.02); }
-    75% { color: #b29e68; transform: scale(1.01); }
+    0%   { color: #ff3b3b; transform: scale(1.07); }
+    25%  { color: #d94a2f; transform: scale(1.04); }
+    50%  { color: #b85c3b; transform: scale(1.02); }
+    75%  { color: #9c6d47; transform: scale(1.01); }
     100% { color: var(--accent, inherit); transform: scale(1); }
 }
 
 @keyframes flash-red-dark {
-    0% { color: red; transform: scale(1.07); }
-    25% { color: #ff6b4a; transform: scale(1.04); }
-    50% { color: #ff9e7a; transform: scale(1.02); }
-    75% { color: #ffd1aa; transform: scale(1.01); }
+    0%   { color: #ff3b3b; transform: scale(1.07); }
+    25%  { color: #e14a2f; transform: scale(1.04); }
+    50%  { color: #c05c3b; transform: scale(1.02); }
+    75%  { color: #a06d47; transform: scale(1.01); }
     100% { color: var(--accent, inherit); transform: scale(1); }
 }
 
