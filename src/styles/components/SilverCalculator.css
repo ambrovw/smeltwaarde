@@ -73,7 +73,7 @@
 
 .adjustment-percent {
     font-size: 0.9rem;
-    color: var(--accent);
+    color: var(--fg);
 }
 
 .era-header {

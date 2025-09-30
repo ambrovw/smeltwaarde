@@ -23,7 +23,7 @@ export const coins = {
         { name: "2.5c", era: "1961–1964", purity: 0.5, weight: 1.414, quantity: 0 }
     ],
     "RSA 1965+": [
-        { name: "R1", era: "1965–1976", purity: 0.8, weight: 15, quantity: 0 },
+        { name: "R1 (1965-1976)", era: "1965–1976", purity: 0.8, weight: 15, quantity: 0 },
         { name: "R1 - Herdenkings Silver / Protea", era: "1965+", purity: 0.925, weight: 15, quantity: 0 },
         { name: "R2 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 },
         { name: "R5 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 }
