@@ -29,13 +29,15 @@ export default function Login({ setIsLoggedIn, setUser }) {
     };
 
     return (
-        <div>
-            <h2>Aanmelding</h2>
-            <GoogleLogin
-                onSuccess={handleLoginSuccess}
-                onError={() => alert('Google-aanmelding het misluk')}
-                ux_mode="popup"
-            />
+        <div className="scroll-wrapper">
+            <div className="container">
+                <h2>Aanmelding</h2>
+                <GoogleLogin
+                    onSuccess={handleLoginSuccess}
+                    onError={() => alert('Google-aanmelding het misluk')}
+                    ux_mode="popup"
+                />
+            </div>
         </div>
     );
 }
