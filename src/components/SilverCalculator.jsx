@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react'
+import useSilverPrice from '../hooks/useSilverPrice.js';
 import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
 
 function SilverCalculator() {
 
-    const [chgXag, setChgXag] = useState(null);
-    const [silverPrice, setSilverPrice] = useState(null)
+    const {
+        silverPrice,
+        randPerGram,
+        chgXag,
+        localTime,
+        flashPrice,
+        error,
+    } = useSilverPrice();
+
     const [adjustmentInput, setAdjustmentInput] = useState('0');
     const [adjustmentPercent, setAdjustmentPercent] = useState(0);
     const adjustedSilverPrice = silverPrice
         ? silverPrice * (1 + adjustmentPercent / 100)
         : null;
-    const [localTime, setLocalTime] = useState(null)
-    const [error, setError] = useState(null)
-    const [randPerGram, setRandPerGram] = useState(null)
-    const [flashPrice, setFlashPrice] = useState(false)
     const initializedGroups = Object.fromEntries(
         Object.entries(groupedCoins).map(([groupLabel, coins]) => [
             groupLabel,
@@ -43,49 +47,6 @@ function SilverCalculator() {
             setAdjustmentPercent(parsed);
         }
     }, [adjustmentInput]);
-
-
-    useEffect(() => {
-            async function fetchSilverPrice() {
-                try {
-                    const response = await fetch('https://data-asg.goldprice.org/dbXRates/ZAR')
-                    const data = await response.json()
-                    const item = data.items?.[0]
-
-                    if (item && item.xagPrice && item.chgXag && data.date) {
-                        setFlashPrice(true)
-                        setTimeout(() => setFlashPrice(false), 500) // Flash lasts 500ms
-                        setSilverPrice(item.xagPrice)
-                        setRandPerGram(item.xagPrice / 31.1035)
-                        setChgXag(item.chgXag);
-
-                        const utcTimestamp = data.tsj
-                        const utcDate = new Date(utcTimestamp)
-
-                        const saDate = utcDate.toLocaleString('af-ZA', {
-                            timeZone: 'Africa/Johannesburg',
-                            weekday: 'short',
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit',
-                        })
-                        setLocalTime(saDate)
-                        setError(null)
-                    } else {
-                        setError('Price data unavailable')
-                    }
-                } catch (err) {
-                    setError('Failed to fetch silver price')
-                }
-            }
-
-            fetchSilverPrice()
-            const interval = setInterval(fetchSilverPrice, 30000)
-            return () => clearInterval(interval)
-        }, [])
 
     const handleQuantityChange = (targetCoin, newQty) => {
         const parsedQty = newQty === '' ? '' : Math.max(Number(newQty), 0);
