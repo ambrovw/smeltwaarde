@@ -19,7 +19,6 @@ html, body {
 
 .container {
     width: 85%;
-    min-width: 800px;
     margin-top: 6rem;
     padding: 1rem 3rem;
     border-radius: 8px;
