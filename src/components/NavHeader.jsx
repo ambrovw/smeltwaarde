@@ -9,7 +9,7 @@ function NavHeader({ role, isLoggedIn }) {
             </NavLink>
 
             <NavLink to="/muntHoeveelhede" className="nav-element">
-                Munt Hoeveelhede (onvoltooid)
+                Munt Hoeveelhede
             </NavLink>
 
             <NavLink to="/shop" className="nav-element">

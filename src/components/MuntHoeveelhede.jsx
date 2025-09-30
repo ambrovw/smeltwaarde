@@ -123,13 +123,6 @@ function MuntHoeveelhede() {
                     </h2>
                     {!collapsedEras.RSA1 && renderMatrixTable(rsa1Coins)}
                 </div>
-
-                <div className="era-section">
-                    <h2 className="era-header" onClick={() => toggleEra('RSA2')}>
-                        {collapsedEras.RSA2 ? '▸' : '▾'} RSA Tweede Desimale Reeks 1965–1990
-                    </h2>
-                    {!collapsedEras.RSA2 && renderMatrixTable(rsa2Coins)}
-                </div>
             </div>
         </div>
     )
