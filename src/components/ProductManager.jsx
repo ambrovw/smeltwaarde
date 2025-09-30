@@ -71,7 +71,7 @@ export default function ProductManager() {
             name: product.name,
             category: product.category,
             description: product.description,
-            price: product.price.toString(),
+            priceOffsetPercent: product.priceOffsetPercent.toString(),
             quantity: product.quantity.toString(),
             images: Array.isArray(product.images) ? product.images.filter(img => img.trim() !== '') : [],
             enabled: product.enabled
@@ -144,11 +144,11 @@ export default function ProductManager() {
             ...form,
             priceOffsetPercent: parseFloat(form.priceOffsetPercent),
             quantity: parseInt(form.quantity),
+            purity: parseFloat(form.purity),
+            weight: parseFloat(form.weight),
             images: Array.isArray(form.images)
                 ? form.images.filter(img => img.trim() !== '')
-                : [],
-            purity: form.purity,
-            weight: form.weight
+                : []
         };
 
         const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {

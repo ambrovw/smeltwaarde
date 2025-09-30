@@ -107,7 +107,7 @@ function ProductFormModal({
                 </div>
 
                 <div className="form-row">
-                    <label htmlFor="priceOffsetPercent">Prys Afwyking (%)</label>
+                    <label htmlFor="priceOffsetPercent">Premie (%)</label>
                     <input
                         id="priceOffsetPercent"
                         name="priceOffsetPercent"
@@ -121,6 +121,30 @@ function ProductFormModal({
                 <div className="form-row">
                     <label htmlFor="quantity">Hoeveelheid</label>
                     <input id="quantity" name="quantity" type="number" value={form.quantity} onChange={handleChange} />
+                </div>
+
+                <div className="form-row">
+                    <label htmlFor="purity">Silwergehalte</label>
+                    <input
+                        id="purity"
+                        name="purity"
+                        type="number"
+                        step="0.01"
+                        value={form.purity}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="form-row">
+                    <label htmlFor="weight">Gewig (g)</label>
+                    <input
+                        id="weight"
+                        name="weight"
+                        type="number"
+                        step="0.01"
+                        value={form.weight}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="form-row">

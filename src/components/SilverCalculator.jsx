@@ -114,7 +114,7 @@ function SilverCalculator() {
                                 className="adjustment-label"
                                 title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
                             >
-                                💡 Afslag/Premie:
+                                💡 Premie:
                             </label>
                             <div className="quantity-control">
                                 <button
