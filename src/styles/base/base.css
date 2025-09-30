@@ -57,9 +57,8 @@ h1 {
     }
 
     html, body {
-        width: 100vw;
+        width: auto;
         font-family: 'Inter', system-ui, sans-serif;
-        overflow: auto;
         display: flex;
         flex-direction: column;
     }
@@ -67,6 +66,7 @@ h1 {
     .scroll-wrapper {
         margin-top: 140px;
         width: 110vw;
+        min-width: 480px;
         flex: 1;
         overflow-y: auto;
         display: flex;
