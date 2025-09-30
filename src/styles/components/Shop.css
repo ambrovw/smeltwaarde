@@ -2,7 +2,6 @@
 .container {
     background-color: var(--card-bg);
     color: var(--fg);
-    min-width: 600px;
 }
 
 /* Page title */
