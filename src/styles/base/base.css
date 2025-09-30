@@ -6,10 +6,10 @@ html, body {
     overflow: auto;
     display: flex;
     flex-direction: column;
-    min-width: 800px;
 }
 
 .scroll-wrapper {
+    height: 100vh;
     flex: 1;
     overflow-y: auto;
     display: flex;
