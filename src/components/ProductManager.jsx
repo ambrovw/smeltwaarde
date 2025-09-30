@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ProductFormModal from './ProductFormModal';
 import '../styles/components/ProductManager.css';
+import {PhotoProvider, PhotoView} from "react-photo-view";
 
 export default function ProductManager() {
     const token = localStorage.getItem('token');
@@ -10,6 +11,7 @@ export default function ProductManager() {
         name: '',
         category: '',
         description: '',
+        heading: '',
         price: '',
         quantity: '',
         images: [],
@@ -57,6 +59,7 @@ export default function ProductManager() {
             name: '',
             category: '',
             description: '',
+            heading: '',
             price: '',
             quantity: '',
             images: [],
@@ -72,6 +75,7 @@ export default function ProductManager() {
             name: product.name,
             category: product.category,
             description: product.description,
+            heading: product.heading,
             priceOffsetPercent: product.priceOffsetPercent.toString(),
             quantity: product.quantity.toString(),
             images: Array.isArray(product.images) ? product.images.filter(img => img.trim() !== '') : [],
@@ -88,6 +92,7 @@ export default function ProductManager() {
             images: Array.isArray(form.images)
                 ? form.images.filter(s => s.trim() !== '')
                 : [],
+            heading: form.heading,
             purity: form.purity,
             weight: form.weight
         };
@@ -130,6 +135,7 @@ export default function ProductManager() {
             name: '',
             category: '',
             description: '',
+            heading: '',
             priceOffsetPercent: '',
             quantity: '',
             images: [],
@@ -143,6 +149,7 @@ export default function ProductManager() {
     const handleUpdate = async () => {
         const payload = {
             ...form,
+            heading: form.heading,
             priceOffsetPercent: parseFloat(form.priceOffsetPercent),
             quantity: parseInt(form.quantity),
             purity: parseFloat(form.purity),
@@ -231,6 +238,7 @@ export default function ProductManager() {
                 <table className="product-table">
                     <thead>
                     <tr>
+                        <th>Fotos</th>
                         <th>Naam</th>
                         <th>Kategorie</th>
                         <th>Prys Afwyking</th>
@@ -242,6 +250,21 @@ export default function ProductManager() {
                     <tbody>
                     {products.map((product) => (
                         <tr key={product._id}>
+                            <td>
+                                {product.images?.[0] ? (
+                                    <PhotoProvider>
+                                        <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
+                                            <img
+                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
+                                                alt={`${product.name} preview`}
+                                                style={{ width: '80px', height: 'auto', cursor: 'zoom-in' }}
+                                            />
+                                        </PhotoView>
+                                    </PhotoProvider>
+                                ) : (
+                                    <span style={{ color: '#aaa' }}>Geen foto</span>
+                                )}
+                            </td>
                             <td>{product.name}</td>
                             <td>{product.category}</td>
                             <td>
@@ -252,12 +275,11 @@ export default function ProductManager() {
                             <td>{product.quantity}</td>
                             <td>{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
                             <td>
-                                <button className="action-button save" onClick={() => handleEditClick(product)}>Wysig
-                                </button>
+                                <button className="action-button save" onClick={() => handleEditClick(product)}>Wysig</button>
                                 <button
                                     className="action-button delete"
                                     onClick={() => deleteProduct(product._id)}
-                                    style={{marginLeft: '0.5rem'}}
+                                    style={{ marginLeft: '0.5rem' }}
                                 >
                                     Verwyder
                                 </button>

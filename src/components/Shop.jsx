@@ -27,9 +27,8 @@ export default function Shop() {
                     <table className="product-table">
                         <thead>
                         <tr>
-                            <th>Foto</th>
-                            <th>Naam</th>
-                            <th>Kategorie</th>
+                            <th>Fotos</th>
+                            <th>Opskrif</th>
                             <th>Premie</th>
                             <th>Prys</th>
                             <th>Beskrywing</th>
@@ -59,8 +58,7 @@ export default function Shop() {
                                             ))}
                                         </PhotoProvider>
                                     </td>
-                                    <td>{product.name}</td>
-                                    <td>{product.category}</td>
+                                    <td>{product.heading}</td>
                                     <td>
                                         {product.priceOffsetPercent !== undefined
                                             ? `${product.priceOffsetPercent > 0 ? '+' : ''}${product.priceOffsetPercent}%`
@@ -77,7 +75,13 @@ export default function Shop() {
                                             : 'Laai...'}
                                     </td>
 
-                                    <td>{product.description}</td>
+                                    <td>{product.description.split('\n').map((line, index) => (
+                                            <span key={index}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        ))}
+                                    </td>
                                 </tr>
                             );
                         })}

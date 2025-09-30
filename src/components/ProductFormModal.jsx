@@ -26,7 +26,7 @@ function ProductFormModal({
     );
 
     useEffect(() => {
-        if (editingProduct) {
+        if (editingProduct && showModal) {
             const coinKey = `${editingProduct.category}|${editingProduct.name}`;
             const selected = coinOptions.find(opt => opt.value === coinKey);
 
@@ -38,10 +38,11 @@ function ProductFormModal({
                 priceOffsetPercent: editingProduct.priceOffsetPercent?.toString() || '0',
                 quantity: editingProduct.quantity?.toString() || '1',
                 description: editingProduct.description || '',
+                heading: editingProduct.heading || '',
                 images: editingProduct.images || [],
                 enabled: editingProduct.enabled ?? true
             });
-        } else {
+        } else if (!editingProduct && showModal) {
             setForm({
                 name: '',
                 category: '',
@@ -50,11 +51,12 @@ function ProductFormModal({
                 priceOffsetPercent: '0',
                 quantity: '1',
                 description: '',
+                heading: '',
                 images: [],
                 enabled: true
             });
         }
-    }, [editingProduct, coinOptions]);
+    }, [editingProduct, showModal]); // ✅ updated dependency array
 
     if (!showModal) return null;
 
@@ -99,7 +101,7 @@ function ProductFormModal({
         <div className="scroll-wrapper">
 
             <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                <div className="modal-content form-section add-product-form" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-content form-section add-product-form container" onClick={(e) => e.stopPropagation()}>
                     <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
 
                     <div className="form-row">
@@ -138,6 +140,16 @@ function ProductFormModal({
                     <div className="form-row">
                         <label htmlFor="category">Kategorie</label>
                         <input id="category" name="category" value={form.category} onChange={handleChange}/>
+                    </div>
+
+                    <div className="form-row">
+                        <label htmlFor="heading">Opskrif</label>
+                        <input
+                            id="heading"
+                            name="heading"
+                            value={form.heading}
+                            onChange={handleChange}
+                        />
                     </div>
 
                     <div className="form-row">
