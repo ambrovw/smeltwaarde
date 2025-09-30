@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import { coins as groupedCoins } from '../coinData';
 
 function ProductFormModal({
                               form,
@@ -15,6 +16,14 @@ function ProductFormModal({
                           }) {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
+    const coinOptions = Object.entries(groupedCoins).flatMap(([groupLabel, coinList]) =>
+        coinList.map((coin) => ({
+            label: `${coin.era} – ${coin.name}`,
+            value: `${coin.era}|${coin.name}`,
+            purity: coin.purity,
+            weight: coin.weight
+        }))
+    );
 
     if (!showModal) return null;
 
@@ -61,6 +70,33 @@ function ProductFormModal({
                 <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
 
                 <div className="form-row">
+                    <label htmlFor="coinSelect">Kies Munt</label>
+                    <select
+                        id="coinSelect"
+                        onChange={(e) => {
+                            const [era, name] = e.target.value.split('|');
+                            const selected = coinOptions.find(opt => opt.value === e.target.value);
+                            if (selected) {
+                                setForm(prev => ({
+                                    ...prev,
+                                    name,
+                                    category: era,
+                                    purity: selected.purity,
+                                    weight: selected.weight
+                                }));
+                            }
+                        }}
+                    >
+                        <option value="">— Kies 'n munt —</option>
+                        {coinOptions.map((opt, index) => (
+                            <option key={index} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-row">
                     <label htmlFor="name">Naam</label>
                     <input id="name" name="name" value={form.name} onChange={handleChange} />
                 </div>
@@ -71,8 +107,15 @@ function ProductFormModal({
                 </div>
 
                 <div className="form-row">
-                    <label htmlFor="price">Prys</label>
-                    <input id="price" name="price" type="number" step="0.01" value={form.price} onChange={handleChange} />
+                    <label htmlFor="priceOffsetPercent">Prys Afwyking (%)</label>
+                    <input
+                        id="priceOffsetPercent"
+                        name="priceOffsetPercent"
+                        type="number"
+                        step="0.01"
+                        value={form.priceOffsetPercent}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="form-row">

@@ -12,7 +12,9 @@ export default function ProductManager() {
         price: '',
         quantity: '',
         images: [],
-        enabled: true
+        enabled: true,
+        purity: '',
+        weight: ''
     });
     const [editingProduct, setEditingProduct] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -80,11 +82,13 @@ export default function ProductManager() {
     const handleSubmit = async () => {
         const payload = {
             ...form,
-            price: parseFloat(form.price).toFixed(2),
+            priceOffsetPercent: parseFloat(form.priceOffsetPercent),
             quantity: parseInt(form.quantity),
             images: Array.isArray(form.images)
                 ? form.images.filter(s => s.trim() !== '')
-                : []
+                : [],
+            purity: form.purity,
+            weight: form.weight
         };
 
         const res = await fetch('https://kajuit.smeltwaarde.co.za/api/products/create', {
@@ -125,7 +129,7 @@ export default function ProductManager() {
             name: '',
             category: '',
             description: '',
-            price: '',
+            priceOffsetPercent: '',
             quantity: '',
             images: [],
             enabled: true
@@ -138,11 +142,13 @@ export default function ProductManager() {
     const handleUpdate = async () => {
         const payload = {
             ...form,
-            price: parseFloat(form.price).toFixed(2),
+            priceOffsetPercent: parseFloat(form.priceOffsetPercent),
             quantity: parseInt(form.quantity),
             images: Array.isArray(form.images)
                 ? form.images.filter(img => img.trim() !== '')
-                : []
+                : [],
+            purity: form.purity,
+            weight: form.weight
         };
 
         const res = await fetch(`https://kajuit.smeltwaarde.co.za/api/products/${editingProduct._id}`, {
@@ -224,7 +230,7 @@ export default function ProductManager() {
                 <tr>
                     <th>Naam</th>
                     <th>Kategorie</th>
-                    <th>Prys</th>
+                    <th>Prys Afwyking</th>
                     <th>Hoeveelheid</th>
                     <th>Sigbaarheid</th>
                     <th>Beheer</th>
@@ -235,12 +241,22 @@ export default function ProductManager() {
                     <tr key={product._id}>
                         <td>{product.name}</td>
                         <td>{product.category}</td>
-                        <td>R{product.price.toFixed(2)}</td>
+                        <td>
+                            {product.priceOffsetPercent !== undefined
+                                ? `${product.priceOffsetPercent > 0 ? '+' : ''}${product.priceOffsetPercent}%`
+                                : '—'}
+                        </td>
                         <td>{product.quantity}</td>
                         <td>{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
                         <td>
                             <button className="action-button save" onClick={() => handleEditClick(product)}>Wysig</button>
-                            <button className="action-button delete" onClick={() => deleteProduct(product._id)} style={{ marginLeft: '0.5rem' }}>Verwyder</button>
+                            <button
+                                className="action-button delete"
+                                onClick={() => deleteProduct(product._id)}
+                                style={{ marginLeft: '0.5rem' }}
+                            >
+                                Verwyder
+                            </button>
                         </td>
                     </tr>
                 ))}
