@@ -89,156 +89,158 @@ function SilverCalculator() {
             }, 0)
 
         return (
-            <div className="container">
-                {error ? (
-                    <p className="error">{error}</p>
-                ) : silverPrice ? (
-                    <>
-                        <div className="header-row">
-                            <img src="/smeltwaarde_logo_transparent_bgfill.png" alt="Smeltwaarde Logo" className="logo" />
-                            <div className="header-text">
-                                <h1>Silver munt waarde</h1>
-                                <p className={`price ${flashPrice ? 'flash' : ''}`}>
-                                    R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
-                                    <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>
-                            {chgXag >= 0 ? '▲' : '▼'}R{Math.abs(chgXag).toFixed(2)}/ozt
-                        </span>
-                                </p>
-                                <p className="timestamp">{localTime}</p>
+            <div className="scroll-wrapper">
+                <div className="container">
+                    {error ? (
+                        <p className="error">{error}</p>
+                    ) : silverPrice ? (
+                        <>
+                            <div className="header-row">
+                                <img src="/smeltwaarde_logo_transparent_bgfill.png" alt="Smeltwaarde Logo" className="logo" />
+                                <div className="header-text">
+                                    <h1>Silver munt waarde</h1>
+                                    <p className={`price ${flashPrice ? 'flash' : ''}`}>
+                                        R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
+                                        <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>
+                                {chgXag >= 0 ? '▲' : '▼'}R{Math.abs(chgXag).toFixed(2)}/ozt
+                            </span>
+                                    </p>
+                                    <p className="timestamp">{localTime}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="adjustment-row">
-                            <label
-                                htmlFor="adjustment"
-                                className="adjustment-label"
-                                title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
-                            >
-                                💡 Premie:
-                            </label>
-                            <div className="quantity-control">
-                                <button
-                                    type="button"
-                                    onClick={() => setAdjustmentInput(prev => Math.max(Number(prev) - 0.5, -100))}
+                            <div className="adjustment-row">
+                                <label
+                                    htmlFor="adjustment"
+                                    className="adjustment-label"
+                                    title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
                                 >
-                                    -
-                                </button>
-                                <input
-                                    id="adjustment"
-                                    type="number"
-                                    step="0.5"
-                                    value={adjustmentInput}
-                                    onChange={(e) => {
-                                        const val = e.target.value;
-                                        setAdjustmentInput(val === '' ? '' : Number(val));
-                                    }}
-                                    className="quantity-input"
-                                />
+                                    💡 Premie:
+                                </label>
+                                <div className="quantity-control">
+                                    <button
+                                        type="button"
+                                        onClick={() => setAdjustmentInput(prev => Math.max(Number(prev) - 0.5, -100))}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        id="adjustment"
+                                        type="number"
+                                        step="0.5"
+                                        value={adjustmentInput}
+                                        onChange={(e) => {
+                                            const val = e.target.value;
+                                            setAdjustmentInput(val === '' ? '' : Number(val));
+                                        }}
+                                        className="quantity-input"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setAdjustmentInput(prev => Math.min(Number(prev) + 0.5, 100))}
+                                    >
+                                        +
+                                    </button>
+                                    <span className="adjustment-percent">%</span>
+                                </div>
+
                                 <button
-                                    type="button"
-                                    onClick={() => setAdjustmentInput(prev => Math.min(Number(prev) + 0.5, 100))}
+                                    className="action-button"
+                                    onClick={() => setHideColumns(prev => !prev)}
                                 >
-                                    +
+                                    {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
                                 </button>
-                                <span className="adjustment-percent">%</span>
+
                             </div>
 
-                            <button
-                                className="action-button"
-                                onClick={() => setHideColumns(prev => !prev)}
-                            >
-                                {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
-                            </button>
+                            {Object.entries(coinList).map(([groupLabel, coins]) => (
+                                <div key={groupLabel}>
+                                    <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
+                                        {collapsedEras[groupLabel] ? '▸' : '▾'} {groupLabel}
+                                    </h2>
 
-                        </div>
+                                    {!collapsedEras[groupLabel] && (
+                                        <table className="coin-table">
+                                            <colgroup>
+                                                <col className="col-name" />
+                                                <col className="col-era" />
+                                                <col className="col-purity" />
+                                                <col className="col-weight" />
+                                                <col className="col-quantity" />
+                                                <col className="col-silver" />
+                                                <col className="col-value" />
+                                            </colgroup>
+                                            <thead>
+                                            <tr>
+                                                <th>Munt</th>
+                                                {!hideColumns && <th>Era</th>}
+                                                {!hideColumns && <th>Fynheid</th>}
+                                                {!hideColumns && <th>Gewig (g)</th>}
+                                                {!hideColumns && <th>Silver (g)</th>}
+                                                <th>Hoeveelheid</th>
+                                                <th>Waarde (R)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {coins.map((coin, index) => {
+                                                const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
+                                                const fineSilverOunces = fineSilverGrams / 31.1035;
+                                                const value = adjustedSilverPrice * fineSilverOunces;
 
-                        {Object.entries(coinList).map(([groupLabel, coins]) => (
-                            <div key={groupLabel}>
-                                <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
-                                    {collapsedEras[groupLabel] ? '▸' : '▾'} {groupLabel}
-                                </h2>
+                                                return (
+                                                    <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
+                                                        <td>{coin.name}</td>
+                                                        {!hideColumns && <td>{coin.era}</td>}
+                                                        {!hideColumns && <td>{coin.purity}</td>}
+                                                        {!hideColumns && <td>{coin.weight}</td>}
+                                                        {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
+                                                        <td>
+                                                            <div className="quantity-control">
+                                                                <button type="button" onClick={() => {
+                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                    handleQuantityChange(coin, Math.max(current - 1, 0));
+                                                                }}>-</button>
+                                                                <input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    value={coin.quantity}
+                                                                    onChange={(e) => {
+                                                                        const val = e.target.value;
+                                                                        handleQuantityChange(coin, val === '' ? '' : Number(val));
+                                                                    }}
+                                                                    className="quantity-input"
+                                                                />
+                                                                <button type="button" onClick={() => {
+                                                                    const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
+                                                                    handleQuantityChange(coin, current + 1);
+                                                                }}>+</button>
+                                                            </div>
+                                                        </td>
+                                                        <td className={`value-cell ${coin.quantity !== 0 ? 'calc-highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
+                                                            {value.toFixed(2)}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                            </tbody>
+                                        </table>
+                                    )}
+                                </div>
+                            ))}
 
-                                {!collapsedEras[groupLabel] && (
-                                    <table className="coin-table">
-                                        <colgroup>
-                                            <col className="col-name" />
-                                            <col className="col-era" />
-                                            <col className="col-purity" />
-                                            <col className="col-weight" />
-                                            <col className="col-quantity" />
-                                            <col className="col-silver" />
-                                            <col className="col-value" />
-                                        </colgroup>
-                                        <thead>
-                                        <tr>
-                                            <th>Munt</th>
-                                            {!hideColumns && <th>Era</th>}
-                                            {!hideColumns && <th>Fynheid</th>}
-                                            {!hideColumns && <th>Gewig (g)</th>}
-                                            {!hideColumns && <th>Silver (g)</th>}
-                                            <th>Hoeveelheid</th>
-                                            <th>Waarde (R)</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {coins.map((coin, index) => {
-                                            const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
-                                            const fineSilverOunces = fineSilverGrams / 31.1035;
-                                            const value = adjustedSilverPrice * fineSilverOunces;
-
-                                            return (
-                                                <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
-                                                    <td>{coin.name}</td>
-                                                    {!hideColumns && <td>{coin.era}</td>}
-                                                    {!hideColumns && <td>{coin.purity}</td>}
-                                                    {!hideColumns && <td>{coin.weight}</td>}
-                                                    {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
-                                                    <td>
-                                                        <div className="quantity-control">
-                                                            <button type="button" onClick={() => {
-                                                                const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
-                                                                handleQuantityChange(coin, Math.max(current - 1, 0));
-                                                            }}>-</button>
-                                                            <input
-                                                                type="number"
-                                                                min="0"
-                                                                value={coin.quantity}
-                                                                onChange={(e) => {
-                                                                    const val = e.target.value;
-                                                                    handleQuantityChange(coin, val === '' ? '' : Number(val));
-                                                                }}
-                                                                className="quantity-input"
-                                                            />
-                                                            <button type="button" onClick={() => {
-                                                                const current = coin.quantity === '' || coin.quantity == null ? 0 : Number(coin.quantity);
-                                                                handleQuantityChange(coin, current + 1);
-                                                            }}>+</button>
-                                                        </div>
-                                                    </td>
-                                                    <td className={`value-cell ${coin.quantity !== 0 ? 'calc-highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
-                                                        {value.toFixed(2)}
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                        </tbody>
-                                    </table>
-                                )}
+                            <div className="totals-row">
+                                <div className="totals-item">
+                                    🪙 Totale silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                                </div>
+                                <div className="totals-item">
+                                    💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
+                                </div>
                             </div>
-                        ))}
-
-                        <div className="totals-row">
-                            <div className="totals-item">
-                                🪙 Totale silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
-                            </div>
-                            <div className="totals-item">
-                                💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
-                            </div>
-                        </div>
-                    </>
-                ) : (
-                    <p>Loading...</p>
-                )}
+                        </>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </div>
             </div>
         )
 }

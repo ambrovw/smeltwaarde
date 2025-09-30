@@ -88,46 +88,48 @@ function MuntHoeveelhede() {
     }
 
     return (
-        <div className="container">
-            <h1 className="page-title">Munt Hoeveelhede</h1>
-            <p className="source-note">
-                <span>Bron:</span>
-                <a
-                    href="https://en.numista.com/catalogue/south-africa-1.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="source-link"
-                >
-                    Numista, 2025
-                </a>
-            </p>
+        <div className="scroll-wrapper">
+            <div className="container">
+                <h1 className="page-title">Munt Hoeveelhede</h1>
+                <p className="source-note">
+                    <span>Bron:</span>
+                    <a
+                        href="https://en.numista.com/catalogue/south-africa-1.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="source-link"
+                    >
+                        Numista, 2025
+                    </a>
+                </p>
 
-            <div className="era-section">
-                <h2 className="era-header" onClick={() => toggleEra('ZAR')}>
-                    {collapsedEras.ZAR ? '▸' : '▾'} ZAR 1892–1898
-                </h2>
-                {!collapsedEras.ZAR && renderMatrixTable(zarCoins)}
-            </div>
+                <div className="era-section">
+                    <h2 className="era-header" onClick={() => toggleEra('ZAR')}>
+                        {collapsedEras.ZAR ? '▸' : '▾'} ZAR 1892–1898
+                    </h2>
+                    {!collapsedEras.ZAR && renderMatrixTable(zarCoins)}
+                </div>
 
-            <div className="era-section">
-                <h2 className="era-header" onClick={() => toggleEra('Union')}>
-                    {collapsedEras.Union ? '▸' : '▾'} Suid Afrikaanse Unie (SAU) 1923–1960
-                </h2>
-                {!collapsedEras.Union && renderMatrixTable(unionCoins)}
-            </div>
+                <div className="era-section">
+                    <h2 className="era-header" onClick={() => toggleEra('Union')}>
+                        {collapsedEras.Union ? '▸' : '▾'} Suid Afrikaanse Unie (SAU) 1923–1960
+                    </h2>
+                    {!collapsedEras.Union && renderMatrixTable(unionCoins)}
+                </div>
 
-            <div className="era-section">
-                <h2 className="era-header" onClick={() => toggleEra('RSA1')}>
-                    {collapsedEras.RSA1 ? '▸' : '▾'} RSA Eerste Desimale Reeks 1961–1964
-                </h2>
-                {!collapsedEras.RSA1 && renderMatrixTable(rsa1Coins)}
-            </div>
+                <div className="era-section">
+                    <h2 className="era-header" onClick={() => toggleEra('RSA1')}>
+                        {collapsedEras.RSA1 ? '▸' : '▾'} RSA Eerste Desimale Reeks 1961–1964
+                    </h2>
+                    {!collapsedEras.RSA1 && renderMatrixTable(rsa1Coins)}
+                </div>
 
-            <div className="era-section">
-                <h2 className="era-header" onClick={() => toggleEra('RSA2')}>
-                    {collapsedEras.RSA2 ? '▸' : '▾'} RSA Tweede Desimale Reeks 1965–1990
-                </h2>
-                {!collapsedEras.RSA2 && renderMatrixTable(rsa2Coins)}
+                <div className="era-section">
+                    <h2 className="era-header" onClick={() => toggleEra('RSA2')}>
+                        {collapsedEras.RSA2 ? '▸' : '▾'} RSA Tweede Desimale Reeks 1965–1990
+                    </h2>
+                    {!collapsedEras.RSA2 && renderMatrixTable(rsa2Coins)}
+                </div>
             </div>
         </div>
     )

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import ProductFormModal from './ProductFormModal';
 import '../styles/components/ProductManager.css';
 
@@ -219,65 +220,75 @@ export default function ProductManager() {
     };
 
     return (
-        <div className="container">
-            <h1>Produkbestuur</h1>
-            <hr />
-            <button className="action-button save" onClick={handleNewClick}>Nuwe produk</button>
+        <div className="scroll-wrapper">
 
-            <h3 className="section-header">Bestaande Produkte</h3>
-            <table className="product-table">
-                <thead>
-                <tr>
-                    <th>Naam</th>
-                    <th>Kategorie</th>
-                    <th>Prys Afwyking</th>
-                    <th>Hoeveelheid</th>
-                    <th>Sigbaarheid</th>
-                    <th>Beheer</th>
-                </tr>
-                </thead>
-                <tbody>
-                {products.map((product) => (
-                    <tr key={product._id}>
-                        <td>{product.name}</td>
-                        <td>{product.category}</td>
-                        <td>
-                            {product.priceOffsetPercent !== undefined
-                                ? `${product.priceOffsetPercent > 0 ? '+' : ''}${product.priceOffsetPercent}%`
-                                : '—'}
-                        </td>
-                        <td>{product.quantity}</td>
-                        <td>{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
-                        <td>
-                            <button className="action-button save" onClick={() => handleEditClick(product)}>Wysig</button>
-                            <button
-                                className="action-button delete"
-                                onClick={() => deleteProduct(product._id)}
-                                style={{ marginLeft: '0.5rem' }}
-                            >
-                                Verwyder
-                            </button>
-                        </td>
+            <div className="container">
+                <h1>Produkbestuur</h1>
+                <hr/>
+                <button className="action-button save" onClick={handleNewClick}>Nuwe produk</button>
+
+                <h3 className="section-header">Bestaande Produkte</h3>
+                <table className="product-table">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Kategorie</th>
+                        <th>Prys Afwyking</th>
+                        <th>Hoeveelheid</th>
+                        <th>Sigbaarheid</th>
+                        <th>Beheer</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {products.map((product) => (
+                        <tr key={product._id}>
+                            <td>{product.name}</td>
+                            <td>{product.category}</td>
+                            <td>
+                                {product.priceOffsetPercent !== undefined
+                                    ? `${product.priceOffsetPercent > 0 ? '+' : ''}${product.priceOffsetPercent}%`
+                                    : '—'}
+                            </td>
+                            <td>{product.quantity}</td>
+                            <td>{product.enabled ? '✅ Sigbaar' : '🚫 Verskuil'}</td>
+                            <td>
+                                <button className="action-button save" onClick={() => handleEditClick(product)}>Wysig
+                                </button>
+                                <button
+                                    className="action-button delete"
+                                    onClick={() => deleteProduct(product._id)}
+                                    style={{marginLeft: '0.5rem'}}
+                                >
+                                    Verwyder
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
 
-            <ProductFormModal
-                form={form}
-                setForm={setForm}
-                editingProduct={editingProduct}
-                handleSubmit={handleSubmit}
-                handleUpdate={handleUpdate}
-                showModal={showModal}
-                setShowModal={setShowModal}
-                uploadedFiles={uploadedFiles}
-                setUploadedFiles={setUploadedFiles}
-                setSelectedImage={setSelectedImage}
-            />
+                {showModal &&
+                    ReactDOM.createPortal(
+                        <ProductFormModal
+                            form={form}
+                            setForm={setForm}
+                            editingProduct={editingProduct}
+                            handleSubmit={handleSubmit}
+                            handleUpdate={handleUpdate}
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            uploadedFiles={uploadedFiles}
+                            setUploadedFiles={setUploadedFiles}
+                            setSelectedImage={setSelectedImage}
+                        />,
+                        document.getElementById('modal-root')
+                    )
+                }
 
-            {showSuccessPopup && <div className="success-popup">✅ Produk gestoor!</div>}
-            {showRemovedPopup && <div className="success-popup">✅ Produk verwyder!</div>}
+                {showSuccessPopup && <div className="success-popup">✅ Produk gestoor!</div>}
+                {showRemovedPopup && <div className="success-popup">✅ Produk verwyder!</div>}
+            </div>
+
         </div>
     );
 }
