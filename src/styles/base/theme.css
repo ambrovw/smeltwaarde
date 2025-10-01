@@ -4,9 +4,10 @@
         --bg: #121212;
         --fg: #e0e0e0;
         --accent: #a88c4a;
-        --card-bg: #1e1e1e;
-        --highlight: #303030;
-        --highlight-plus: #505050;
+        --card-bg: #303030;
+        --container-bg: #202020;
+        --highlight: #4c4c4c;
+        --highlight-plus: #5e5e5e;
     }
 
     body {
@@ -15,7 +16,7 @@
     }
 
     .container {
-        background-color: var(--card-bg);
+        background-color: var(--container-bg);
     }
 
     h1 {
@@ -39,10 +40,11 @@
 /* LIGHT MODE */
 @media (prefers-color-scheme: light) {
     :root {
-        --bg: #d5c2af;
+        --bg: #e8d8cb;
         --fg: #5C4432;
         --accent: #916d51;
         --card-bg: #fff8f0;
+        --container-bg: #f3eadd;
         --highlight: #EADAC1;
         --highlight-plus: #E2C8A5;
     }
@@ -53,7 +55,7 @@
     }
 
     .container {
-        background-color: var(--bg);
+        background-color: var(--container-bg);
     }
 
     h1 {

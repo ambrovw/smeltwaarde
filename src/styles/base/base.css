@@ -18,9 +18,9 @@ html, body {
 .container {
     width: 100%;
     max-width: 680px;
-    margin-top: 6rem;
+    margin-top: 5rem;
     border-radius: 8px;
-    padding: 2rem 2rem;
+    padding: 0.0rem 2rem;
 }
 
 h1 {

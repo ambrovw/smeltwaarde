@@ -103,6 +103,8 @@ function MuntHoeveelhede() {
                     </a>
                 </p>
 
+                <hr />
+
                 <div className="era-section">
                     <h2 className="era-header" onClick={() => toggleEra('ZAR')}>
                         {collapsedEras.ZAR ? '▸' : '▾'} ZAR 1892–1898
