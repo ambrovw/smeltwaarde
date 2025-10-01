@@ -21,72 +21,53 @@ export default function Shop() {
             <div className="container">
                 <h1>Winkel</h1>
                 <hr />
-
                 <h3 className="section-header">Beskikbare Produkte</h3>
+
                 <PhotoProvider maskOpacity={0.85}>
-                    <table className="product-table">
-                        <thead>
-                        <tr>
-                            <th>Fotos</th>
-                            <th>Opskrif</th>
-                            <th>Premie</th>
-                            <th>Prys</th>
-                            <th>Beskrywing</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div className="product-grid">
                         {products.filter(product => product.enabled).map(product => {
                             const baseValue = product.purity * product.weight * (randPerGram || 0);
                             const adjustedPrice = baseValue * (1 + product.priceOffsetPercent / 100);
 
                             return (
-                                <tr key={product._id} className="highlight-row">
-                                    <td>
-                                        <PhotoProvider>
-                                            <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
-                                                <img
-                                                    src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
-                                                    alt={`${product.name} preview`}
-                                                    className="image-preview"
-                                                    style={{ cursor: 'zoom-in' }}
-                                                />
-                                            </PhotoView>
-                                            {product.images.slice(1).map((img, index) => (
-                                                <PhotoView key={index} src={`https://kajuit.smeltwaarde.co.za/uploads/${img}`}>
-                                                    <span style={{ display: 'none' }} />
-                                                </PhotoView>
-                                            ))}
-                                        </PhotoProvider>
-                                    </td>
-                                    <td>{product.heading}</td>
-                                    <td>
-                                        {product.priceOffsetPercent !== undefined
-                                            ? `${product.priceOffsetPercent > 0 ? '+' : ''}${product.priceOffsetPercent}%`
-                                            : '—'}
-                                    </td>
-                                    <td className={`price-columns ${flashPrice ? ' flash' : ''}`}>
-                                    {randPerGram !== null
-                                            ? `R${(
-                                                product.purity *
-                                                product.weight *
-                                                randPerGram *
-                                                (1 + product.priceOffsetPercent / 100)
-                                            ).toFixed(2)}`
-                                            : 'Laai...'}
-                                    </td>
+                                <div key={product._id} className="product-card">
+                                    <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
+                                        <img
+                                            src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
+                                            alt={`${product.name} preview`}
+                                            className="image-preview"
+                                            style={{ cursor: 'zoom-in' }}
+                                        />
+                                    </PhotoView>
 
-                                    <td>{product.description.split('\n').map((line, index) => (
-                                            <span key={index}>
-                                                {line}
-                                                <br />
-                                            </span>
-                                        ))}
-                                    </td>
-                                </tr>
+                                    <div className="product-info">
+                                        <div className="product-heading"><strong>{product.heading}</strong></div>
+
+                                        <div className={`price-columns ${flashPrice ? ' flash' : ''}`}>
+                                            {randPerGram !== null
+                                                ? `R${adjustedPrice.toFixed(2)}`
+                                                : 'Laai...'}
+                                        </div>
+
+                                        <div className="product-premie">
+                                            <span className="label">Premie:</span>{' '}
+                                            {product.priceOffsetPercent != null ? `${product.priceOffsetPercent}%` : '0%'}
+                                        </div>
+
+                                        <div className="product-description">
+                                            {product.description.split('\n').map((line, index) => (
+                                                <span key={index}>
+                                                  <em>{line}</em>
+                                                  <br />
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                </div>
                             );
                         })}
-                        </tbody>
-                    </table>
+                    </div>
                 </PhotoProvider>
             </div>
         </div>

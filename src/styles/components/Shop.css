@@ -38,15 +38,6 @@
     background-color: var(--card-bg);
 }
 
-/* Image preview */
-.image-preview {
-    width: 80px;
-    height: auto;
-    border-radius: 4px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Highlighted row */
 .highlight-row {
     background-color: var(--highlight-plus);
     transition: background-color 0.3s ease;
@@ -56,4 +47,46 @@
     color: var(--accent, inherit);
     font-weight: bold;
     font-size: 1rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.product-card {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.image-preview {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.product-info > div {
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+.product-heading {
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.product-premie .label {
+    font-weight: 500;
+    margin-right: 0.25rem;
+}
+
+.product-description {
+    font-size: 0.85rem;
+    font-style: italic;
 }
