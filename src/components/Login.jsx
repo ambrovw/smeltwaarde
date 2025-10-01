@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
 import '../styles/components/Login.css';
 
 export default function Login({ setIsLoggedIn, setUser }) {
@@ -28,6 +28,11 @@ export default function Login({ setIsLoggedIn, setUser }) {
             alert('Netwerkfout: kon nie verbind nie');
         }
     };
+
+    useGoogleOneTapLogin({
+        onSuccess: handleLoginSuccess,
+        onError: () => alert('Google-aanmelding het misluk'),
+    });
 
     return (
         <div className="scroll-wrapper">
