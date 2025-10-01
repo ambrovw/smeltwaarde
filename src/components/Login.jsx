@@ -37,7 +37,8 @@ export default function Login({ setIsLoggedIn, setUser }) {
     return (
         <div className="scroll-wrapper">
             <div className="container login-container">
-                <h2>Aanmelding</h2>
+                <h1>Aanmelding</h1>
+                <hr />
                 <GoogleLogin
                     onSuccess={handleLoginSuccess}
                     onError={() => alert('Google-aanmelding het misluk')}
