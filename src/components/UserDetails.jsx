@@ -51,36 +51,39 @@ export default function UserDetails({ user, setUser, setIsLoggedIn }) {
     };
 
     return (
-        <div className="container user-details">
-            <h2 style={{ color: 'white', textAlign: 'center' }}>Gebruiker Inligting</h2>
-            <form className="add-product-form" onSubmit={handleSave}>
-                <div className="form-row">
-                    <label>Naam:</label>
-                    <input name="name" value={formData.name} onChange={handleChange} />
-                </div>
-                <div className="form-row">
-                    <label>E-pos:</label>
-                    <input name="email" value={formData.email} onChange={handleChange} disabled />
-                </div>
-                <div className="form-row">
-                    <label>Rol:</label>
-                    <input name="role" value={formData.role} onChange={handleChange} disabled />
-                </div>
-                <div className="form-row">
-                    <label>Telefoon:</label>
-                    <input name="telephone" value={formData.telephone} onChange={handleChange} />
-                </div>
-                <div className="form-row">
-                    <label>Adres:</label>
-                    <textarea name="address" value={formData.address} onChange={handleChange} />
-                </div>
-                <div className="form-row" style={{ justifyContent: 'space-between' }}>
-                    <button type="submit">Stoor</button>
-                    <button type="button" onClick={handleLogout} style={{ backgroundColor: '#d9534f', color: 'white' }}>
-                        Teken uit
-                    </button>
-                </div>
-            </form>
+        <div className="scroll-wrapper">
+            <div className="container user-details">
+                <h1>Gebruiker Inligting</h1>
+                <hr />
+                <form onSubmit={handleSave}>
+                    <div className="form-row">
+                        <label>Naam:</label>
+                        <input name="name" value={formData.name} onChange={handleChange} />
+                    </div>
+                    <div className="form-row">
+                        <label>E-pos:</label>
+                        <input name="email" value={formData.email} onChange={handleChange} disabled />
+                    </div>
+                    <div className="form-row">
+                        <label>Rol:</label>
+                        <input name="role" value={formData.role} onChange={handleChange} disabled />
+                    </div>
+                    <div className="form-row">
+                        <label>Telefoon:</label>
+                        <input name="telephone" value={formData.telephone} onChange={handleChange} />
+                    </div>
+                    <div className="form-row">
+                        <label>Adres:</label>
+                        <textarea className="address" name="address" value={formData.address} onChange={handleChange} />
+                    </div>
+                    <div className="form-row" style={{ justifyContent: 'space-between' }}>
+                        <button className="action-button save" type="submit">Stoor</button>
+                        <button className="action-button delete" type="button" onClick={handleLogout} style={{ backgroundColor: '#d9534f', color: 'white' }}>
+                            Teken uit
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
