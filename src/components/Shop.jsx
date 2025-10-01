@@ -31,22 +31,29 @@ export default function Shop() {
 
                             return (
                                 <div key={product._id} className="product-card">
-                                    <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
-                                        <img
-                                            src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
-                                            alt={`${product.name} preview`}
-                                            className="image-preview"
-                                            style={{ cursor: 'zoom-in' }}
-                                        />
-                                    </PhotoView>
+                                    <PhotoProvider maskOpacity={0.85}>
+                                        <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
+                                            <img
+                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
+                                                alt={`${product.name} preview`}
+                                                className="image-preview"
+                                                style={{ cursor: 'zoom-in' }}
+                                            />
+                                        </PhotoView>
+
+                                        {/* Hidden additional images for preview */}
+                                        {product.images.slice(1).map((img, index) => (
+                                            <PhotoView key={index} src={`https://kajuit.smeltwaarde.co.za/uploads/${img}`}>
+                                                <span style={{ display: 'none' }} />
+                                            </PhotoView>
+                                        ))}
+                                    </PhotoProvider>
 
                                     <div className="product-info">
                                         <div className="product-heading"><strong>{product.heading}</strong></div>
 
                                         <div className={`price-columns ${flashPrice ? ' flash' : ''}`}>
-                                            {randPerGram !== null
-                                                ? `R${adjustedPrice.toFixed(2)}`
-                                                : 'Laai...'}
+                                            {randPerGram !== null ? `R${adjustedPrice.toFixed(2)}` : 'Laai...'}
                                         </div>
 
                                         <div className="product-premie">
@@ -63,7 +70,6 @@ export default function Shop() {
                                             ))}
                                         </div>
                                     </div>
-
                                 </div>
                             );
                         })}
