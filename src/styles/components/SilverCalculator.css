@@ -242,3 +242,8 @@
 .quantity-input {
     -moz-appearance: textfield;
 }
+
+.calculator-each {
+    font-size: 0.6rem;
+    font-style: italic;
+}

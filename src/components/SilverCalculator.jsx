@@ -29,7 +29,7 @@ function SilverCalculator() {
     const [collapsedEras, setCollapsedEras] = useState(() => {
         const initialState = {}
         Object.keys(coinList).forEach((groupLabel, index) => {
-            initialState[groupLabel] = index !== 0 // first group expanded, rest collapsed
+            initialState[groupLabel] = index !== 1 // second group expanded, rest collapsed
         })
         return initialState
     })
@@ -177,6 +177,7 @@ function SilverCalculator() {
                                                 {!hideColumns && <th>Fynheid</th>}
                                                 {!hideColumns && <th>Gewig (g)</th>}
                                                 {!hideColumns && <th>Silver (g)</th>}
+                                                {!hideColumns && <th>Elk</th>}
                                                 <th>Hoeveelheid</th>
                                                 <th>Waarde (R)</th>
                                             </tr>
@@ -186,6 +187,7 @@ function SilverCalculator() {
                                                 const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
                                                 const fineSilverOunces = fineSilverGrams / 31.1035;
                                                 const value = adjustedSilverPrice * fineSilverOunces;
+                                                const perItemValue = adjustedSilverPrice * (coin.purity * coin.weight / 31.1035);
 
                                                 return (
                                                     <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
@@ -194,6 +196,7 @@ function SilverCalculator() {
                                                         {!hideColumns && <td>{coin.purity}</td>}
                                                         {!hideColumns && <td>{coin.weight}</td>}
                                                         {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
+                                                        {!hideColumns && <td>R{perItemValue.toFixed(2)}</td>}
                                                         <td>
                                                             <div className="quantity-control">
                                                                 <button type="button" onClick={() => {
@@ -217,7 +220,7 @@ function SilverCalculator() {
                                                             </div>
                                                         </td>
                                                         <td className={`value-cell ${coin.quantity !== 0 ? 'calc-highlight-cell' : ''} ${flashPrice ? 'flash' : ''}`}>
-                                                            {value.toFixed(2)}
+                                                            R{value.toFixed(2)}
                                                         </td>
                                                     </tr>
                                                 );
