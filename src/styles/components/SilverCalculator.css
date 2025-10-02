@@ -90,6 +90,10 @@
     background-color: var(--highlight);
 }
 
+.calc-each {
+    color: var(--accent);
+}
+
 .coin-table {
     width: 100%;
     margin: 0.2rem;
