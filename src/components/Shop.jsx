@@ -50,7 +50,7 @@ export default function Shop() {
                                     </PhotoProvider>
 
                                     <div className="product-info">
-                                        <div className="product-heading"><strong>{product.heading}</strong></div>
+                                        <div className="product-heading">{product.heading}</div>
 
                                         <div className={`price-columns ${flashPrice ? ' flash' : ''}`}>
                                             {randPerGram !== null ? `R${adjustedPrice.toFixed(2)}` : 'Laai...'}
@@ -59,6 +59,11 @@ export default function Shop() {
                                         <div className="product-premie">
                                             <span className="label">Premie:</span>{' '}
                                             {product.priceOffsetPercent != null ? `${product.priceOffsetPercent}%` : '0%'}
+                                        </div>
+
+                                        <div className="product-purity">
+                                            <span className="label">Fynheid:</span>{' '}
+                                            {`${(product.purity * 100).toFixed(3).replace(/\.?0+$/, '')}%`}
                                         </div>
 
                                         <div className="product-description">
