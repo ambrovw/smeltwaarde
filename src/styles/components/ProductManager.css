@@ -125,6 +125,10 @@
     background-color: var(--highlight);
 }
 
+.image-preview {
+    max-height: 100px;
+}
+
 .image-preview-row {
     display: flex;
     flex-wrap: wrap;
