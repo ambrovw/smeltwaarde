@@ -187,5 +187,6 @@
 }
 
 .kies-dropdown {
-    background-color: var(--container-bg);
+    color: var(--fg);
+    background-color: var(--card-bg);
 }
