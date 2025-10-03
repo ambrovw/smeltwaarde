@@ -171,8 +171,8 @@ function ProductFormModal({
                                onChange={handleChange}/>
                     </div>
 
-                    <div className="form-row">
-                        <label htmlFor="purity">Silwergehalte</label>
+                    <div className="hidden">
+                        <label htmlFor="purity">Silwergehaalte</label>
                         <input
                             id="purity"
                             name="purity"
@@ -183,7 +183,7 @@ function ProductFormModal({
                         />
                     </div>
 
-                    <div className="form-row">
+                    <div className="hidden">
                         <label htmlFor="weight">Gewig (g)</label>
                         <input
                             id="weight"

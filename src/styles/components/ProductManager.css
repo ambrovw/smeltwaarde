@@ -89,6 +89,7 @@
 .form-row textarea {
     background-color: var(--card-bg);
     border: 1px solid var(--highlight);
+    color: var(--fg);
     border-radius: 4px;
     box-shadow: none;
     outline: none;
