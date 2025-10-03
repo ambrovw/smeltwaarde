@@ -32,16 +32,33 @@ export default function Shop() {
                             return (
                                 <div key={product._id} className="product-card">
                                     <PhotoProvider maskOpacity={0.85}>
-                                        <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
-                                            <img
-                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
-                                                alt={`${product.name} preview`}
-                                                className="shop-image-preview"
-                                                style={{ cursor: 'zoom-in' }}
-                                            />
-                                        </PhotoView>
+                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                            <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}>
+                                                <img
+                                                    src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
+                                                    alt={`${product.name} preview`}
+                                                    className="shop-image-preview"
+                                                    style={{ cursor: 'zoom-in', display: 'block' }}
+                                                />
+                                            </PhotoView>
 
-                                        {/* Hidden additional images for preview */}
+                                            {(product.priceOffsetPercent === 0 || product.priceOffsetPercent === null) && (
+                                                <img
+                                                    src="/teen-smelt.png"
+                                                    alt="Teen Smelt"
+                                                    className="shop-ribbon"
+                                                />
+                                            )}
+
+                                            {product.priceOffsetPercent < 0 && (
+                                                <img
+                                                    src="/onder-smelt.png"
+                                                    alt="Onder Smelt"
+                                                    className="shop-ribbon"
+                                                />
+                                            )}
+                                        </div>
+
                                         {product.images.slice(1).map((img, index) => (
                                             <PhotoView key={index} src={`https://kajuit.smeltwaarde.co.za/uploads/${img}`}>
                                                 <span style={{ display: 'none' }} />
