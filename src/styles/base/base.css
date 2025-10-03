@@ -45,6 +45,10 @@ h1 {
     font-weight: 500;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 600px) {
     .nav-header {
         flex-direction: column;
@@ -82,9 +86,5 @@ h1 {
         width: 100%;
         max-width: 480px;
         box-sizing: border-box;
-    }
-
-    .hidden {
-        display: none;
     }
 }
