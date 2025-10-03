@@ -8,6 +8,7 @@
         --container-bg: #202020;
         --highlight: #4c4c4c;
         --highlight-plus: #5e5e5e;
+        --pop-text: #d867f1;
     }
 
     body {
@@ -47,6 +48,7 @@
         --container-bg: #f3eadd;
         --highlight: #EADAC1;
         --highlight-plus: #E2C8A5;
+        --pop-text: #7b0d93;
     }
 
     body {

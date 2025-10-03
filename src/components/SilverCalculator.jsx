@@ -177,7 +177,7 @@ function SilverCalculator() {
                                                 {!hideColumns && <th>Fynheid</th>}
                                                 {!hideColumns && <th>Gewig (g)</th>}
                                                 {!hideColumns && <th>Silver (g)</th>}
-                                                {!hideColumns && <th className="calc-each">Elk</th>}
+                                                {!hideColumns && <th>Elk</th>}
                                                 <th>Hoeveelheid</th>
                                                 <th>Waarde (R)</th>
                                             </tr>
