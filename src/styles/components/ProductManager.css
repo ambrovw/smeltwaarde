@@ -190,3 +190,7 @@
     color: var(--fg);
     background-color: var(--card-bg);
 }
+
+.kies-dropdown {
+    background-color: var(--highlight);
+}
