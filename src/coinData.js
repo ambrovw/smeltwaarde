@@ -72,7 +72,7 @@ export const coins = {
         { name: "Half Tiekie (1.5p)", era: "1944-1946", purity: 0.5, weight: 1.414, quantity: 0 },
     ],
     "VSA <=1964 90%": [
-        { name: "Dollar", era: "<=1964", purity: 0.9, weight: 24.057, quantity: 0 },
+        { name: "Dollar", era: "<=1964", purity: 0.9, weight: 26.73, quantity: 0 },
         { name: "Half Dollar", era: "<=1964", purity: 0.9, weight: 12.5, quantity: 0 },
         { name: "Quater", era: "<=1964", purity: 0.9, weight: 6.25, quantity: 0 },
         { name: "Dime", era: "<=1964", purity: 0.9, weight: 2.5, quantity: 0 },
