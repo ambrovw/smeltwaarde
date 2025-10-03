@@ -107,7 +107,7 @@
 
 .kies-dropdown {
     color: var(--fg);
-    background-color: var(--highlight-plus);
+    background-color: var(--card-bg);
 }
 
 .kies-dropdown option:hover {

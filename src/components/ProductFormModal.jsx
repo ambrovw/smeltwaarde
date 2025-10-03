@@ -195,7 +195,7 @@ function ProductFormModal({
                         />
                     </div>
 
-                    <div className="form-row">
+                    <div className="form-row hidden">
                         <label htmlFor="images">Foto Skakels</label>
                         <input
                             id="images"
