@@ -87,7 +87,7 @@
 
 .form-row input,
 .form-row textarea {
-    background-color: var(--highlight-plus);
+    background-color: var(--card-bg);
     border: 1px solid var(--highlight);
     border-radius: 4px;
     box-shadow: none;
@@ -97,6 +97,7 @@
 
 .form-row input:focus,
 .form-row textarea:focus {
+    color: var(--fg);
     border-color: var(--accent);
 }
 

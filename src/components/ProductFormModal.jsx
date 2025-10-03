@@ -133,12 +133,12 @@ function ProductFormModal({
                         </select>
                     </div>
 
-                    <div className="form-row">
+                    <div className="form-row hidden">
                         <label htmlFor="name">Naam</label>
                         <input id="name" name="name" value={form.name} onChange={handleChange}/>
                     </div>
 
-                    <div className="form-row">
+                    <div className="form-row hidden">
                         <label htmlFor="category">Kategorie</label>
                         <input id="category" name="category" value={form.category} onChange={handleChange}/>
                     </div>

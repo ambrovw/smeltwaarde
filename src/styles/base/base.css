@@ -83,4 +83,8 @@ h1 {
         max-width: 480px;
         box-sizing: border-box;
     }
+
+    .hidden {
+        display: none;
+    }
 }
