@@ -60,7 +60,7 @@ h1 {
 
     html, body {
         width: 100%;
-        overflow-x: hidden; /* ✅ prevent horizontal scroll */
+        overflow-x: hidden;
         font-family: 'Inter', system-ui, sans-serif;
         display: flex;
         flex-direction: column;
@@ -68,13 +68,13 @@ h1 {
 
     .scroll-wrapper {
         margin-top: 100px;
-        width: 100%; /* ✅ no overflow */
+        width: 100%;
         flex: 1;
         overflow-y: auto;
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        padding: 0 1rem; /* ✅ optional breathing room */
+        padding: 0 1rem;
         box-sizing: border-box;
     }
 

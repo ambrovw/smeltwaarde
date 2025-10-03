@@ -88,7 +88,7 @@
 .form-row input,
 .form-row textarea {
     background-color: transparent;
-    color: var(--fg);
+    color: var(--highlight-plus);
     border: 1px solid var(--highlight);
     border-radius: 4px;
     box-shadow: none;
