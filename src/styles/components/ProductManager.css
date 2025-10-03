@@ -189,6 +189,6 @@
     background-color: var(--card-bg);
 }
 
-.kies-dropdown option{
+.kies-dropdown option:hover {
     background-color: var(--highlight);
 }
