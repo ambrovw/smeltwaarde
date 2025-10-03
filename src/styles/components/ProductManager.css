@@ -14,6 +14,7 @@
 .action-button.save {
     border-color: var(--accent);
     color: var(--accent);
+    max-width: 300px;
 }
 
 .action-button.save:hover {
@@ -23,6 +24,7 @@
 .action-button.delete {
     border-color: #f44336;
     color: #f44336;
+    max-width: 300px;
 }
 
 .action-button.delete:hover {
@@ -178,4 +180,12 @@
     10% { opacity: 1; transform: translateY(0); }
     90% { opacity: 1; }
     100% { opacity: 0; transform: translateY(20px); }
+}
+
+.beskrywing-text {
+    min-height: 200px;
+}
+
+.kies-dropdown {
+    background-color: var(--container-bg);
 }

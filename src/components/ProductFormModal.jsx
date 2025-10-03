@@ -108,6 +108,7 @@ function ProductFormModal({
                         <label htmlFor="coinSelect">Kies Munt</label>
                         <select
                             id="coinSelect"
+                            className="kies-dropdown"
                             value={`${form.category}|${form.name}`}
                             onChange={(e) => {
                                 const [era, name] = e.target.value.split('|');
@@ -279,7 +280,7 @@ function ProductFormModal({
 
                     <div className="form-row">
                         <label htmlFor="description">Beskrywing</label>
-                        <textarea id="description" name="description" value={form.description} onChange={handleChange}/>
+                        <textarea calssName="beskrywing-text" id="description" name="description" value={form.description} onChange={handleChange}/>
                     </div>
 
                     <div className="form-row checkbox-row">
