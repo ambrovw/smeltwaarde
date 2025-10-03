@@ -61,11 +61,11 @@
 }
 
 .modal-content {
-    background: white;
+    background: var(--card-bg);
     border-radius: 8px;
     padding: 2rem;
-    max-height: 90vh;         /* ✅ constrain height */
-    overflow-y: auto;         /* ✅ enable vertical scroll */
+    max-height: 90vh;
+    overflow-y: auto;
     width: 95%;
     max-width: 800px;
 }

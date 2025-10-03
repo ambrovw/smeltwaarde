@@ -79,8 +79,8 @@ h1 {
     }
 
     .container {
-        width: 100%; /* ✅ fits parent */
-        max-width: 480px; /* ✅ optional limit for readability */
+        width: 100%;
+        max-width: 480px;
         box-sizing: border-box;
     }
 }

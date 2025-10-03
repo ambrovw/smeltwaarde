@@ -101,7 +101,7 @@ function ProductFormModal({
         <div className="scroll-wrapper">
 
             <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                <div className="modal-content form-section add-product-form container" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-content form-section container" onClick={(e) => e.stopPropagation()}>
                     <h3 className="section-header">{editingProduct ? 'Wysig Produk' : 'Voeg Nuwe Produk By'}</h3>
 
                     <div className="form-row">
