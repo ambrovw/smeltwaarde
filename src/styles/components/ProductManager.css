@@ -87,8 +87,7 @@
 
 .form-row input,
 .form-row textarea {
-    background-color: transparent;
-    color: var(--highlight-plus);
+    background-color: var(--highlight-plus);
     border: 1px solid var(--highlight);
     border-radius: 4px;
     box-shadow: none;
@@ -99,6 +98,19 @@
 .form-row input:focus,
 .form-row textarea:focus {
     border-color: var(--accent);
+}
+
+.beskrywing-text {
+    min-height: 80px;
+}
+
+.kies-dropdown {
+    color: var(--fg);
+    background-color: var(--highlight-plus);
+}
+
+.kies-dropdown option:hover {
+    background-color: var(--highlight);
 }
 
 .checkbox-row {
@@ -173,17 +185,4 @@
     10% { opacity: 1; transform: translateY(0); }
     90% { opacity: 1; }
     100% { opacity: 0; transform: translateY(20px); }
-}
-
-.beskrywing-text {
-    min-height: 80px;
-}
-
-.kies-dropdown {
-    color: var(--fg);
-    background-color: var(--card-bg);
-}
-
-.kies-dropdown option:hover {
-    background-color: var(--highlight);
 }
