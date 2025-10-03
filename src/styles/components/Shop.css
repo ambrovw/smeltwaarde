@@ -85,3 +85,10 @@
 .product-purity {
     margin-bottom: 0.5rem;
 }
+
+.shop-image-preview {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}

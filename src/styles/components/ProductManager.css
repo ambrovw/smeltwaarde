@@ -125,7 +125,6 @@
     background-color: var(--highlight);
 }
 
-/* Image Previews */
 .image-preview-row {
     display: flex;
     flex-wrap: wrap;
@@ -135,14 +134,6 @@
 
 .image-preview-wrapper {
     position: relative;
-}
-
-.image-preview {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ccc;
 }
 
 .remove-image-icon {

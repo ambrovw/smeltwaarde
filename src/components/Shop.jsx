@@ -36,7 +36,7 @@ export default function Shop() {
                                             <img
                                                 src={`https://kajuit.smeltwaarde.co.za/uploads/${product.images[0]}`}
                                                 alt={`${product.name} preview`}
-                                                className="image-preview"
+                                                className="shop-image-preview"
                                                 style={{ cursor: 'zoom-in' }}
                                             />
                                         </PhotoView>
