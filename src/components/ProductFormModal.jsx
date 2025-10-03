@@ -280,7 +280,7 @@ function ProductFormModal({
 
                     <div className="form-row">
                         <label htmlFor="description">Beskrywing</label>
-                        <textarea calssName="beskrywing-text" id="description" name="description" value={form.description} onChange={handleChange}/>
+                        <textarea className="beskrywing-text" id="description" name="description" value={form.description} onChange={handleChange}/>
                     </div>
 
                     <div className="form-row checkbox-row">

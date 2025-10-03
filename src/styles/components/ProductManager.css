@@ -14,7 +14,7 @@
 .action-button.save {
     border-color: var(--accent);
     color: var(--accent);
-    max-width: 300px;
+    max-width: 240px;
 }
 
 .action-button.save:hover {
@@ -24,7 +24,7 @@
 .action-button.delete {
     border-color: #f44336;
     color: #f44336;
-    max-width: 300px;
+    max-width: 240px;
 }
 
 .action-button.delete:hover {
