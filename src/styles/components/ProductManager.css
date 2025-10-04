@@ -153,6 +153,7 @@
 }
 
 .image-preview-row {
+    max-height: 120px;
     flex: 1 1 300px;
     display: flex;
     flex-wrap: wrap;
