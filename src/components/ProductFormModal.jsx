@@ -222,7 +222,7 @@ function ProductFormModal({
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                             >
-                                <p>Sleep foto's hierheen of klik om te kies</p>
+                                <p>Sleep foto's hierheen.</p>
                                 <input
                                     id="photoUpload"
                                     type="file"
@@ -233,7 +233,7 @@ function ProductFormModal({
                                     ref={fileInputRef}
                                 />
                                 <button onClick={() => fileInputRef.current.click()} className="action-button">
-                                    Kies Foto's
+                                    Klik om te kies.
                                 </button>
                             </div>
                         </div>
