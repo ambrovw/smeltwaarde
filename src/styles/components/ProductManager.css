@@ -152,12 +152,15 @@
     border-radius: 4px;
 }
 
-.image-preview-row img {
-    max-height: 120px;
+.image-preview-row {
     flex: 1 1 300px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.image-preview-row img {
+    max-height: 120px;
 }
 
 .image-preview-wrapper {
