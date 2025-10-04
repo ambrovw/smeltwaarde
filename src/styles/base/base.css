@@ -4,6 +4,8 @@ html, body {
     overflow: auto;
     display: flex;
     flex-direction: column;
+    background-color: var(--bg);
+    color: var(--fg);
 }
 
 .scroll-wrapper {
@@ -29,38 +31,11 @@ h1 {
     text-align: center;
 }
 
-.nav-header {
-    position: fixed;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.nav-element {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-}
-
 .hidden {
     display: none;
 }
 
 @media (max-width: 600px) {
-    .nav-header {
-        flex-direction: column;
-        align-items: center;
-        padding: 0.1rem 0.1rem
-    }
-
-    .nav-element {
-        width: 100%;
-        text-align: center;
-        padding: 0.2rem 0.4rem
-    }
 
     html, body {
         width: 100%;

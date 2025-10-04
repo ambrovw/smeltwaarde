@@ -23,19 +23,6 @@
     h1 {
         color: #fff;
     }
-
-    .nav-header {
-        background: linear-gradient(to right, #1e1e1e, #2a2a2a);
-    }
-
-    .nav-element {
-        color: var(--accent);
-    }
-
-    .nav-element:hover {
-        background-color: var(--highlight);
-        color: #fff;
-    }
 }
 
 /* LIGHT MODE */
@@ -49,11 +36,6 @@
         --highlight: #EADAC1;
         --highlight-plus: #E2C8A5;
         --pop-text: #7b0d93;
-    }
-
-    body {
-        background-color: var(--bg);
-        color: var(--fg);
     }
 
     .container {
