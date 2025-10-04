@@ -213,56 +213,58 @@ function ProductFormModal({
                         />
                     </div>
 
-                    <div className="form-row">
-                        <label htmlFor="photoUpload">Fotos</label>
-                        <div
-                            className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
-                            onDragOver={handleDragOver}
-                            onDragLeave={handleDragLeave}
-                            onDrop={handleDrop}
-                        >
-                            <p>Sleep foto's hierheen of klik om te kies</p>
-                            <input
-                                id="photoUpload"
-                                type="file"
-                                accept="image/*"
-                                multiple
-                                onChange={handleFileUpload}
-                                style={{display: 'none'}}
-                                ref={fileInputRef}
-                            />
-                            <button onClick={() => fileInputRef.current.click()} className="action-button">
-                                Kies Foto's
-                            </button>
+                    <div className="photo-row-wrapper">
+                        <div className="form-row">
+                            <label htmlFor="photoUpload">Fotos</label>
+                            <div
+                                className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
+                                <p>Sleep foto's hierheen of klik om te kies</p>
+                                <input
+                                    id="photoUpload"
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleFileUpload}
+                                    style={{display: 'none'}}
+                                    ref={fileInputRef}
+                                />
+                                <button onClick={() => fileInputRef.current.click()} className="action-button">
+                                    Kies Foto's
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    {Array.isArray(form.images) && form.images.length > 0 && (
-                        <div className="image-preview-row">
-                            <PhotoProvider>
-                                {form.images.map((filename, index) => (
-                                    filename.trim() !== '' && (
-                                        <div key={index} className="image-preview-wrapper">
-                                            <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}>
-                                                <img
-                                                    src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
-                                                    alt={`Bestaande Foto ${index + 1}`}
-                                                    className="image-preview"
-                                                    style={{cursor: 'zoom-in'}}
-                                                />
-                                            </PhotoView>
-                                            <button
-                                                className="remove-image-icon"
-                                                onClick={() => handleRemoveImage(index)}
-                                            >
-                                                &times;
-                                            </button>
-                                        </div>
-                                    )
-                                ))}
-                            </PhotoProvider>
-                        </div>
-                    )}
+                        {Array.isArray(form.images) && form.images.length > 0 && (
+                            <div className="image-preview-row">
+                                <PhotoProvider>
+                                    {form.images.map((filename, index) => (
+                                        filename.trim() !== '' && (
+                                            <div key={index} className="image-preview-wrapper">
+                                                <PhotoView src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}>
+                                                    <img
+                                                        src={`https://kajuit.smeltwaarde.co.za/uploads/${filename}`}
+                                                        alt={`Bestaande Foto ${index + 1}`}
+                                                        className="image-preview"
+                                                        style={{cursor: 'zoom-in'}}
+                                                    />
+                                                </PhotoView>
+                                                <button
+                                                    className="remove-image-icon"
+                                                    onClick={() => handleRemoveImage(index)}
+                                                >
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        )
+                                    ))}
+                                </PhotoProvider>
+                            </div>
+                        )}
+                    </div>
 
                     {uploadedFiles.length > 0 && (
                         <div className="image-preview-row">

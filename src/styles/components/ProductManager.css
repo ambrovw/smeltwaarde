@@ -124,6 +124,13 @@
     margin-right: 0.5rem;
 }
 
+.photo-row-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
 /* Drop Zone */
 .drop-zone {
     border: 2px dashed var(--highlight-plus);
