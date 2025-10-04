@@ -273,7 +273,6 @@ function ProductFormModal({
                                     key={index}
                                     src={URL.createObjectURL(file)}
                                     alt={`Preview ${index + 1}`}
-                                    className="image-preview"
                                     onClick={() => setSelectedImage(URL.createObjectURL(file))}
                                 />
                             ))}
