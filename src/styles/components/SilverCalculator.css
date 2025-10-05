@@ -122,6 +122,11 @@
     gap: 0.25rem;
 }
 
+.quantity-control.hover-left {
+    align-items: normal;
+    justify-content: flex-start;
+}
+
 .quantity-control button {
     background-color: var(--highlight);
     color: var(--fg);

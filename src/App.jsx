@@ -13,6 +13,8 @@ import UserDetails from './components/UserDetails.jsx';
 import Shop from './components/Shop.jsx';
 import { useState, useEffect } from 'react';
 import NavHeader from './components/NavHeader';
+import {CartProvider} from "./contexts/CartContext.jsx";
+import Cart from './components/Cart.jsx';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -44,16 +46,16 @@ function App() {
 
     return (
         <Router>
-            {loading ? (
-                <div>Laai gebruiker...</div>
-            ) : (
-                <InnerApp
-                    isLoggedIn={isLoggedIn}
-                    setIsLoggedIn={setIsLoggedIn}
-                    user={user}
-                    setUser={setUser}
-                />
-            )}
+                {loading ? (
+                    <div>Laai gebruiker...</div>
+                ) : (
+                    <InnerApp
+                        isLoggedIn={isLoggedIn}
+                        setIsLoggedIn={setIsLoggedIn}
+                        user={user}
+                        setUser={setUser}
+                    />
+                )}
         </Router>
     );
 }
@@ -73,6 +75,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                     <Route path="/userDetails" element={<UserDetails user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/products" element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </div>

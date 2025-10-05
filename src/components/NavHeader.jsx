@@ -1,16 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import {
-    FaCalculator,     // Waarde Berekening
-    FaCoins,          // Munt Hoeveelhede
-    FaStore,          // Winkel
-    FaBoxOpen,        // Produkte (admin only)
-    FaUser,           // Gebruiker
-    FaSignInAlt,      // Meld aan
-    FaShoppingCart    // Trolley
+    FaCalculator,
+    FaCoins,
+    FaStore,
+    FaBoxOpen,
+    FaUser,
+    FaUserPlus,
+    FaShoppingCart
 } from 'react-icons/fa';
+
 import '../styles/components/NavHeader.css';
+import { useCart } from '../contexts/CartContext';
 
 function NavHeader({ role, isLoggedIn }) {
+    const { cartItems } = useCart();
     return (
         <nav className="nav-header">
             <NavLink to="/" className="nav-element" end>
@@ -36,13 +39,14 @@ function NavHeader({ role, isLoggedIn }) {
                     <NavLink to="/userDetails" className="nav-element">
                         <FaUser title="Gebruiker" />
                     </NavLink>
-                    <NavLink to="/cart" className="nav-element">
+
+                    <NavLink to="/cart" className={`nav-element ${cartItems.length > 0 ? 'cart-active' : ''}`}>
                         <FaShoppingCart title="Waentjie" />
                     </NavLink>
                 </>
             ) : (
                 <NavLink to="/login" className="nav-element">
-                    <FaSignInAlt title="Meld aan" />
+                    <FaUserPlus title="Meld aan" />
                 </NavLink>
             )}
         </nav>

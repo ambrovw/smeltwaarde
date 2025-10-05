@@ -49,3 +49,9 @@
     color: var(--card-bg);
     transform: scale(1.2);
 }
+
+.nav-element.cart-active svg {
+    color: var(--accent);
+    transform: scale(1.4);
+    transition: color 0.3s ease, transform 0.3s ease;
+}

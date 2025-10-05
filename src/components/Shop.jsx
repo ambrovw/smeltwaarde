@@ -3,21 +3,38 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import '../styles/components/Shop.css';
 import useSilverPrice from '../hooks/useSilverPrice';
+import { useCart } from '../contexts/CartContext';
 
 export default function Shop() {
     const [products, setProducts] = useState([]);
+    const [quantities, setQuantities] = useState({});
     const { flashPrice, randPerGram } = useSilverPrice();
+    const { addToCart } = useCart();
+    const [showAddedPopup, setShowAddedPopup] = useState(false);
 
     useEffect(() => {
         fetch('https://kajuit.smeltwaarde.co.za/api/products/all')
             .then(res => res.json())
             .then(data => {
-                if (data.success) setProducts(data.products);
+                if (data.success) {
+                    setProducts(data.products);
+                    const initialQuantities = {};
+                    data.products.forEach(p => {
+                        if (p.enabled) initialQuantities[p._id] = 1;
+                    });
+                    setQuantities(initialQuantities);
+                }
             });
     }, []);
 
+    const handleQuantityChange = (id, val, max) => {
+        const parsed = val === '' ? '' : Math.max(0, Math.min(Number(val), max));
+        setQuantities(prev => ({ ...prev, [id]: parsed }));
+    };
+
     return (
         <div className="scroll-wrapper">
+            {showAddedPopup && <div className="success-popup">✅ Produk by mandjie gevoeg!</div>}
             <div className="container">
                 <h1>Winkel</h1>
                 <hr />
@@ -26,8 +43,8 @@ export default function Shop() {
                 <PhotoProvider maskOpacity={0.85}>
                     <div className="product-grid">
                         {products.filter(product => product.enabled).map(product => {
-                            const baseValue = product.purity * product.weight * (randPerGram || 0);
-                            const adjustedPrice = baseValue * (1 + product.priceOffsetPercent / 100);
+                            const maxQuantity = product.quantity || 1;
+                            const currentQuantity = quantities[product._id] ?? 1;
 
                             return (
                                 <div key={product._id} className="product-card">
@@ -70,7 +87,9 @@ export default function Shop() {
                                         <div className="product-heading">{product.heading}</div>
 
                                         <div className={`price-columns ${flashPrice ? ' flash' : ''}`}>
-                                            {randPerGram !== null ? `R${adjustedPrice.toFixed(2)}` : 'Laai...'}
+                                            {randPerGram !== null
+                                                ? `R${(product.purity * product.weight * randPerGram * (1 + product.priceOffsetPercent / 100)).toFixed(2)}`
+                                                : 'Laai...'}
                                         </div>
 
                                         <div className="product-premie">
@@ -90,6 +109,52 @@ export default function Shop() {
                                                   <br />
                                                 </span>
                                             ))}
+                                        </div>
+
+                                        <div className="box-in">
+                                            <div className="quantity-control hover-left">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleQuantityChange(product._id, currentQuantity - 1, maxQuantity)
+                                                    }
+                                                >
+                                                    -
+                                                </button>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    max={maxQuantity}
+                                                    value={currentQuantity}
+                                                    onChange={(e) =>
+                                                        handleQuantityChange(product._id, e.target.value, maxQuantity)
+                                                    }
+                                                    className="quantity-input"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleQuantityChange(product._id, currentQuantity + 1, maxQuantity)
+                                                    }
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
+
+                                            <button
+                                                className="add-to-cart-button"
+                                                onClick={() => {
+                                                    const enrichedProduct = {
+                                                        ...product,
+                                                        quantityAvailable: product.quantity
+                                                    };
+                                                    addToCart(enrichedProduct, currentQuantity);
+                                                    setShowAddedPopup(true);
+                                                    setTimeout(() => setShowAddedPopup(false), 2000);
+                                                }}
+                                            >
+                                                Voeg by mandjie
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
