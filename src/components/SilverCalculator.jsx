@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import useSilverPrice from '../hooks/useSilverPrice.js';
 import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
+import {Helmet} from "react-helmet";
 
 function SilverCalculator() {
 
@@ -90,6 +91,14 @@ function SilverCalculator() {
 
         return (
             <div className="scroll-wrapper">
+
+                <Helmet>
+                    <title>Smeltwaarde | Bereken die silverwaarde van ou Suidafrikaanse munte | Calculate the silver value of old South African coins and junk silver </title>
+                    <meta name="description" content="Koop ou Suidafrikaanse silver munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
+                    <meta name="keywords" content="South African silver coins, melt value, junk silver, ZAR coins, Union coins, Rand coins, buy silver coins, old coins for sale" />
+                    <link rel="canonical" href="https://smeltwaarde.co.za/" />
+                </Helmet>
+
                 <div className="container">
                     {error ? (
                         <p className="error">{error}</p>

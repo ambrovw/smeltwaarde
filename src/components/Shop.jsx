@@ -4,6 +4,7 @@ import 'react-photo-view/dist/react-photo-view.css';
 import '../styles/components/Shop.css';
 import useSilverPrice from '../hooks/useSilverPrice';
 import { useCart } from '../contexts/CartContext';
+import { Helmet } from 'react-helmet';
 
 export default function Shop({ isLoggedIn }) {
     const [products, setProducts] = useState([]);
@@ -33,7 +34,15 @@ export default function Shop({ isLoggedIn }) {
     };
 
     return (
-        <div className="scroll-wrapper">
+    <div className="scroll-wrapper">
+
+        <Helmet>
+            <title>Buy Old South African Silver Coins | Smeltwaarde</title>
+            <meta name="description" content="Koop ou Suidafrikaanse silver munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
+            <meta name="keywords" content="South African silver coins, melt value, junk silver, ZAR coins, Union coins, Rand coins, buy silver coins, old coins for sale" />
+            <link rel="canonical" href="https://smeltwaarde.co.za/shop" />
+        </Helmet>
+
             {showAddedPopup && <div className="success-popup">✅ Produk by mandjie gevoeg!</div>}
             <div className="container">
                 <h1>Winkel</h1>

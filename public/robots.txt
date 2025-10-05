@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /products
+Disallow: /cart
+Disallow: /userDetails
+Disallow: /login
+
+Allow: /shop
+Allow: /muntHoeveelhede
+Allow: /
+
+Sitemap: https://smeltwaarde.co.za/sitemap.xml
