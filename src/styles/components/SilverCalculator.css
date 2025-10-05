@@ -30,7 +30,7 @@
 .price {
     font-size: 1.4rem;
     margin: 0.25rem 0;
-    color: var(--accent);
+    color: var(--fg);
 }
 
 .rateChange {

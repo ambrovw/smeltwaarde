@@ -105,7 +105,7 @@ function SilverCalculator() {
                     ) : silverPrice ? (
                         <>
                             <div className="header-row">
-                                <img src="/smeltwaarde_logo_transparent_bgfill.png" alt="Smeltwaarde Logo" className="logo" />
+                                <img src="/smeltwaarde_logo_transparent_bgfill.webp" alt="Smeltwaarde Logo" className="logo" />
                                 <div className="header-text">
                                     <h1>Silver munt waarde</h1>
                                     <p className={`price ${flashPrice ? 'flash' : ''}`}>
