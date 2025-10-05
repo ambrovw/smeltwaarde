@@ -73,7 +73,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
                     <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />} />
                     <Route path="/userDetails" element={<UserDetails user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} />
-                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/shop" element={<Shop isLoggedIn={isLoggedIn} />} />
                     <Route path="/products" element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="*" element={<Navigate to="/" />} />

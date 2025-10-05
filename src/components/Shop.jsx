@@ -5,7 +5,7 @@ import '../styles/components/Shop.css';
 import useSilverPrice from '../hooks/useSilverPrice';
 import { useCart } from '../contexts/CartContext';
 
-export default function Shop() {
+export default function Shop({ isLoggedIn }) {
     const [products, setProducts] = useState([]);
     const [quantities, setQuantities] = useState({});
     const { flashPrice, randPerGram } = useSilverPrice();
@@ -144,6 +144,11 @@ export default function Shop() {
                                             <button
                                                 className="add-to-cart-button"
                                                 onClick={() => {
+                                                    if (!isLoggedIn) {
+                                                    window.location.href = '/login';
+                                                    return;
+                                                }
+
                                                     const enrichedProduct = {
                                                         ...product,
                                                         quantityAvailable: product.quantity
