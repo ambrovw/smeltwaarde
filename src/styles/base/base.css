@@ -46,7 +46,6 @@ h1 {
     }
 
     .scroll-wrapper {
-        margin-top: 100px;
         width: 100%;
         flex: 1;
         overflow-y: auto;
