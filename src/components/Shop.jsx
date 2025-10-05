@@ -37,8 +37,8 @@ export default function Shop({ isLoggedIn }) {
     <div className="scroll-wrapper">
 
         <Helmet>
-            <title>Buy Old South African Silver Coins | Smeltwaarde</title>
-            <meta name="description" content="Koop ou Suidafrikaanse silver munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
+            <title>Koop ou Suid-Afrikaanse silver munte | Buy Old South African Silver Coins | Smeltwaarde</title>
+            <meta name="description" content="Koop ou Suid-Afrikaanse silver munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
             <meta name="keywords" content="South African silver coins, melt value, junk silver, ZAR coins, Union coins, Rand coins, buy silver coins, old coins for sale" />
             <link rel="canonical" href="https://smeltwaarde.co.za/shop" />
         </Helmet>
