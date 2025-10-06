@@ -11,6 +11,15 @@
     margin-bottom: 6px;
 }
 
+.action-button.checkout {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.action-button.checkout:hover {
+    background-color: var(--highlight);
+}
+
 .action-button.save {
     border-color: var(--accent);
     color: var(--accent);
@@ -189,6 +198,19 @@
     bottom: 2rem;
     right: 2rem;
     background-color: #4CAF50;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 1001;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.error-popup {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #af4c4c;
     color: white;
     padding: 1rem 1.5rem;
     border-radius: 6px;

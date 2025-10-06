@@ -1,14 +1,49 @@
 import { useCart } from '../contexts/CartContext';
 import useSilverPrice from '../hooks/useSilverPrice';
 import '../styles/components/Cart.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Cart() {
     const { cartItems, removeFromCart, addToCart } = useCart();
     const { randPerGram, silverPrice, flashPrice } = useSilverPrice();
     const [showRemovedPopup, setShowRemovedPopup] = useState(false);
+    const [checkoutTriggered, setCheckoutTriggered] = useState(false);
+    const [checkoutStatus, setCheckoutStatus] = useState<'success' | 'error' | null>(null);
+    const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
+    const [showCheckoutError, setShowCheckoutError] = useState(false);
 
     const randPerOunce = randPerGram ? randPerGram * 31.1035 : null;
+
+    useEffect(() => {
+        if (checkoutTriggered) {
+            fetch('https://kajuit.smeltwaarde.co.za/api/products/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ items: cartItems })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        setShowCheckoutSuccess(true);
+                        setTimeout(() => setShowCheckoutSuccess(false), 3000);
+                    } else {
+                        setShowCheckoutError(true);
+                        setTimeout(() => setShowCheckoutError(false), 3000);
+                    }
+                })
+                .catch(err => {
+                    console.error('Checkout failed:', err);
+                    setShowCheckoutError(true);
+                    setTimeout(() => setShowCheckoutError(false), 3000);
+                })
+                .finally(() => {
+                    setCheckoutTriggered(false);
+                });
+        }
+    }, [checkoutTriggered]);
 
     const handleQuantityChange = (item, newQuantity) => {
         const parsed = newQuantity === ''
@@ -39,87 +74,100 @@ export default function Cart() {
                     <p>Jou mandjie is leeg.</p>
                 ) : (
                     <>
-                    <div className="cart-items-row">
-                    {cartItems.map(item => {
-                            const baseValue = item.purity * item.weight * (randPerGram || 0);
-                            const adjustedPrice = baseValue * (1 + item.priceOffsetPercent / 100);
-                            const itemTotal = adjustedPrice * item.quantity;
 
-                            return (
-                                <div key={item._id} className="cart-item">
-                                    <div className="box-in">
-                                        {item.images?.[0] && (
-                                            <img
-                                                src={`https://kajuit.smeltwaarde.co.za/uploads/${item.images[0]}`}
-                                                alt={`${item.heading} preview`}
-                                                className="cart-image-preview"
-                                            />
-                                        )}
-                                        <h3>{item.heading}</h3>
-                                        <p className="unit-price">
-                                            Eenheidsprys:{' '}
-                                            <span className={flashPrice ? 'flash' : ''}>
-                                                R{adjustedPrice.toFixed(2)}
-                                            </span>
-                                        </p>
+                        <div className="cart-items-row">
+                        {cartItems.map(item => {
+                                const baseValue = item.purity * item.weight * (randPerGram || 0);
+                                const adjustedPrice = baseValue * (1 + item.priceOffsetPercent / 100);
+                                const itemTotal = adjustedPrice * item.quantity;
 
-                                        <div className="quantity-control hover-left">
+                                return (
+                                    <div key={item._id} className="cart-item">
+                                        <div className="box-in">
+                                            {item.images?.[0] && (
+                                                <img
+                                                    src={`https://kajuit.smeltwaarde.co.za/uploads/${item.images[0]}`}
+                                                    alt={`${item.heading} preview`}
+                                                    className="cart-image-preview"
+                                                />
+                                            )}
+                                            <h3>{item.heading}</h3>
+                                            <p className="unit-price">
+                                                Eenheidsprys:{' '}
+                                                <span className={flashPrice ? 'flash' : ''}>
+                                                    R{adjustedPrice.toFixed(2)}
+                                                </span>
+                                            </p>
+
+                                            <div className="quantity-control hover-left">
+                                                <button
+                                                    type="button"
+                                                    disabled={item.quantity <= 0}
+                                                    onClick={() => handleQuantityChange(item, item.quantity - 1)}
+                                                >
+                                                    -
+                                                </button>
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    max={item.quantityAvailable}
+                                                    value={item.quantity}
+                                                    onChange={(e) => handleQuantityChange(item, e.target.value)}
+                                                    className="quantity-input"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    disabled={item.quantity >= item.quantityAvailable}
+                                                    onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
+
+                                            <p className="item-total">
+                                                Totaal:{' '}
+                                                <span className={flashPrice ? 'flash' : ''}>
+                                                    R{itemTotal.toFixed(2)}
+                                                </span>
+                                            </p>
                                             <button
-                                                type="button"
-                                                disabled={item.quantity <= 0}
-                                                onClick={() => handleQuantityChange(item, item.quantity - 1)}
+                                                className="action-button delete"
+                                                onClick={() => {
+                                                    removeFromCart(item._id);
+                                                    setShowRemovedPopup(true);
+                                                    setTimeout(() => setShowRemovedPopup(false), 2000);
+                                                }}
                                             >
-                                                -
-                                            </button>
-                                            <input
-                                                type="number"
-                                                min="0"
-                                                max={item.quantityAvailable}
-                                                value={item.quantity}
-                                                onChange={(e) => handleQuantityChange(item, e.target.value)}
-                                                className="quantity-input"
-                                            />
-                                            <button
-                                                type="button"
-                                                disabled={item.quantity >= item.quantityAvailable}
-                                                onClick={() => handleQuantityChange(item, item.quantity + 1)}
-                                            >
-                                                +
+                                                Verwyder
                                             </button>
                                         </div>
-
-                                        <p className="item-total">
-                                            Totaal:{' '}
-                                            <span className={flashPrice ? 'flash' : ''}>
-                                                R{itemTotal.toFixed(2)}
-                                            </span>
-                                        </p>
-                                        <button
-                                            className="action-button delete"
-                                            onClick={() => {
-                                                removeFromCart(item._id);
-                                                setShowRemovedPopup(true);
-                                                setTimeout(() => setShowRemovedPopup(false), 2000);
-                                            }}
-                                        >
-                                            Verwyder
-                                        </button>
                                     </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="cart-total-bar">
-                        <h2 className="cart-emphasis">
-                            Totaal:{' '}
-                            <span className={flashPrice ? 'flash' : ''}>
-                                R{totalCartValue.toFixed(2)}
-                              </span>
-                        </h2>
-                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="cart-total-bar">
+                            <h2 className="cart-emphasis">
+                                Totaal:{' '}
+                                <span className={flashPrice ? 'flash' : ''}>
+                                    R{totalCartValue.toFixed(2)}
+                                  </span>
+                            </h2>
+                        </div>
+
+                        <div className="checkout-bar">
+                            <button className="action-button checkout" onClick={() => setCheckoutTriggered(true)} >
+                                🛒 Betaal
+                            </button>
+                        </div>
+
                     </>
                 )}
             </div>
+
+            {showCheckoutSuccess && <div className="success-popup">✅ Bestelling gestuur!</div>}
+            {showCheckoutError && <div className="error-popup">❌ Kon nie bestelling verwerk nie</div>}
+
         </div>
     );
 }
