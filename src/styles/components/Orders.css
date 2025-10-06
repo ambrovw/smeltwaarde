@@ -1,7 +1,75 @@
 .order-wrapper {
     margin-bottom: 2rem;
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--accent);
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--bg);
+}
+
+.order-header-label {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.order-header-value {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.order-item-label {
+    color: var(--fg);
+    font-weight: normal;
+}
+
+.order-item-value {
+    color: var(--green);
+    font-weight: bold;
+}
+
+.order-label {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.order-value {
+    color: var(--fg);
+    font-weight: normal;
+}
+
+.order-total-label {
+    color: var(--fg);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.order-total-value {
+    color: var(--green);
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.payment-info-card {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 3px dashed var(--accent);
+    border-radius: 8px;
+    background-color: var(--container-bg);
+}
+
+.payment-label {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.payment-value {
+    color: var(--fg);
+    font-weight: normal;
+    font-style: italic;
+}
+
+.payment-text {
+    color: var(--fg);
+    font-weight: normal;
+    font-style: italic;
 }

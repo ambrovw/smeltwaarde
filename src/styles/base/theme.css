@@ -9,6 +9,7 @@
         --highlight: #4c4c4c;
         --highlight-plus: #5e5e5e;
         --pop-text: #d867f1;
+        --green: lightgreen;
     }
 
     body {
@@ -29,13 +30,14 @@
 @media (prefers-color-scheme: light) {
     :root {
         --bg: #e8d8cb;
-        --fg: #5C4432;
-        --accent: #916d51;
+        --fg: #453122;
+        --accent: #5a3f2d;
         --card-bg: #fff8f0;
         --container-bg: #f3eadd;
         --highlight: #EADAC1;
         --highlight-plus: #E2C8A5;
         --pop-text: #7b0d93;
+        --green: green;
     }
 
     .container {

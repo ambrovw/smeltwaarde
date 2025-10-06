@@ -31,6 +31,7 @@ export default function Cart() {
                 .then(data => {
                     if (data.success) {
                         setShowCheckoutSuccess(true);
+                        cartItems.forEach(item => removeFromCart(item._id));
                         setTimeout(() => setShowCheckoutSuccess(false), 3000);
                         navigate('/orders');
                     } else {
@@ -161,7 +162,7 @@ export default function Cart() {
 
                         <div className="checkout-bar">
                             <button className="action-button checkout" onClick={() => setCheckoutTriggered(true)} >
-                                🛒 Betaal
+                                Bestel
                             </button>
                         </div>
 

@@ -1,6 +1,6 @@
 .nav-header {
     background-color: var(--bg);
-    border-bottom: 1px solid var(--fg);
+    border-bottom: 1px solid var(--accent);
     position: fixed;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
 
 /* Each nav link */
 .nav-element:hover {
-    background-color: var(--fg);
+    background-color: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,7 +39,7 @@
 
 /* Icon styling */
 .nav-element svg {
-    color: var(--fg);
+    color: var(--accent);
     font-size: 1.5rem;
     transition: transform 0.2s ease;
 }
