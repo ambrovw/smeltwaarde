@@ -120,56 +120,60 @@ export default function Shop({ isLoggedIn }) {
                                             ))}
                                         </div>
 
-                                        <div className="box-in">
-                                            <div className="quantity-control hover-left">
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleQuantityChange(product._id, currentQuantity - 1, maxQuantity)
-                                                    }
-                                                >
-                                                    -
-                                                </button>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    max={maxQuantity}
-                                                    value={currentQuantity}
-                                                    onChange={(e) =>
-                                                        handleQuantityChange(product._id, e.target.value, maxQuantity)
-                                                    }
-                                                    className="quantity-input"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleQuantityChange(product._id, currentQuantity + 1, maxQuantity)
-                                                    }
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
+                                        <div className="product-quantity">
+                                            <span className="label">Beskikbaar:</span>{' '}
+                                            {product.quantity}
+                                        </div>
 
+                                        <div className="quantity-control hover-left">
                                             <button
-                                                className="add-to-cart-button"
-                                                onClick={() => {
-                                                    if (!isLoggedIn) {
-                                                    window.location.href = '/login';
-                                                    return;
+                                                type="button"
+                                                onClick={() =>
+                                                    handleQuantityChange(product._id, currentQuantity - 1, maxQuantity)
                                                 }
-
-                                                    const enrichedProduct = {
-                                                        ...product,
-                                                        quantityAvailable: product.quantity
-                                                    };
-                                                    addToCart(enrichedProduct, currentQuantity);
-                                                    setShowAddedPopup(true);
-                                                    setTimeout(() => setShowAddedPopup(false), 2000);
-                                                }}
                                             >
-                                                Voeg by mandjie
+                                                -
+                                            </button>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max={maxQuantity}
+                                                value={currentQuantity}
+                                                onChange={(e) =>
+                                                    handleQuantityChange(product._id, e.target.value, maxQuantity)
+                                                }
+                                                className="quantity-input"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleQuantityChange(product._id, currentQuantity + 1, maxQuantity)
+                                                }
+                                            >
+                                                +
                                             </button>
                                         </div>
+
+                                        <button
+                                            className="add-to-cart-button"
+                                            onClick={() => {
+                                                if (!isLoggedIn) {
+                                                window.location.href = '/login';
+                                                return;
+                                            }
+
+                                                const enrichedProduct = {
+                                                    ...product,
+                                                    quantityAvailable: product.quantity
+                                                };
+                                                addToCart(enrichedProduct, currentQuantity);
+                                                setShowAddedPopup(true);
+                                                setTimeout(() => setShowAddedPopup(false), 2000);
+                                            }}
+                                        >
+                                            Voeg by mandjie
+                                        </button>
+
                                     </div>
                                 </div>
                             );
