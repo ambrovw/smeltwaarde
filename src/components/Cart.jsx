@@ -5,12 +5,12 @@ import {useEffect, useState} from "react";
 
 export default function Cart() {
     const { cartItems, removeFromCart, addToCart } = useCart();
-    const { randPerGram, silverPrice, flashPrice } = useSilverPrice();
+    const { randPerGram, flashPrice } = useSilverPrice();
     const [showRemovedPopup, setShowRemovedPopup] = useState(false);
     const [checkoutTriggered, setCheckoutTriggered] = useState(false);
-    const [checkoutStatus, setCheckoutStatus] = useState<'success' | 'error' | null>(null);
     const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
     const [showCheckoutError, setShowCheckoutError] = useState(false);
+    const token = localStorage.getItem('token');
 
     const randPerOunce = randPerGram ? randPerGram * 31.1035 : null;
 
@@ -19,7 +19,8 @@ export default function Cart() {
             fetch('https://kajuit.smeltwaarde.co.za/api/products/checkout', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 credentials: 'include',
                 body: JSON.stringify({ items: cartItems })
