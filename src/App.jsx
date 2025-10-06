@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 import NavHeader from './components/NavHeader';
 import {CartProvider} from "./contexts/CartContext.jsx";
 import Cart from './components/Cart.jsx';
+import UserOrders from "./components/UserOrders.jsx";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -75,6 +76,7 @@ function InnerApp({ isLoggedIn, setIsLoggedIn, user, setUser }) {
                     <Route path="/userDetails" element={<UserDetails user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />} />
                     <Route path="/shop" element={<Shop isLoggedIn={isLoggedIn} />} />
                     <Route path="/products" element={role === 'admin' ? <ProductManager /> : <Navigate to="/" />} />
+                    <Route path="/orders" element={<UserOrders />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

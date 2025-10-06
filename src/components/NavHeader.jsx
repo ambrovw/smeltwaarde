@@ -6,7 +6,7 @@ import {
     FaBoxOpen,
     FaUser,
     FaUserPlus,
-    FaShoppingCart
+    FaShoppingCart, FaClipboardList
 } from 'react-icons/fa';
 
 import '../styles/components/NavHeader.css';
@@ -36,6 +36,10 @@ function NavHeader({ role, isLoggedIn }) {
 
             {isLoggedIn ? (
                 <>
+                    <NavLink to="/orders" className="nav-element">
+                        <FaClipboardList title="Bestellings" />
+                    </NavLink>
+
                     <NavLink to="/userDetails" className="nav-element">
                         <FaUser title="Gebruiker" />
                     </NavLink>
