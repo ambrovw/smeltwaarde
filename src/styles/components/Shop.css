@@ -79,11 +79,11 @@
 .product-description {
     font-size: 0.9rem;
     font-style: italic;
-    margin-bottom: 0.25rem;
+    margin-bottom: 1rem;
 }
 
-.product-purity {
-    margin-bottom: 0.5rem;
+.product-quantity {
+    margin-bottom: 1rem;
 }
 
 .shop-image-preview {

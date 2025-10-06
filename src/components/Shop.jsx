@@ -101,6 +101,15 @@ export default function Shop({ isLoggedIn }) {
                                                 : 'Laai...'}
                                         </div>
 
+                                        <div className="product-description">
+                                            {product.description.split('\n').map((line, index) => (
+                                                <span key={index}>
+                                                  <em>{line}</em>
+                                                  <br />
+                                                </span>
+                                            ))}
+                                        </div>
+
                                         <div className="product-premie">
                                             <span className="label">Premie:</span>{' '}
                                             {product.priceOffsetPercent != null ? `${product.priceOffsetPercent}%` : '0%'}
@@ -109,15 +118,6 @@ export default function Shop({ isLoggedIn }) {
                                         <div className="product-purity">
                                             <span className="label">Fynheid:</span>{' '}
                                             {`${(product.purity * 100).toFixed(3).replace(/\.?0+$/, '')}%`}
-                                        </div>
-
-                                        <div className="product-description">
-                                            {product.description.split('\n').map((line, index) => (
-                                                <span key={index}>
-                                                  <em>{line}</em>
-                                                  <br />
-                                                </span>
-                                            ))}
                                         </div>
 
                                         <div className="product-quantity">

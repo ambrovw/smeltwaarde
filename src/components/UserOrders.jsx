@@ -38,9 +38,9 @@ function UserOrders() {
                     <div className="order-list">
                         {orders.map(order => (
                             <div key={order._id} className="order-card">
-                                <h2>Verwysings nommer: {order.reference}</h2>
+                                <h2>Verw#: {order.reference}</h2>
                                 <p>Datum: {new Date(order.createdAt).toLocaleString()}</p>
-                                <p>Rand per gram: R{order.randPerGram.toFixed(2)}</p>
+                                <p>R/g: R{order.randPerGram.toFixed(2)}</p>
                                 <ul>
                                     {order.items.map(item => (
                                         <li key={item.productId}>
