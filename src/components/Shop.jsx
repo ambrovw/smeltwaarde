@@ -68,20 +68,29 @@ export default function Shop({ isLoggedIn }) {
                                                 />
                                             </PhotoView>
 
-                                            {(product.priceOffsetPercent === 0 || product.priceOffsetPercent === null) && (
+                                            {product.quantity === 0 ? (
                                                 <img
-                                                    src="/teen-smelt.png"
-                                                    alt="Teen Smelt"
+                                                    src="/uitverkoop.png"
+                                                    alt="Uitverkoop"
                                                     className="shop-ribbon"
                                                 />
-                                            )}
-
-                                            {product.priceOffsetPercent < 0 && (
-                                                <img
-                                                    src="/onder-smelt.png"
-                                                    alt="Onder Smelt"
-                                                    className="shop-ribbon"
-                                                />
+                                            ) : (
+                                                <>
+                                                    {(product.priceOffsetPercent === 0 || product.priceOffsetPercent === null) && (
+                                                        <img
+                                                            src="/teen-smelt.png"
+                                                            alt="Teen Smelt"
+                                                            className="shop-ribbon"
+                                                        />
+                                                    )}
+                                                    {product.priceOffsetPercent < 0 && (
+                                                        <img
+                                                            src="/onder-smelt.png"
+                                                            alt="Onder Smelt"
+                                                            className="shop-ribbon"
+                                                        />
+                                                    )}
+                                                </>
                                             )}
                                         </div>
 

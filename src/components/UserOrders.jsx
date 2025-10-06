@@ -37,18 +37,20 @@ function UserOrders() {
                 ) : (
                     <div className="order-list">
                         {orders.map(order => (
-                            <div key={order._id} className="order-card">
-                                <h2>Verw#: {order.reference}</h2>
-                                <p>Datum: {new Date(order.createdAt).toLocaleString()}</p>
-                                <p>R/g: R{order.randPerGram.toFixed(2)}</p>
-                                <ul>
-                                    {order.items.map(item => (
-                                        <li key={item.productId}>
-                                            {item.quantity} × {item.heading} @ R{item.unitPrice.toFixed(2)} = R{item.total.toFixed(2)}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <p>Totaal: R{order.totalAmount.toFixed(2)}</p>
+                            <div key={order._id} className="order-wrapper">
+                                <div className="order-card">
+                                    <h2>Verw.#: {order.reference}</h2>
+                                    <p>Datum: {new Date(order.createdAt).toLocaleString()}</p>
+                                    <p>Rand per gram: R{order.randPerGram.toFixed(2)}</p>
+                                    <p>Totaal: R{order.totalAmount.toFixed(2)}</p>
+                                    <ul>
+                                        {order.items.map(item => (
+                                            <li key={item.productId}>
+                                                {item.quantity} × {item.heading} @ R{item.unitPrice.toFixed(2)} = R{item.total.toFixed(2)}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         ))}
                     </div>
