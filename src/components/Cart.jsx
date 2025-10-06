@@ -2,6 +2,7 @@ import { useCart } from '../contexts/CartContext';
 import useSilverPrice from '../hooks/useSilverPrice';
 import '../styles/components/Cart.css';
 import {useEffect, useState} from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
     const { cartItems, removeFromCart, addToCart } = useCart();
@@ -11,6 +12,7 @@ export default function Cart() {
     const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
     const [showCheckoutError, setShowCheckoutError] = useState(false);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const randPerOunce = randPerGram ? randPerGram * 31.1035 : null;
 
@@ -30,6 +32,7 @@ export default function Cart() {
                     if (data.success) {
                         setShowCheckoutSuccess(true);
                         setTimeout(() => setShowCheckoutSuccess(false), 3000);
+                        navigate('/orders');
                     } else {
                         setShowCheckoutError(true);
                         setTimeout(() => setShowCheckoutError(false), 3000);
