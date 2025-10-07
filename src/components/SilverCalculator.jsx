@@ -186,7 +186,7 @@ function SilverCalculator() {
                                                 {!hideColumns && <th>Fynheid</th>}
                                                 {!hideColumns && <th>Gewig (g)</th>}
                                                 {!hideColumns && <th>Silver (g)</th>}
-                                                {!hideColumns && <th>Elk</th>}
+                                                <th>Elk</th>
                                                 <th>Hoeveelheid</th>
                                                 <th>Waarde (R)</th>
                                             </tr>
@@ -205,7 +205,7 @@ function SilverCalculator() {
                                                         {!hideColumns && <td>{coin.purity}</td>}
                                                         {!hideColumns && <td>{coin.weight}</td>}
                                                         {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
-                                                        {!hideColumns && <td className="calc-each">R{perItemValue.toFixed(2)}</td>}
+                                                        <td className="calc-each">R{perItemValue.toFixed(2)}</td>
                                                         <td>
                                                             <div className="quantity-control">
                                                                 <button type="button" onClick={() => {

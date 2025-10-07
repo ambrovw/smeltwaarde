@@ -146,7 +146,7 @@
 .quantity-input {
     background-color: var(--highlight);
     color: var(--fg);
-    width: 60px;
+    width: 30px;
     text-align: center;
     padding: 0.2rem;
     font-size: 0.85rem;
