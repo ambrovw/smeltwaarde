@@ -3,6 +3,7 @@ import useSilverPrice from '../hooks/useSilverPrice.js';
 import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
+import { useNavigate } from 'react-router-dom';
 
 function SilverCalculator() {
 
@@ -15,6 +16,7 @@ function SilverCalculator() {
         error,
     } = useSilverPrice();
 
+    const navigate = useNavigate();
     const [adjustmentInput, setAdjustmentInput] = useState('0');
     const [adjustmentPercent, setAdjustmentPercent] = useState(0);
     const adjustedSilverPrice = silverPrice
@@ -247,6 +249,12 @@ function SilverCalculator() {
                                 <div className="totals-item">
                                     💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                                 </div>
+                            </div>
+
+                            <div className="koop-bar">
+                            <button className="action-button koop" onClick={() => navigate('/shop')}>
+                                    Koop
+                                </button>
                             </div>
                         </>
                     ) : (

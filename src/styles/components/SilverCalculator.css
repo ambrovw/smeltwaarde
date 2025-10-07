@@ -61,16 +61,6 @@
     margin-right: 0.25rem;
 }
 
-.adjustment-input-group {
-    display: flex;
-    align-items: center;
-}
-
-.adjustment-input {
-    width: 60px;
-    margin-right: 4px;
-}
-
 .adjustment-percent {
     font-size: 0.9rem;
     color: var(--fg);
@@ -254,4 +244,20 @@
 
 .calc-each {
     color: var(--pop-text);
+}
+
+.koop-bar {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.action-button.koop {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.action-button.koop:hover {
+    color: var(--card-bg);
+    border-color: var(--accent);
+    background-color: var(--accent);
 }

@@ -84,6 +84,7 @@ export const coins = {
     ],
     "Bullion en skroot": [
         { name: "Fynsilver (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
+        { name: "Fynsilver (g)", era: "-", purity: 0.999, weight: 1, quantity: 0 },
         { name: "92.5% (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
         { name: "90% (g)", era: "-", purity: 0.9, weight: 1, quantity: 0 },
         { name: "80% (g)", era: "-", purity: 0.8, weight: 1, quantity: 0 },
