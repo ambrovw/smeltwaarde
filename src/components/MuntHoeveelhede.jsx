@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { zarCoins, unionCoins, rsa1Coins, rsa2Coins } from '../muntHoeveelhedeData.js'
+import { zarCoins, unionCoins, rsa1Coins } from '../muntHoeveelhedeData.js'
 import '../styles/components/MuntHoeveelhede.css';
 
 function MuntHoeveelhede() {
     const [collapsedEras, setCollapsedEras] = useState({
         ZAR: true,
         Union: true,
-        RSA1: true,
-        RSA2: true
+        RSA1: true
     })
 
     const getOrderedDenominations = (coins) => {
@@ -59,7 +58,7 @@ function MuntHoeveelhede() {
     }
 
     const renderMatrixTable = (coins) => {
-        const { years, denominations, matrix } = buildMatrix(coins)
+        const { denominations, matrix } = buildMatrix(coins)
 
         return (
             <table>

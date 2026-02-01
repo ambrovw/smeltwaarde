@@ -1,0 +1,21 @@
+// archived from parsed.json
+[
+  { denomination: '1/4p', year: '1923', quantity: 32800 },
+  { denomination: '1/2p', year: '1923', quantity: 12080 },
+  { denomination: '1p', year: '1923', quantity: 91027 },
+  { denomination: '3p', year: '1923', quantity: 303292 },
+  { denomination: '6p', year: '1923', quantity: 209110 },
+  { denomination: '1S', year: '1923', quantity: 808000 },
+  { denomination: '2S', year: '1923', quantity: 695000 },
+  { denomination: '2.5S', year: '1923', quantity: 1227000 },
+  { denomination: '1/4p', year: '1924', quantity: 94838 },
+  { denomination: '1/2p', year: '1924', quantity: 64165 },
+  { denomination: '1p', year: '1924', quantity: 134487 },
+  { denomination: '3p', year: '1924', quantity: 501456 },
+  { denomination: '6p', year: '1924', quantity: 325610 },
+  { denomination: '1S', year: '1924', quantity: 1269000 },
+  { denomination: '2S', year: '1924', quantity: 1513000 },
+  { denomination: '2.5S', year: '1924', quantity: 2556000 },
+  // ...omitted remainder for brevity
+]
+

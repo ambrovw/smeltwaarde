@@ -1,0 +1,39 @@
+// archived from dist/index.html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Smeltwaarde" />
+    <meta property="og:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silver munte." />
+    <meta property="og:image" content="/smeltwaarde_logo_transparent_bgfill.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smeltwaarde.co.za/" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Smeltwaarde" />
+    <meta name="twitter:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silver munte." />
+    <meta name="twitter:image" content="/smeltwaarde_logo_transparent_bgfill.png" />
+    <meta name="description" content="Bereken die smeltwaarde van Suid-Afrikaanse silver munte." />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smeltwaarde</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <script type="module" crossorigin src="/assets/index-DpP9_WFb.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-baOD7EfY.css">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BWGJV426YF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-BWGJV426YF');
+</script>
+<body>
+<div id="root"></div>
+<div id="modal-root"></div>
+</body>
+</html>
+

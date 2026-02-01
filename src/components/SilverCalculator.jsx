@@ -3,7 +3,6 @@ import useSilverPrice from '../hooks/useSilverPrice.js';
 import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
-import { useNavigate } from 'react-router-dom';
 
 function SilverCalculator() {
 
@@ -16,7 +15,6 @@ function SilverCalculator() {
         error,
     } = useSilverPrice();
 
-    const navigate = useNavigate();
     const [adjustmentInput, setAdjustmentInput] = useState('0');
     const [adjustmentPercent, setAdjustmentPercent] = useState(0);
     const adjustedSilverPrice = silverPrice
@@ -67,14 +65,7 @@ function SilverCalculator() {
 
         setCoinList(updated);
 
-        // Trigger Google Analytics event
-        if (window.gtag) {
-            window.gtag('event', 'hoeveelheid_change', {
-                event_category: 'Input',
-                event_label: `${targetCoin.name} (${targetCoin.era})`,
-                value: parsedQty === '' ? 0 : parsedQty
-            });
-        }
+        // Google Analytics removed intentionally
     };
 
         const totalFineSilverGrams = Object.values(coinList)
@@ -251,11 +242,7 @@ function SilverCalculator() {
                                 </div>
                             </div>
 
-                            <div className="koop-bar">
-                            <button className="action-button koop" onClick={() => navigate('/shop')}>
-                                    Koop
-                                </button>
-                            </div>
+                            {/* Removed the koop/shop button and navigation to ensure no shop/backend code remains */}
                         </>
                     ) : (
                         <p>Loading...</p>

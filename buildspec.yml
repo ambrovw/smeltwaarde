@@ -1,16 +1,4 @@
-version: 0.2
+# (intentionally left blank)
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: 22
-    commands:
-      - npm ci
-  build:
-    commands:
-      - npm run build
 
-artifacts:
-  files:
-    - '**/*'
-  base-directory: dist
+
