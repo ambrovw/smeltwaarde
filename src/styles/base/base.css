@@ -35,6 +35,22 @@ h1 {
     display: none;
 }
 
+/* Make era/group headers slightly larger across the app (applies to both Silver and Gold pages) */
+.era-header {
+    font-size: 1rem; /* reset to 1rem as requested */
+    font-weight: 600;
+    margin: 0.4rem 0;
+    line-height: 1.2;
+}
+
+/* Stronger override to ensure component CSS can't accidentally shrink headings */
+.scroll-wrapper .container .era-header,
+.container .era-header {
+    font-size: 1rem !important;
+    margin: 0.4rem 0 !important;
+    font-weight: 700 !important;
+}
+
 @media (max-width: 600px) {
 
     html, body {
@@ -60,5 +76,17 @@ h1 {
         width: 100%;
         max-width: 480px;
         box-sizing: border-box;
+    }
+
+    /* slightly reduce era header size on small screens */
+    .era-header {
+        font-size: 0.95rem;
+        margin: 0.3rem 0;
+    }
+
+    .scroll-wrapper .container .era-header,
+    .container .era-header {
+        font-size: 0.95rem !important;
+        margin: 0.3rem 0 !important;
     }
 }

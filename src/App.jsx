@@ -4,7 +4,7 @@ import {
     Route,
     Navigate
 } from 'react-router-dom';
-import SilverCalculator from './components/SilverCalculator.jsx';
+import MetalTabs from './components/MetalTabs.jsx';
 import MuntHoeveelhede from './components/MuntHoeveelhede.jsx';
 import NavHeader from './components/NavHeader';
 
@@ -14,7 +14,9 @@ function App() {
             <NavHeader />
             <div>
                 <Routes>
-                    <Route path="/" element={<SilverCalculator />} />
+                    <Route path="/" element={<MetalTabs />} />
+                    <Route path="/silver" element={<MetalTabs initialTab="silver" />} />
+                    <Route path="/gold" element={<MetalTabs initialTab="gold" />} />
                     <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

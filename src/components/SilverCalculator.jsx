@@ -26,10 +26,28 @@ function SilverCalculator() {
             coins.map((coin) => ({ ...coin, quantity: 0 }))
         ])
     )
-    const [coinList, setCoinList] = useState(initializedGroups)
+    // Restore persisted state if present
+    const [coinList, setCoinList] = useState(() => {
+        try {
+            const raw = localStorage.getItem('silver_state');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.coinList) return parsed.coinList;
+            }
+        } catch (e) {}
+        return initializedGroups;
+    })
+
     const [collapsedEras, setCollapsedEras] = useState(() => {
+        try {
+            const raw = localStorage.getItem('silver_state');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.collapsedEras) return parsed.collapsedEras;
+            }
+        } catch (e) {}
         const initialState = {}
-        Object.keys(coinList).forEach((groupLabel, index) => {
+        Object.keys(initializedGroups).forEach((groupLabel, index) => {
             initialState[groupLabel] = index !== 1 // second group expanded, rest collapsed
         })
         return initialState
@@ -42,12 +60,31 @@ function SilverCalculator() {
     }
     const [hideColumns, setHideColumns] = useState(true);
 
+    // Reset persisted silver state
+    const resetSilverState = () => {
+        try { localStorage.removeItem('silver_state'); } catch (e) {}
+        setCoinList(initializedGroups);
+        const defaultCollapsed = {};
+        Object.keys(initializedGroups).forEach((groupLabel, index) => {
+            defaultCollapsed[groupLabel] = index !== 1
+        });
+        setCollapsedEras(defaultCollapsed);
+        setAdjustmentInput('0');
+    }
+
     useEffect(() => {
         const parsed = parseFloat(adjustmentInput);
         if (!isNaN(parsed)) {
             setAdjustmentPercent(parsed);
         }
     }, [adjustmentInput]);
+
+    // Persist silver state
+    useEffect(() => {
+        try {
+            localStorage.setItem('silver_state', JSON.stringify({ coinList, collapsedEras, adjustmentInput }));
+        } catch (e) {}
+    }, [coinList, collapsedEras, adjustmentInput]);
 
     const handleQuantityChange = (targetCoin, newQty) => {
         const parsedQty = newQty === '' ? '' : Math.max(Number(newQty), 0);
@@ -151,6 +188,13 @@ function SilverCalculator() {
                                     onClick={() => setHideColumns(prev => !prev)}
                                 >
                                     {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
+                                </button>
+                                <button
+                                    className="action-button"
+                                    onClick={resetSilverState}
+                                    title="Herstel silver blad na verstek state"
+                                >
+                                    🔄 Herstel
                                 </button>
 
                             </div>

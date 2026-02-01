@@ -37,6 +37,12 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Active link */
+.nav-element.active {
+    background-color: var(--accent);
+    color: var(--card-bg);
+}
+
 /* Icon styling */
 .nav-element svg {
     color: var(--accent);
@@ -54,4 +60,35 @@
     color: var(--accent);
     transform: scale(1.4);
     transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-element.active svg {
+    color: var(--card-bg);
+    transform: scale(1.25);
+}
+
+/* Show label text next to icon */
+.nav-label {
+    margin-left: 0.5rem;
+    font-weight: 600;
+    color: inherit;
+}
+
+/* Symbol styling (Ag / Au) */
+.nav-symbol {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-element:hover .nav-symbol {
+    color: var(--card-bg);
+    transform: scale(1.2);
+}
+
+.nav-element.active .nav-symbol {
+    color: var(--card-bg);
+    transform: scale(1.25);
 }

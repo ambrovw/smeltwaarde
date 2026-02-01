@@ -1,0 +1,22 @@
+.tabs{
+    display:flex;
+    gap:8px;
+    margin:16px 0;
+}
+.tab{
+    padding:8px 12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    background:transparent;
+    cursor:pointer;
+}
+.tab--active{
+    background:#b29e68;
+    color:white;
+    border-color:#b29e68;
+}
+@media(max-width:600px){
+    .tabs{flex-direction:column}
+    .tab{width:100%}
+}
+

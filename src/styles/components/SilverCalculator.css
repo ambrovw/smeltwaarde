@@ -68,10 +68,8 @@
 
 .era-header {
     cursor: pointer;
-    font-size: 0.95rem;
     font-weight: 600;
     color: var(--accent);
-    margin: 0.3rem 0;
     padding: 0;
     line-height: 1.2;
 }
