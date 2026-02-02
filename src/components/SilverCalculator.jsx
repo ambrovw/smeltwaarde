@@ -148,7 +148,7 @@ function SilverCalculator() {
 
                 <Helmet>
                     <title>Smeltwaarde | Bereken die silverwaarde van ou Suid-Afrikaanse munte | Calculate the silver value of old South African coins and junk silver </title>
-                    <meta name="description" content="Koop ou Suid-Afrikaanse silver munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
+                    <meta name="description" content="Koop ou Suid-Afrikaanse silwer munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
                     <meta name="keywords" content="South African silver coins, melt value, junk silver, ZAR coins, Union coins, Rand coins, buy silver coins, old coins for sale" />
                     <link rel="canonical" href="https://smeltwaarde.co.za/" />
                 </Helmet>
@@ -161,7 +161,7 @@ function SilverCalculator() {
                             <div className="header-row">
                                 <img src="/smeltwaarde_logo_transparent_bgfill.webp" alt="Smeltwaarde Logo" className="logo" />
                                 <div className="header-text">
-                                    <h1>Silver munt waarde</h1>
+                                    <h1>Silwer munt waarde</h1>
                                     <p className={`price ${flashPrice ? 'flash' : ''}`}>
                                         R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
                                         <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>
@@ -217,7 +217,7 @@ function SilverCalculator() {
                                     <button
                                         className="action-button"
                                         onClick={resetSilverState}
-                                        title="Herstel silver blad na verstek state"
+                                        title="Herstel silwer blad na verstek state"
                                     >
                                         🔄 Herstel
                                     </button>
@@ -305,7 +305,7 @@ function SilverCalculator() {
 
                             <div className="totals-row">
                                 <div className="totals-item">
-                                    🪙 Totale silver: <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                                    🪙 Totale silwer: <span>{totalFineSilverGrams.toFixed(2)}g</span>
                                 </div>
                                 <div className="totals-item">
                                     💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>

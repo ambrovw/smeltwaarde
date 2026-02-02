@@ -175,8 +175,8 @@ function GoldCalculator() {
                                 <p className={`price ${flashPrice ? 'flash' : ''}`}>
                                     R{randPerGram ? randPerGram.toFixed(2) : '–'}/g {'  -  '} R{goldPrice ? goldPrice.toFixed(2) : '–'}/ozt
                                     <span className={`rateChange ${chgXau >= 0 ? 'up' : 'down'}`}>
-                                        {typeof chgXau === 'number' ? (chgXau >= 0 ? `+${chgXau}` : chgXau) : ''}
-                                    </span>
+                                {chgXau >= 0 ? '▲' : '▼'}R{Math.abs(chgXau).toFixed(2)}/ozt
+                            </span>
                                 </p>
                                 <p className="timestamp">{localTime}</p>
                             </div>

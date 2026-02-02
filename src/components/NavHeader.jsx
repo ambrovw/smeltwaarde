@@ -8,7 +8,7 @@ function NavHeader() {
         <nav className="nav-header">
             <NavLink to="/silver" className={({ isActive }) => `nav-element ${isActive ? 'active' : ''}`} end>
                 <span className="nav-symbol" aria-hidden="true">Ag</span>
-                <span className="nav-label">Silver</span>
+                <span className="nav-label">Silwer</span>
             </NavLink>
 
             <NavLink to="/gold" className={({ isActive }) => `nav-element ${isActive ? 'active' : ''}`}>

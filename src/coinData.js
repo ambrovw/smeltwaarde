@@ -32,9 +32,9 @@ export const coins = {
     ],
     "RSA 1965+": [
         { name: "R1 (1965-1976)", era: "1965–1976", purity: 0.8, weight: 15, quantity: 0 },
-        { name: "R1 - Herdenkings Silver / Protea", era: "1965+", purity: 0.925, weight: 15, quantity: 0 },
-        { name: "R2 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 },
-        { name: "R5 - Herdenkings Silver", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 }
+        { name: "R1 - Herdenkings Silwer / Protea", era: "1965+", purity: 0.925, weight: 15, quantity: 0 },
+        { name: "R2 - Herdenkings Silwer", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 },
+        { name: "R5 - Herdenkings Silwer", era: "1965+", purity: 0.925, weight: 33.63, quantity: 0 }
     ],
     "Brit <=1919 92.5%": [
         { name: "Kroon (5S)", era: "<=1919", purity: 0.925, weight: 28.28, quantity: 0 },
@@ -83,8 +83,8 @@ export const coins = {
         { name: "Thaler", era: "1780+", purity: 0.8333, weight: 28.0668, quantity: 0 },
     ],
     "Bullion en skroot": [
-        { name: "Fynsilver (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
-        { name: "Fynsilver (g)", era: "-", purity: 0.999, weight: 1, quantity: 0 },
+        { name: "Fynsilwer (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
+        { name: "Fynsilwer (g)", era: "-", purity: 0.999, weight: 1, quantity: 0 },
         { name: "92.5% (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
         { name: "90% (g)", era: "-", purity: 0.9, weight: 1, quantity: 0 },
         { name: "80% (g)", era: "-", purity: 0.8, weight: 1, quantity: 0 },
