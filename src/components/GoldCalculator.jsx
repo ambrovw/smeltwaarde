@@ -59,6 +59,15 @@ function GoldCalculator() {
         return initialState
     })
 
+    // Track whether we have a saved state for conditional rendering of reset button
+    const [hasSaved, setHasSaved] = useState(() => {
+        try {
+            return !!localStorage.getItem('gold_state');
+        } catch (e) {
+            return false;
+        }
+    })
+
     // show/hide fine details (era/purity/weight)
     const [hideColumns, setHideColumns] = useState(true);
 
@@ -67,11 +76,35 @@ function GoldCalculator() {
         setAdjustmentPercent(percent)
     }, [adjustmentInput])
 
-    // Persist state to localStorage when relevant pieces change
+    // Helper to determine if current state equals defaults
+    const isDefaultState = (cl, ce, adj) => {
+        if (String(adj) !== '0') return false;
+        // collapsed default: Krugerrand false, others true
+        for (const k of Object.keys(groupedCoins)) {
+            const expected = k === 'Krugerrand' ? false : true;
+            if (ce[k] !== expected) return false;
+        }
+        // coin quantities default to 0
+        for (const coins of Object.values(cl)) {
+            for (const coin of coins) {
+                if (Number(coin.quantity) !== 0) return false;
+            }
+        }
+        return true;
+    }
+
+    // Persist state to localStorage when relevant pieces change.
+    // Save only when state differs from defaults; otherwise remove saved state.
     useEffect(() => {
         try {
-            const toSave = JSON.stringify({ coinList, collapsedEras, adjustmentInput });
-            localStorage.setItem('gold_state', toSave);
+            if (isDefaultState(coinList, collapsedEras, adjustmentInput)) {
+                localStorage.removeItem('gold_state');
+                setHasSaved(false);
+            } else {
+                const toSave = JSON.stringify({ coinList, collapsedEras, adjustmentInput });
+                localStorage.setItem('gold_state', toSave);
+                setHasSaved(true);
+            }
         } catch (e) {
             // ignore storage errors
         }
@@ -108,6 +141,7 @@ function GoldCalculator() {
         });
         setCollapsedEras(defaultCollapsed);
         setAdjustmentInput('0');
+        setHasSaved(false);
     }
 
     const totalFineGoldGrams = Object.values(coinList)
@@ -171,13 +205,15 @@ function GoldCalculator() {
                             >
                                 {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Goud'}
                             </button>
-                            <button
-                                className="action-button"
-                                onClick={resetGoldState}
-                                title="Herstel goud blad na verstek state"
-                            >
-                                🔄 Herstel
-                            </button>
+                            {hasSaved && (
+                                <button
+                                    className="action-button"
+                                    onClick={resetGoldState}
+                                    title="Herstel goud blad na verstek state"
+                                >
+                                    🔄 Herstel
+                                </button>
+                            )}
                         </div>
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => (

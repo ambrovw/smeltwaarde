@@ -27,31 +27,38 @@ function SilverCalculator() {
         ])
     )
     // Restore persisted state if present
-    const [coinList, setCoinList] = useState(() => {
+     const [coinList, setCoinList] = useState(() => {
+         try {
+             const raw = localStorage.getItem('silver_state');
+             if (raw) {
+                 const parsed = JSON.parse(raw);
+                 if (parsed && parsed.coinList) return parsed.coinList;
+             }
+         } catch (e) {}
+         return initializedGroups;
+     })
+
+     const [collapsedEras, setCollapsedEras] = useState(() => {
+         try {
+             const raw = localStorage.getItem('silver_state');
+             if (raw) {
+                 const parsed = JSON.parse(raw);
+                 if (parsed && parsed.collapsedEras) return parsed.collapsedEras;
+             }
+         } catch (e) {}
+         const initialState = {}
+         Object.keys(initializedGroups).forEach((groupLabel, index) => {
+             initialState[groupLabel] = index !== 1 // second group expanded, rest collapsed
+         })
+         return initialState
+     })
+    // hasSaved for silver
+    const [hasSaved, setHasSaved] = useState(() => {
         try {
-            const raw = localStorage.getItem('silver_state');
-            if (raw) {
-                const parsed = JSON.parse(raw);
-                if (parsed && parsed.coinList) return parsed.coinList;
-            }
-        } catch (e) {}
-        return initializedGroups;
+            return !!localStorage.getItem('silver_state');
+        } catch (e) { return false }
     })
 
-    const [collapsedEras, setCollapsedEras] = useState(() => {
-        try {
-            const raw = localStorage.getItem('silver_state');
-            if (raw) {
-                const parsed = JSON.parse(raw);
-                if (parsed && parsed.collapsedEras) return parsed.collapsedEras;
-            }
-        } catch (e) {}
-        const initialState = {}
-        Object.keys(initializedGroups).forEach((groupLabel, index) => {
-            initialState[groupLabel] = index !== 1 // second group expanded, rest collapsed
-        })
-        return initialState
-    })
     const toggleEra = (groupLabel) => {
         setCollapsedEras((prev) => ({
             ...prev,
@@ -82,7 +89,24 @@ function SilverCalculator() {
     // Persist silver state
     useEffect(() => {
         try {
-            localStorage.setItem('silver_state', JSON.stringify({ coinList, collapsedEras, adjustmentInput }));
+            // determine default for silver: second group open, others closed, all zeros, adjustment 0
+            const defaultCollapsed = {};
+            Object.keys(initializedGroups).forEach((groupLabel, index) => {
+                defaultCollapsed[groupLabel] = index !== 1;
+            })
+            const isDefault = (function() {
+                if (String(adjustmentInput) !== '0') return false;
+                for (const k of Object.keys(initializedGroups)) if (collapsedEras[k] !== defaultCollapsed[k]) return false;
+                for (const coins of Object.values(coinList)) for (const c of coins) if (Number(c.quantity) !== 0) return false;
+                return true;
+            })();
+            if (isDefault) {
+                localStorage.removeItem('silver_state');
+                setHasSaved(false);
+            } else {
+                localStorage.setItem('silver_state', JSON.stringify({ coinList, collapsedEras, adjustmentInput }));
+                setHasSaved(true);
+            }
         } catch (e) {}
     }, [coinList, collapsedEras, adjustmentInput]);
 
@@ -189,13 +213,15 @@ function SilverCalculator() {
                                 >
                                     {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
                                 </button>
-                                <button
-                                    className="action-button"
-                                    onClick={resetSilverState}
-                                    title="Herstel silver blad na verstek state"
-                                >
-                                    🔄 Herstel
-                                </button>
+                                {hasSaved && (
+                                    <button
+                                        className="action-button"
+                                        onClick={resetSilverState}
+                                        title="Herstel silver blad na verstek state"
+                                    >
+                                        🔄 Herstel
+                                    </button>
+                                )}
 
                             </div>
 

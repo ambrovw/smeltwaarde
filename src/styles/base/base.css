@@ -20,7 +20,8 @@ html, body {
 .container {
     width: 100%;
     max-width: 760px;
-    margin-top: 5rem;
+    /* Further reduced margin-top so content sits closer under the fixed navbar */
+    margin-top: 1.5rem;
     border-radius: 8px;
     padding: 0.0rem 2rem;
 }
@@ -75,6 +76,8 @@ h1 {
     .container {
         width: 100%;
         max-width: 480px;
+        /* smaller top gap on mobile */
+        margin-top: 1rem;
         box-sizing: border-box;
     }
 
