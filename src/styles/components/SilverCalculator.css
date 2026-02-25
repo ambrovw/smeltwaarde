@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    margin-top: 3.8rem;
+    margin-top: calc(0.5rem + 10px);
     flex-wrap: wrap;
 }
 

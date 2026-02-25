@@ -47,6 +47,7 @@ function AnnouncementBanner() {
     );
 }
 
+
 function App() {
     return (
         <LanguageProvider>

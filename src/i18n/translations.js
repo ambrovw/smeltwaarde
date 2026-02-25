@@ -59,6 +59,10 @@ export const af = {
     banner: 'Verskoning vir die onlangse stilstand — ons is weer aanlyn en reg om te gaan!',
     bannerEngels: 'Nou ook beskikbaar in Engels!',
 
+    // Footer
+    footerCta: 'Wil jy dit vir jou webwerf hê? Kontak my.',
+    footerModalText: 'Stuur vir my \'n e-pos en ek sal jou help om dit op te stel:',
+
     // Helmet
     silverTitle: 'Smeltwaarde | Silwer munt smeltwaarde sakrekenaar',
     silverDescription: 'Bereken die smeltwaarde van ou Suid-Afrikaanse silwer munte — ZAR, Unie, RSA, Brits, en VSA.',
@@ -127,6 +131,10 @@ export const en = {
 
     // Banner
     banner: 'Apologies for the recent downtime — we are back online and ready to go!',
+
+    // Footer
+    footerCta: 'Want this for your website? Contact me.',
+    footerModalText: 'Send me an email and I\'ll help you set it up:',
 
     // Helmet
     silverTitle: 'Smeltwaarde | Silver coin melt value calculator',

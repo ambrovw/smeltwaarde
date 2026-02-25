@@ -78,12 +78,91 @@ h1 {
     line-height: 1.2;
 }
 
+.era-header--active {
+    background-color: var(--highlight);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+}
+
 /* Stronger override to ensure component CSS can't accidentally shrink headings */
 .scroll-wrapper .container .era-header,
 .container .era-header {
     font-size: 1rem !important;
     margin: 0.4rem 0 !important;
     font-weight: 700 !important;
+}
+
+.contact-row {
+    text-align: center;
+    margin: 0.3rem 0;
+}
+
+.footer-cta {
+    background: none;
+    border: none;
+    color: var(--fg);
+    opacity: 0.4;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: inherit;
+    transition: opacity 0.2s;
+}
+
+.footer-cta:hover {
+    opacity: 0.7;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-width: 340px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-content p {
+    font-size: 0.9rem;
+    margin: 0 0 0.8rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--fg);
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.modal-close:hover {
+    opacity: 1;
+}
+
+.modal-email {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.modal-email:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 600px) {

@@ -5,6 +5,7 @@ import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
 import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
+import ContactLink from './ContactLink.jsx';
 
 function SilverCalculator() {
     const { t } = useLanguage();
@@ -242,10 +243,14 @@ function SilverCalculator() {
 
                             </div>
 
-                            {Object.entries(coinList).map(([groupLabel, coins]) => (
+                            <ContactLink />
+
+                            {Object.entries(coinList).map(([groupLabel, coins]) => {
+                                const groupTotal = coins.reduce((sum, c) => sum + (Number(c.quantity) || 0), 0);
+                                return (
                                 <div key={groupLabel}>
-                                    <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
-                                        {collapsedEras[groupLabel] ? '▸' : '▾'} {t(groupLabel) || groupLabel}
+                                    <h2 className={`era-header ${groupTotal > 0 ? 'era-header--active' : ''}`} onClick={() => toggleEra(groupLabel)}>
+                                        {collapsedEras[groupLabel] ? '▸' : '▾'} {t(groupLabel) || groupLabel}{groupTotal > 0 && ` (${groupTotal})`}
                                     </h2>
 
                                     {!collapsedEras[groupLabel] && (
@@ -318,7 +323,8 @@ function SilverCalculator() {
                                         </table>
                                     )}
                                 </div>
-                            ))}
+                                );
+                            })}
 
                             <div className="totals-row">
                                 <div className="totals-item">
