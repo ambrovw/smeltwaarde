@@ -83,7 +83,7 @@ export const coins = {
         { name: "Thaler", era: "1780+", purity: 0.8333, weight: 28.0668, quantity: 0 },
     ],
     "Bullion en skroot": [
-        { name: "Fynsilwer (ozt)", era: "-", purity: 0.999, weight: 31.1035, quantity: 0 },
+        { name: "Fynsilwer (ozt)", era: "-", purity: 0.999, weight: 31.1034768, quantity: 0 },
         { name: "Fynsilwer (g)", era: "-", purity: 0.999, weight: 1, quantity: 0 },
         { name: "92.5% (g)", era: "-", purity: 0.925, weight: 1, quantity: 0 },
         { name: "90% (g)", era: "-", purity: 0.9, weight: 1, quantity: 0 },

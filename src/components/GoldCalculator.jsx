@@ -164,7 +164,7 @@ function GoldCalculator() {
         .flat()
         .reduce((sum, coin) => {
             const fineGrams = coin.purity * coin.weight * coin.quantity
-            const fineOunces = fineGrams / 31.1035
+            const fineOunces = fineGrams / 31.1034768
             return sum + (adjustedGoldPrice || 0) * fineOunces
         }, 0)
 
@@ -274,9 +274,9 @@ function GoldCalculator() {
                                          <tbody>
                                             {coins.map((coin, index) => {
                                                 const fineGrams = coin.purity * coin.weight * coin.quantity
-                                                const fineOunces = fineGrams / 31.1035
+                                                const fineOunces = fineGrams / 31.1034768
                                                 const value = (adjustedGoldPrice || 0) * fineOunces
-                                                const perItemValue = (adjustedGoldPrice || 0) * (coin.purity * coin.weight / 31.1035)
+                                                const perItemValue = (adjustedGoldPrice || 0) * (coin.purity * coin.weight / 31.1034768)
 
                                                 return (
                                                     <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
@@ -284,7 +284,7 @@ function GoldCalculator() {
                                                         {!hideColumns && <td>{coin.era}</td>}
                                                         {!hideColumns && <td>{coin.purity}</td>}
                                                         {!hideColumns && <td>{coin.weight}</td>}
-                                                        {!hideColumns && <td>{fineGrams.toFixed(2)}</td>}
+                                                        {!hideColumns && <td>{fineGrams.toFixed(6)}</td>}
                                                         <td className="calc-each">R{perItemValue.toFixed(2)}</td>
                                                         <td>
                                                             <div className="quantity-control">
@@ -322,7 +322,7 @@ function GoldCalculator() {
 
                         <div className="totals-row">
                             <div className="totals-item">
-                                🪙 {t('totalGold')} <span>{totalFineGoldGrams.toFixed(2)}g</span>
+                                🪙 {t('totalGold')} <span>{totalFineGoldGrams.toFixed(6)}g</span>
                             </div>
                             <div className="totals-item">
                                 💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>

@@ -29,7 +29,7 @@ export default function useSilverPrice() {
                     setFlashPrice(true);
                     setTimeout(() => setFlashPrice(false), 500);
                     setSilverPrice(zarPrice);
-                    setRandPerGram(zarPrice / 31.1035);
+                    setRandPerGram(zarPrice / 31.1034768);
 
                     // Calculate change from previous fetch
                     if (prevPrice.current !== null) {

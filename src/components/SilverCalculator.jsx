@@ -143,7 +143,7 @@ function SilverCalculator() {
             .flat()
             .reduce((sum, coin) => {
                 const fineSilverGrams = coin.purity * coin.weight * coin.quantity
-                const fineSilverOunces = fineSilverGrams / 31.1035
+                const fineSilverOunces = fineSilverGrams / 31.1034768
                 return sum + adjustedSilverPrice * fineSilverOunces
             }, 0)
 
@@ -274,9 +274,9 @@ function SilverCalculator() {
                                             <tbody>
                                             {coins.map((coin, index) => {
                                                 const fineSilverGrams = coin.purity * coin.weight * coin.quantity;
-                                                const fineSilverOunces = fineSilverGrams / 31.1035;
+                                                const fineSilverOunces = fineSilverGrams / 31.1034768;
                                                 const value = adjustedSilverPrice * fineSilverOunces;
-                                                const perItemValue = adjustedSilverPrice * (coin.purity * coin.weight / 31.1035);
+                                                const perItemValue = adjustedSilverPrice * (coin.purity * coin.weight / 31.1034768);
 
                                                 return (
                                                     <tr key={`${coin.era}-${index}`} className={coin.quantity !== 0 ? 'calc-highlight-row' : ''}>
@@ -284,7 +284,7 @@ function SilverCalculator() {
                                                         {!hideColumns && <td>{coin.era}</td>}
                                                         {!hideColumns && <td>{coin.purity}</td>}
                                                         {!hideColumns && <td>{coin.weight}</td>}
-                                                        {!hideColumns && <td>{fineSilverGrams.toFixed(2)}</td>}
+                                                        {!hideColumns && <td>{fineSilverGrams.toFixed(6)}</td>}
                                                         <td className="calc-each">R{perItemValue.toFixed(2)}</td>
                                                         <td>
                                                             <div className="quantity-control">
@@ -322,7 +322,7 @@ function SilverCalculator() {
 
                             <div className="totals-row">
                                 <div className="totals-item">
-                                    🪙 {t('totalSilver')} <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                                    🪙 {t('totalSilver')} <span>{totalFineSilverGrams.toFixed(6)}g</span>
                                 </div>
                                 <div className="totals-item">
                                     💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
