@@ -20,15 +20,28 @@ function PageViewTracker() {
     return null;
 }
 
+function BannerSegment() {
+    const { t, lang } = useLanguage();
+    return (
+        <>
+            {`⚒️ ${t('banner')}\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0`}
+            {lang === 'af' && (
+                <>
+                    <img src="/flags/uk.svg" alt="" className="banner-flag" />
+                    {` ${t('bannerEngels')}\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0`}
+                </>
+            )}
+        </>
+    );
+}
+
 function AnnouncementBanner() {
-    const { t } = useLanguage();
-    const msg = `⚒️ ${t('banner')}\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0`;
-    const repeated = (msg).repeat(5);
+    const segments = Array.from({ length: 5 }, (_, i) => <BannerSegment key={i} />);
     return (
         <div className="announcement-banner">
             <div className="announcement-banner__track">
-                <span>{repeated}</span>
-                <span>{repeated}</span>
+                <span>{segments}</span>
+                <span>{segments}</span>
             </div>
         </div>
     );

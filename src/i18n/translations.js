@@ -57,6 +57,7 @@ export const af = {
 
     // Banner
     banner: 'Verskoning vir die onlangse stilstand — ons is weer aanlyn en reg om te gaan!',
+    bannerEngels: 'Nou ook beskikbaar in Engels!',
 
     // Helmet
     silverTitle: 'Smeltwaarde | Silwer munt smeltwaarde sakrekenaar',

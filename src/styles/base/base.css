@@ -19,6 +19,14 @@
     animation: scroll-banner 30s linear infinite;
 }
 
+.banner-flag {
+    width: 18px;
+    height: 12px;
+    vertical-align: middle;
+    margin: 0 2px;
+    border-radius: 1px;
+}
+
 @keyframes scroll-banner {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }

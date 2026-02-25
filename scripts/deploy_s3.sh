@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
+set -eu
 
 # deploy_s3.sh
 # Zero-argument deploy script. Uploads built site (dist/) to S3 bucket using local AWS profile 'ambro'.
