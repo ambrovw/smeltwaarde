@@ -74,7 +74,7 @@ export const coins = {
     "VSA <=1964 90%": [
         { name: "Dollar", era: "<=1964", purity: 0.9, weight: 26.73, quantity: 0 },
         { name: "Half Dollar", era: "<=1964", purity: 0.9, weight: 12.5, quantity: 0 },
-        { name: "Quater", era: "<=1964", purity: 0.9, weight: 6.25, quantity: 0 },
+        { name: "Quarter", era: "<=1964", purity: 0.9, weight: 6.25, quantity: 0 },
         { name: "Dime", era: "<=1964", purity: 0.9, weight: 2.5, quantity: 0 },
         { name: "Kennedy Half (40%) 1965-1970", era: "1965-1970", purity: 0.4, weight: 11.5, quantity: 0 },
         { name: "War Nickel (35%) 1942-1945", era: "1942-1945", purity: 0.35, weight: 5, quantity: 0 },

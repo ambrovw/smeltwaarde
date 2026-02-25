@@ -126,7 +126,14 @@ function SilverCalculator() {
 
         setCoinList(updated);
 
-        // Google Analytics removed intentionally
+        // Trigger Google Analytics event
+        if (window.gtag) {
+            window.gtag('event', 'hoeveelheid_change', {
+                event_category: 'Input',
+                event_label: `${targetCoin.name} (${targetCoin.era})`,
+                value: parsedQty === '' ? 0 : parsedQty
+            });
+        }
     };
 
         const totalFineSilverGrams = Object.values(coinList)
