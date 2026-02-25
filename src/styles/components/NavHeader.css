@@ -92,3 +92,20 @@
     color: var(--card-bg);
     transform: scale(1.25);
 }
+
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-toggle:hover {
+    background-color: var(--accent);
+    color: var(--card-bg);
+}

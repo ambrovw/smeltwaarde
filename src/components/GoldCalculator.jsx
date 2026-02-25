@@ -4,8 +4,11 @@ import { coins as groupedCoins } from '../goldCoinData.js'
 import '../styles/components/SilverCalculator.css';
 import { Helmet } from 'react-helmet';
 import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 function GoldCalculator() {
+    const { t } = useLanguage();
+
     const {
         goldPrice,
         randPerGram,
@@ -181,20 +184,20 @@ function GoldCalculator() {
     return (
         <div className="scroll-wrapper">
             <Helmet>
-                <title>Smeltwaarde | Goue munt smeltwaarde sakrekenaar</title>
-                <meta name="description" content="Bereken die smeltwaarde van Krugerrands, ZAR Ponde, en goue skroot. Calculate South African gold coin melt values with live prices." />
+                <title>{t('goldTitle')}</title>
+                <meta name="description" content={t('goldDescription')} />
                 <meta name="keywords" content="smeltwaarde, goud, Krugerrand, gold coins, melt value, ZAR Pond, gold scrap, South African gold" />
                 <link rel="canonical" href="https://smeltwaarde.co.za/gold" />
             </Helmet>
             <div className="container">
                 {error ? (
-                    <p className="error">{error}</p>
+                    <p className="error">{t('fetchFailedGold')}</p>
                 ) : goldPrice ? (
                     <>
                         <div className="header-row">
                             <img src="/smeltwaarde_logo_transparent_bgfill.webp" alt="Smeltwaarde Logo" className="logo" />
                             <div className="header-text">
-                                <h1>Goue munt waarde</h1>
+                                <h1>{t('goldHeading')}</h1>
                                 <p className={`price ${flashPrice ? 'flash' : ''}`}>
                                     R{randPerGram ? randPerGram.toFixed(2) : '–'}/g {'  -  '} R{goldPrice ? goldPrice.toFixed(2) : '–'}/ozt
                                     <span className={`rateChange ${chgXau >= 0 ? 'up' : 'down'}`}>
@@ -209,9 +212,9 @@ function GoldCalculator() {
                             <label
                                 htmlFor="adjustment"
                                 className="adjustment-label"
-                                title="Pas die goue prys aan met 'n persentasie om 'n premie of afslag in te reken."
+                                title={t('premiumTooltipGold')}
                             >
-                                💡 Premie:
+                                💡 {t('premium')}
                             </label>
                              <div className="quantity-control">
                                 <button type="button" onClick={() => setAdjustmentInput(prev => Math.max(Number(prev) - 0.5, -100))}>-</button>
@@ -226,15 +229,15 @@ function GoldCalculator() {
                                 className="action-button"
                                 onClick={() => setHideColumns(prev => !prev)}
                             >
-                                {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Goud'}
+                                {hideColumns ? `👁️ ${t('showDetails')}` : `🙈 ${t('hideDetailsGold')}`}
                             </button>
                             {hasSaved && (
                                 <button
                                     className="action-button"
                                     onClick={resetGoldState}
-                                    title="Herstel goud blad na verstek state"
+                                    title={t('resetTooltipGold')}
                                 >
-                                    🔄 Herstel
+                                    🔄 {t('reset')}
                                 </button>
                             )}
                         </div>
@@ -242,7 +245,7 @@ function GoldCalculator() {
                         {Object.entries(coinList).map(([groupLabel, coins]) => (
                             <div key={groupLabel}>
                                 <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
-                                    {collapsedEras[groupLabel] ? '▸' : '▾'} {groupLabel}
+                                    {collapsedEras[groupLabel] ? '▸' : '▾'} {t(groupLabel) || groupLabel}
                                 </h2>
                                  {!collapsedEras[groupLabel] && (
                                      <table className="coin-table">
@@ -258,14 +261,14 @@ function GoldCalculator() {
                                          </colgroup>
                                          <thead>
                                              <tr>
-                                                 <th>Munt</th>
-                                                 {!hideColumns && <th>Era</th>}
-                                                 {!hideColumns && <th>Fynheid</th>}
-                                                 {!hideColumns && <th>Gewig (g)</th>}
-                                                 {!hideColumns && <th>Goud (g)</th>}
-                                                 <th>Elk</th>
-                                                 <th>Hoeveelheid</th>
-                                                 <th>Waarde (R)</th>
+                                                 <th>{t('coin')}</th>
+                                                 {!hideColumns && <th>{t('era')}</th>}
+                                                 {!hideColumns && <th>{t('purity')}</th>}
+                                                 {!hideColumns && <th>{t('weight')}</th>}
+                                                 {!hideColumns && <th>{t('goldGrams')}</th>}
+                                                 <th>{t('each')}</th>
+                                                 <th>{t('quantity')}</th>
+                                                 <th>{t('valueR')}</th>
                                              </tr>
                                          </thead>
                                          <tbody>
@@ -319,15 +322,15 @@ function GoldCalculator() {
 
                         <div className="totals-row">
                             <div className="totals-item">
-                                🪙 Totale goud: <span>{totalFineGoldGrams.toFixed(2)}g</span>
+                                🪙 {t('totalGold')} <span>{totalFineGoldGrams.toFixed(2)}g</span>
                             </div>
                             <div className="totals-item">
-                                💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
+                                💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                             </div>
                         </div>
                     </>
                 ) : (
-                    <p>Loading...</p>
+                    <p>{t('loading')}</p>
                 )}
             </div>
         </div>

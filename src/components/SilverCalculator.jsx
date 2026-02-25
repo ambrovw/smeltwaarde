@@ -4,8 +4,10 @@ import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
 import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 function SilverCalculator() {
+    const { t } = useLanguage();
 
     const {
         silverPrice,
@@ -162,21 +164,21 @@ function SilverCalculator() {
             <div className="scroll-wrapper">
 
                 <Helmet>
-                    <title>Smeltwaarde | Silwer munt smeltwaarde sakrekenaar</title>
-                    <meta name="description" content="Bereken die smeltwaarde van ou Suid-Afrikaanse silwer munte — ZAR, Unie, RSA, Brits, en VSA. Calculate South African silver coin melt values with live prices." />
+                    <title>{t('silverTitle')}</title>
+                    <meta name="description" content={t('silverDescription')} />
                     <meta name="keywords" content="smeltwaarde, silwer munte, silver coins, melt value, junk silver, ZAR coins, Union coins, Krugerrand, South African coins" />
                     <link rel="canonical" href="https://smeltwaarde.co.za/silver" />
                 </Helmet>
 
                 <div className="container">
                     {error ? (
-                        <p className="error">{error}</p>
+                        <p className="error">{t('fetchFailedSilver')}</p>
                     ) : silverPrice ? (
                         <>
                             <div className="header-row">
                                 <img src="/smeltwaarde_logo_transparent_bgfill.webp" alt="Smeltwaarde Logo" className="logo" />
                                 <div className="header-text">
-                                    <h1>Silwer munt waarde</h1>
+                                    <h1>{t('silverHeading')}</h1>
                                     <p className={`price ${flashPrice ? 'flash' : ''}`}>
                                         R{randPerGram.toFixed(2)}/g {'  -  '} R{silverPrice.toFixed(2)}/ozt
                                         <span className={`rateChange ${chgXag >= 0 ? 'up' : 'down'}`}>
@@ -191,9 +193,9 @@ function SilverCalculator() {
                                 <label
                                     htmlFor="adjustment"
                                     className="adjustment-label"
-                                    title="Pas die silwerprys aan met 'n persentasie om 'n premie of afslag in te reken."
+                                    title={t('premiumTooltipSilver')}
                                 >
-                                    💡 Premie:
+                                    💡 {t('premium')}
                                 </label>
                                 <div className="quantity-control">
                                     <button
@@ -226,15 +228,15 @@ function SilverCalculator() {
                                     className="action-button"
                                     onClick={() => setHideColumns(prev => !prev)}
                                 >
-                                    {hideColumns ? '👁️ Fyn Details' : '🙈 Versteek Era/Fynheid/Gewig/Silwer'}
+                                    {hideColumns ? `👁️ ${t('showDetails')}` : `🙈 ${t('hideDetailsSilver')}`}
                                 </button>
                                 {hasSaved && (
                                     <button
                                         className="action-button"
                                         onClick={resetSilverState}
-                                        title="Herstel silwer blad na verstek state"
+                                        title={t('resetTooltipSilver')}
                                     >
-                                        🔄 Herstel
+                                        🔄 {t('reset')}
                                     </button>
                                 )}
 
@@ -243,7 +245,7 @@ function SilverCalculator() {
                             {Object.entries(coinList).map(([groupLabel, coins]) => (
                                 <div key={groupLabel}>
                                     <h2 className="era-header" onClick={() => toggleEra(groupLabel)}>
-                                        {collapsedEras[groupLabel] ? '▸' : '▾'} {groupLabel}
+                                        {collapsedEras[groupLabel] ? '▸' : '▾'} {t(groupLabel) || groupLabel}
                                     </h2>
 
                                     {!collapsedEras[groupLabel] && (
@@ -259,14 +261,14 @@ function SilverCalculator() {
                                             </colgroup>
                                             <thead>
                                             <tr>
-                                                <th>Munt</th>
-                                                {!hideColumns && <th>Era</th>}
-                                                {!hideColumns && <th>Fynheid</th>}
-                                                {!hideColumns && <th>Gewig (g)</th>}
-                                                {!hideColumns && <th>Silver (g)</th>}
-                                                <th>Elk</th>
-                                                <th>Hoeveelheid</th>
-                                                <th>Waarde (R)</th>
+                                                <th>{t('coin')}</th>
+                                                {!hideColumns && <th>{t('era')}</th>}
+                                                {!hideColumns && <th>{t('purity')}</th>}
+                                                {!hideColumns && <th>{t('weight')}</th>}
+                                                {!hideColumns && <th>{t('silverGrams')}</th>}
+                                                <th>{t('each')}</th>
+                                                <th>{t('quantity')}</th>
+                                                <th>{t('valueR')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -320,17 +322,15 @@ function SilverCalculator() {
 
                             <div className="totals-row">
                                 <div className="totals-item">
-                                    🪙 Totale silwer: <span>{totalFineSilverGrams.toFixed(2)}g</span>
+                                    🪙 {t('totalSilver')} <span>{totalFineSilverGrams.toFixed(2)}g</span>
                                 </div>
                                 <div className="totals-item">
-                                    💰 Totale waarde: <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
+                                    💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                                 </div>
                             </div>
-
-                            {/* Removed the koop/shop button and navigation to ensure no shop/backend code remains */}
                         </>
                     ) : (
-                        <p>Loading...</p>
+                        <p>{t('loading')}</p>
                     )}
                 </div>
             </div>

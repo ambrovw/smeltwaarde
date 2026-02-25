@@ -10,6 +10,7 @@ import MetalTabs from './components/MetalTabs.jsx';
 import MuntHoeveelhede from './components/MuntHoeveelhede.jsx';
 import NavHeader from './components/NavHeader';
 import { trackPageView } from './analytics.js';
+import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx';
 
 function PageViewTracker() {
     const location = useLocation();
@@ -20,8 +21,8 @@ function PageViewTracker() {
 }
 
 function AnnouncementBanner() {
-    const msg = '⚒️ Verskoning vir die onlangse stilstand — ons is weer aanlyn en reg om te gaan!\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0';
-    // Repeat enough times so each half fills more than the viewport
+    const { t } = useLanguage();
+    const msg = `⚒️ ${t('banner')}\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0`;
     const repeated = (msg).repeat(5);
     return (
         <div className="announcement-banner">
@@ -35,20 +36,22 @@ function AnnouncementBanner() {
 
 function App() {
     return (
-        <Router>
-            <PageViewTracker />
-            <AnnouncementBanner />
-            <NavHeader />
-            <div>
-                <Routes>
-                    <Route path="/" element={<MetalTabs />} />
-                    <Route path="/silver" element={<MetalTabs initialTab="silver" />} />
-                    <Route path="/gold" element={<MetalTabs initialTab="gold" />} />
-                    <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </div>
-        </Router>
+        <LanguageProvider>
+            <Router>
+                <PageViewTracker />
+                <AnnouncementBanner />
+                <NavHeader />
+                <div>
+                    <Routes>
+                        <Route path="/" element={<MetalTabs />} />
+                        <Route path="/silver" element={<MetalTabs initialTab="silver" />} />
+                        <Route path="/gold" element={<MetalTabs initialTab="gold" />} />
+                        <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </div>
+            </Router>
+        </LanguageProvider>
     );
 }
 

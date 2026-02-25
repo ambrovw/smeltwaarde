@@ -3,8 +3,10 @@ import { useSearchParams } from 'react-router-dom'
 import SilverCalculator from './SilverCalculator.jsx'
 import GoldCalculator from './GoldCalculator.jsx'
 import '../styles/components/Tabs.css'
+import { useLanguage } from '../i18n/LanguageContext.jsx'
 
 function MetalTabs({ initialTab }) {
+    const { t } = useLanguage()
     const [searchParams] = useSearchParams()
     const fromQuery = searchParams.get('tab') === 'gold' ? 'gold' : 'silver'
     const initial = initialTab === 'gold' ? 'gold' : fromQuery
@@ -23,13 +25,13 @@ function MetalTabs({ initialTab }) {
                     className={`tab ${active === 'silver' ? 'tab--active' : ''}`}
                     onClick={() => setActive('silver')}
                 >
-                    Silver
+                    {t('silver')}
                 </button>
                 <button
                     className={`tab ${active === 'gold' ? 'tab--active' : ''}`}
                     onClick={() => setActive('gold')}
                 >
-                    Goud
+                    {t('gold')}
                 </button>
             </div>
 

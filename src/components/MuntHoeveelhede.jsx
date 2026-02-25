@@ -3,8 +3,11 @@ import { zarCoins, unionCoins, rsa1Coins } from '../muntHoeveelhedeData.js'
 import '../styles/components/MuntHoeveelhede.css';
 import { trackEvent } from '../analytics.js';
 import { Helmet } from 'react-helmet';
+import { useLanguage } from '../i18n/LanguageContext.jsx';
 
 function MuntHoeveelhede() {
+    const { t } = useLanguage();
+
     const [collapsedEras, setCollapsedEras] = useState({
         ZAR: true,
         Union: true,
@@ -67,7 +70,7 @@ function MuntHoeveelhede() {
             <table>
                 <thead>
                 <tr>
-                    <th>Jaar</th>
+                    <th>{t('year')}</th>
                     {denominations.map((denom, i) => (
                         <th key={i}>{denom}</th>
                     ))}
@@ -92,15 +95,15 @@ function MuntHoeveelhede() {
     return (
         <div className="scroll-wrapper">
             <Helmet>
-                <title>Smeltwaarde | Munt Hoeveelhede — SA silwer munt oplaagsyfers</title>
-                <meta name="description" content="Suid-Afrikaanse silwer munt oplaagsyfers — ZAR, Unie, en RSA desimale reeks. South African silver coin mintage figures by year and denomination." />
+                <title>{t('mintageHelmetTitle')}</title>
+                <meta name="description" content={t('mintageDescription')} />
                 <meta name="keywords" content="munt hoeveelhede, mintage, South African coins, ZAR, Union, RSA, silver coin mintage, oplaagsyfers" />
                 <link rel="canonical" href="https://smeltwaarde.co.za/muntHoeveelhede" />
             </Helmet>
             <div className="container">
-                <h1 className="page-title">Munt Hoeveelhede</h1>
+                <h1 className="page-title">{t('mintageTitle')}</h1>
                 <p className="source-note">
-                    <span>Bron:</span>
+                    <span>{t('source')}</span>
                     <a
                         href="https://en.numista.com/catalogue/south-africa-1.html"
                         target="_blank"
@@ -116,21 +119,21 @@ function MuntHoeveelhede() {
 
                 <div className="era-section">
                     <h2 className="era-header" onClick={() => toggleEra('ZAR')}>
-                        {collapsedEras.ZAR ? '▸' : '▾'} ZAR 1892–1898
+                        {collapsedEras.ZAR ? '▸' : '▾'} {t('zarEra')}
                     </h2>
                     {!collapsedEras.ZAR && renderMatrixTable(zarCoins)}
                 </div>
 
                 <div className="era-section">
                     <h2 className="era-header" onClick={() => toggleEra('Union')}>
-                        {collapsedEras.Union ? '▸' : '▾'} Suid Afrikaanse Unie (SAU) 1923–1960
+                        {collapsedEras.Union ? '▸' : '▾'} {t('unionEra')}
                     </h2>
                     {!collapsedEras.Union && renderMatrixTable(unionCoins)}
                 </div>
 
                 <div className="era-section">
                     <h2 className="era-header" onClick={() => toggleEra('RSA1')}>
-                        {collapsedEras.RSA1 ? '▸' : '▾'} RSA Eerste Desimale Reeks 1961–1964
+                        {collapsedEras.RSA1 ? '▸' : '▾'} {t('rsaEra')}
                     </h2>
                     {!collapsedEras.RSA1 && renderMatrixTable(rsa1Coins)}
                 </div>
