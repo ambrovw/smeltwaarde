@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { trackError } from '../analytics.js';
 
 export default function useSilverPrice() {
     const [silverPrice, setSilverPrice] = useState(null);
@@ -7,22 +8,38 @@ export default function useSilverPrice() {
     const [localTime, setLocalTime] = useState(null);
     const [flashPrice, setFlashPrice] = useState(false);
     const [error, setError] = useState(null);
+    const prevPrice = useRef(null);
 
     useEffect(() => {
         async function fetchSilverPrice() {
             try {
-                const response = await fetch('https://data-asg.goldprice.org/dbXRates/ZAR');
-                const data = await response.json();
-                const item = data.items?.[0];
+                const [metalRes, fxRes] = await Promise.all([
+                    fetch('https://api.gold-api.com/price/XAG'),
+                    fetch('https://open.er-api.com/v6/latest/USD'),
+                ]);
+                const metalData = await metalRes.json();
+                const fxData = await fxRes.json();
 
-                if (item && item.xagPrice && item.chgXag && data.date) {
+                const usdPrice = metalData?.price;
+                const zarRate = fxData?.rates?.ZAR;
+
+                if (typeof usdPrice === 'number' && Number.isFinite(usdPrice) && zarRate) {
+                    const zarPrice = usdPrice * zarRate;
+
                     setFlashPrice(true);
                     setTimeout(() => setFlashPrice(false), 500);
-                    setSilverPrice(item.xagPrice);
-                    setRandPerGram(item.xagPrice / 31.1035);
-                    setChgXag(item.chgXag);
+                    setSilverPrice(zarPrice);
+                    setRandPerGram(zarPrice / 31.1035);
 
-                    const utcDate = new Date(data.tsj);
+                    // Calculate change from previous fetch
+                    if (prevPrice.current !== null) {
+                        setChgXag(zarPrice - prevPrice.current);
+                    } else {
+                        setChgXag(0);
+                    }
+                    prevPrice.current = zarPrice;
+
+                    const utcDate = new Date(metalData.updatedAt);
                     const saDate = utcDate.toLocaleString('af-ZA', {
                         timeZone: 'Africa/Johannesburg',
                         weekday: 'short',
@@ -33,14 +50,15 @@ export default function useSilverPrice() {
                         minute: '2-digit',
                         second: '2-digit',
                     });
-
                     setLocalTime(saDate);
                     setError(null);
                 } else {
                     setError('Price data unavailable');
+                    trackError('silver_price_error', 'Price data unavailable');
                 }
             } catch (err) {
                 setError('Failed to fetch silver price');
+                trackError('silver_price_error', err.message || 'fetch failed');
             }
         }
 

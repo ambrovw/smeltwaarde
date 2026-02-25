@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useGoldPrice from '../hooks/useGoldPrice.js';
 import { coins as groupedCoins } from '../goldCoinData.js'
 import '../styles/components/SilverCalculator.css';
 import { Helmet } from 'react-helmet';
+import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
 
 function GoldCalculator() {
     const {
@@ -125,23 +126,20 @@ function GoldCalculator() {
         );
 
         setCoinList(updated);
-
-        // Trigger Google Analytics event
-        if (window.gtag) {
-            window.gtag('event', 'hoeveelheid_change', {
-                event_category: 'Input',
-                event_label: `${targetCoin.name} (${targetCoin.era})`,
-                value: parsedQty === '' ? 0 : parsedQty
-            });
-        }
+        trackQuantityChangeDebounced(targetCoin, parsedQty, 'gold');
     };
 
     const toggleEra = (eraKey) => {
-        setCollapsedEras(prev => ({ ...prev, [eraKey]: !prev[eraKey] }))
+        setCollapsedEras(prev => {
+            const expanded = prev[eraKey]; // was collapsed → now expanding
+            trackEvent('group_toggle', { group_name: eraKey, expanded, metal: 'gold' });
+            return { ...prev, [eraKey]: !prev[eraKey] };
+        })
     }
 
     // Reset persisted gold state and revert to defaults
     const resetGoldState = () => {
+        trackEvent('calculator_reset', { metal: 'gold' });
         try { localStorage.removeItem('gold_state'); } catch (e) {}
         setCoinList(initializedGroups);
         const defaultCollapsed = {};
@@ -166,6 +164,19 @@ function GoldCalculator() {
             const fineOunces = fineGrams / 31.1035
             return sum + (adjustedGoldPrice || 0) * fineOunces
         }, 0)
+
+    // Fire engagement event once per session when user first has a non-zero total
+    const engagementFired = useRef(false);
+    useEffect(() => {
+        if (totalValue > 0 && !engagementFired.current) {
+            engagementFired.current = true;
+            trackEvent('calculation_active', {
+                metal: 'gold',
+                total_value: Math.round(totalValue),
+                total_grams: Math.round(totalFineGoldGrams * 100) / 100,
+            });
+        }
+    }, [totalValue]);
 
     return (
         <div className="scroll-wrapper">

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSilverPrice from '../hooks/useSilverPrice.js';
 import { coins as groupedCoins } from '../coinData.js'
 import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
+import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
 
 function SilverCalculator() {
 
@@ -60,15 +61,17 @@ function SilverCalculator() {
     })
 
     const toggleEra = (groupLabel) => {
-        setCollapsedEras((prev) => ({
-            ...prev,
-            [groupLabel]: !prev[groupLabel]
-        }))
+        setCollapsedEras((prev) => {
+            const expanded = prev[groupLabel]; // was collapsed → now expanding
+            trackEvent('group_toggle', { group_name: groupLabel, expanded, metal: 'silver' });
+            return { ...prev, [groupLabel]: !prev[groupLabel] };
+        })
     }
     const [hideColumns, setHideColumns] = useState(true);
 
     // Reset persisted silver state
     const resetSilverState = () => {
+        trackEvent('calculator_reset', { metal: 'silver' });
         try { localStorage.removeItem('silver_state'); } catch (e) {}
         setCoinList(initializedGroups);
         const defaultCollapsed = {};
@@ -125,15 +128,7 @@ function SilverCalculator() {
         );
 
         setCoinList(updated);
-
-        // Trigger Google Analytics event
-        if (window.gtag) {
-            window.gtag('event', 'hoeveelheid_change', {
-                event_category: 'Input',
-                event_label: `${targetCoin.name} (${targetCoin.era})`,
-                value: parsedQty === '' ? 0 : parsedQty
-            });
-        }
+        trackQuantityChangeDebounced(targetCoin, parsedQty, 'silver');
     };
 
         const totalFineSilverGrams = Object.values(coinList)
@@ -149,6 +144,19 @@ function SilverCalculator() {
                 const fineSilverOunces = fineSilverGrams / 31.1035
                 return sum + adjustedSilverPrice * fineSilverOunces
             }, 0)
+
+        // Fire engagement event once per session when user first has a non-zero total
+        const engagementFired = useRef(false);
+        useEffect(() => {
+            if (totalValue > 0 && !engagementFired.current) {
+                engagementFired.current = true;
+                trackEvent('calculation_active', {
+                    metal: 'silver',
+                    total_value: Math.round(totalValue),
+                    total_grams: Math.round(totalFineSilverGrams * 100) / 100,
+                });
+            }
+        }, [totalValue]);
 
         return (
             <div className="scroll-wrapper">

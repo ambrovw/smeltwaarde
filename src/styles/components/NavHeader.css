@@ -2,7 +2,7 @@
     background-color: var(--bg);
     border-bottom: 1px solid var(--accent);
     position: fixed;
-    top: 0;
+    top: 1.8rem;
     left: 0;
     width: 100%;
     display: flex;

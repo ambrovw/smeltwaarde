@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { zarCoins, unionCoins, rsa1Coins } from '../muntHoeveelhedeData.js'
 import '../styles/components/MuntHoeveelhede.css';
+import { trackEvent } from '../analytics.js';
 
 function MuntHoeveelhede() {
     const [collapsedEras, setCollapsedEras] = useState({
@@ -33,10 +34,11 @@ function MuntHoeveelhede() {
     }
 
     const toggleEra = (eraKey) => {
-        setCollapsedEras(prev => ({
-            ...prev,
-            [eraKey]: !prev[eraKey]
-        }))
+        setCollapsedEras(prev => {
+            const expanded = prev[eraKey]; // was collapsed → now expanding
+            trackEvent('group_toggle', { group_name: eraKey, expanded, metal: 'mintage' });
+            return { ...prev, [eraKey]: !prev[eraKey] };
+        })
     }
 
     const buildMatrix = (coins) => {
@@ -97,6 +99,7 @@ function MuntHoeveelhede() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="source-link"
+                        onClick={() => trackEvent('external_link_click', { url: 'https://en.numista.com/catalogue/south-africa-1.html' })}
                     >
                         Numista, 2025
                     </a>

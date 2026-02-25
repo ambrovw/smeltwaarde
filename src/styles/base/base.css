@@ -1,3 +1,29 @@
+.announcement-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    overflow: hidden;
+    background-color: var(--accent, #b29e68);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.8rem;
+    white-space: nowrap;
+}
+
+.announcement-banner__track {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-banner 30s linear infinite;
+}
+
+@keyframes scroll-banner {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 html, body {
     width: 100vw;
     font-family: 'Inter', system-ui, sans-serif;
@@ -20,8 +46,8 @@ html, body {
 .container {
     width: 100%;
     max-width: 760px;
-    /* Further reduced margin-top so content sits closer under the fixed navbar */
-    margin-top: 1.5rem;
+    /* Account for fixed navbar + announcement banner */
+    margin-top: 3.3rem;
     border-radius: 8px;
     padding: 0.0rem 2rem;
 }
@@ -76,8 +102,8 @@ h1 {
     .container {
         width: 100%;
         max-width: 480px;
-        /* smaller top gap on mobile */
-        margin-top: 1rem;
+        /* Account for fixed navbar + announcement banner on mobile */
+        margin-top: 2.8rem;
         box-sizing: border-box;
     }
 

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { trackError } from '../analytics.js';
 
 export default function useGoldPrice() {
     const [goldPrice, setGoldPrice] = useState(null);
@@ -7,60 +8,62 @@ export default function useGoldPrice() {
     const [localTime, setLocalTime] = useState(null);
     const [flashPrice, setFlashPrice] = useState(false);
     const [error, setError] = useState(null);
+    const prevPrice = useRef(null);
 
     useEffect(() => {
         async function fetchGoldPrice() {
             try {
-                const response = await fetch('https://data-asg.goldprice.org/dbXRates/ZAR');
-                const data = await response.json();
-                const item = data.items?.[0];
+                const [metalRes, fxRes] = await Promise.all([
+                    fetch('https://api.gold-api.com/price/XAU'),
+                    fetch('https://open.er-api.com/v6/latest/USD'),
+                ]);
+                const metalData = await metalRes.json();
+                const fxData = await fxRes.json();
 
-                // Validate numeric fields explicitly (0 should be allowed)
-                const hasXau = item && typeof item.xauPrice === 'number' && Number.isFinite(item.xauPrice);
-                const hasChg = item && 'chgXau' in item && typeof item.chgXau === 'number' && Number.isFinite(item.chgXau);
+                const usdPrice = metalData?.price;
+                const zarRate = fxData?.rates?.ZAR;
 
-                if (hasXau && hasChg) {
+                if (typeof usdPrice === 'number' && Number.isFinite(usdPrice) && zarRate) {
+                    const zarPrice = usdPrice * zarRate;
+
                     setFlashPrice(true);
                     setTimeout(() => setFlashPrice(false), 500);
-                    setGoldPrice(item.xauPrice);
-                    setRandPerGram(item.xauPrice / 31.1035);
-                    setChgXau(item.chgXau);
+                    setGoldPrice(zarPrice);
+                    setRandPerGram(zarPrice / 31.1035);
 
-                    // Prefer the millisecond timestamp fields (tsj or ts) for stable parsing
-                    const tsMs = (typeof data.tsj === 'number' && Number.isFinite(data.tsj))
-                        ? data.tsj
-                        : (typeof data.ts === 'number' && Number.isFinite(data.ts) ? data.ts : null);
-
-                    if (tsMs) {
-                        const utcDate = new Date(tsMs);
-                        const saDate = utcDate.toLocaleString('af-ZA', {
-                            timeZone: 'Africa/Johannesburg',
-                            weekday: 'short',
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit',
-                        });
-                        setLocalTime(saDate);
+                    // Calculate change from previous fetch
+                    if (prevPrice.current !== null) {
+                        setChgXau(zarPrice - prevPrice.current);
                     } else {
-                        // Fallback to the provided date string if present
-                        setLocalTime(typeof data.date === 'string' ? data.date : '');
+                        setChgXau(0);
                     }
+                    prevPrice.current = zarPrice;
 
+                    const utcDate = new Date(metalData.updatedAt);
+                    const saDate = utcDate.toLocaleString('af-ZA', {
+                        timeZone: 'Africa/Johannesburg',
+                        weekday: 'short',
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                    });
+                    setLocalTime(saDate);
                     setError(null);
                 } else {
                     setError('Kon nie goue prysdata laai nie');
+                    trackError('gold_price_error', 'Price data unavailable');
                 }
             } catch (err) {
                 console.error(err);
                 setError('Kon nie prysdata laai nie');
+                trackError('gold_price_error', err.message || 'fetch failed');
             }
         }
 
         fetchGoldPrice();
-
         const interval = setInterval(fetchGoldPrice, 60 * 1000);
         return () => clearInterval(interval);
     }, []);

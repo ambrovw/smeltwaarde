@@ -2,16 +2,11 @@ import { NavLink } from 'react-router-dom';
 import { FaCoins } from 'react-icons/fa';
 
 import '../styles/components/NavHeader.css';
+import { trackEvent } from '../analytics.js';
 
 function NavHeader() {
-    // Helper function to send GA event
     const handleTabClick = (tabName) => {
-        if (window.gtag) {
-            window.gtag('event', 'tab_click', {
-                event_category: 'Navigation',
-                event_label: tabName,
-            });
-        }
+        trackEvent('tab_click', { tab_name: tabName });
     };
 
     return (
