@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { zarCoins, unionCoins, rsa1Coins } from '../muntHoeveelhedeData.js'
 import '../styles/components/MuntHoeveelhede.css';
 import { trackEvent } from '../analytics.js';
+import { Helmet } from 'react-helmet';
 
 function MuntHoeveelhede() {
     const [collapsedEras, setCollapsedEras] = useState({
@@ -90,6 +91,12 @@ function MuntHoeveelhede() {
 
     return (
         <div className="scroll-wrapper">
+            <Helmet>
+                <title>Smeltwaarde | Munt Hoeveelhede — SA silwer munt oplaagsyfers</title>
+                <meta name="description" content="Suid-Afrikaanse silwer munt oplaagsyfers — ZAR, Unie, en RSA desimale reeks. South African silver coin mintage figures by year and denomination." />
+                <meta name="keywords" content="munt hoeveelhede, mintage, South African coins, ZAR, Union, RSA, silver coin mintage, oplaagsyfers" />
+                <link rel="canonical" href="https://smeltwaarde.co.za/muntHoeveelhede" />
+            </Helmet>
             <div className="container">
                 <h1 className="page-title">Munt Hoeveelhede</h1>
                 <p className="source-note">

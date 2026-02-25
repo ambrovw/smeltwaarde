@@ -162,10 +162,10 @@ function SilverCalculator() {
             <div className="scroll-wrapper">
 
                 <Helmet>
-                    <title>Smeltwaarde | Bereken die silverwaarde van ou Suid-Afrikaanse munte | Calculate the silver value of old South African coins and junk silver </title>
-                    <meta name="description" content="Koop ou Suid-Afrikaanse silwer munte. Browse and buy South African silver coins including ZAR, Union, and Rand-era collectibles." />
-                    <meta name="keywords" content="South African silver coins, melt value, junk silver, ZAR coins, Union coins, Rand coins, buy silver coins, old coins for sale" />
-                    <link rel="canonical" href="https://smeltwaarde.co.za/" />
+                    <title>Smeltwaarde | Silwer munt smeltwaarde sakrekenaar</title>
+                    <meta name="description" content="Bereken die smeltwaarde van ou Suid-Afrikaanse silwer munte — ZAR, Unie, RSA, Brits, en VSA. Calculate South African silver coin melt values with live prices." />
+                    <meta name="keywords" content="smeltwaarde, silwer munte, silver coins, melt value, junk silver, ZAR coins, Union coins, Krugerrand, South African coins" />
+                    <link rel="canonical" href="https://smeltwaarde.co.za/silver" />
                 </Helmet>
 
                 <div className="container">

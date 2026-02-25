@@ -181,7 +181,10 @@ function GoldCalculator() {
     return (
         <div className="scroll-wrapper">
             <Helmet>
-                <title>Smeltwaarde | Bereken die goue waarde van ou Suid-Afrikaanse munte</title>
+                <title>Smeltwaarde | Goue munt smeltwaarde sakrekenaar</title>
+                <meta name="description" content="Bereken die smeltwaarde van Krugerrands, ZAR Ponde, en goue skroot. Calculate South African gold coin melt values with live prices." />
+                <meta name="keywords" content="smeltwaarde, goud, Krugerrand, gold coins, melt value, ZAR Pond, gold scrap, South African gold" />
+                <link rel="canonical" href="https://smeltwaarde.co.za/gold" />
             </Helmet>
             <div className="container">
                 {error ? (
