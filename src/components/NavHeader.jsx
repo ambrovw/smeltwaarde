@@ -48,7 +48,11 @@ function NavHeader() {
             </NavLink>
 
             <button className="lang-toggle" onClick={toggleLang} title="Toggle language">
-                {lang === 'af' ? 'EN' : 'AF'}
+                <img
+                    src={lang === 'af' ? '/flags/uk.svg' : '/flags/za-union.svg'}
+                    alt={lang === 'af' ? 'Switch to English' : 'Skakel na Afrikaans'}
+                    className="lang-flag"
+                />
             </button>
         </nav>
     );

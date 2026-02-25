@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 120">
+  <!-- Orange stripe -->
+  <rect width="180" height="40" fill="#E35205"/>
+  <!-- White stripe -->
+  <rect y="40" width="180" height="40" fill="#FFFFFF"/>
+  <!-- Blue stripe -->
+  <rect y="80" width="180" height="40" fill="#00247D"/>
+
+  <!-- Three inner flags centered in white stripe -->
+  <!-- Union Jack (left) -->
+  <g transform="translate(47,53)">
+    <rect width="28" height="14" fill="#012169"/>
+    <path d="m0,0 28,14m0,-14-28,14" stroke="#fff" stroke-width="2.5"/>
+    <path d="m0,0 9.3,4.67h-1.2L0,0.9zm28,0-9.3,4.67h1.2L28,0.9zm-28,14 9.3,-4.67h-1.2L0,13.1zm28,0-9.3,-4.67h1.2L28,13.1z" fill="#C8102E"/>
+    <path d="m14,0v14m-14,-7h28" stroke="#fff" stroke-width="4.5"/>
+    <path d="m14,0v14m-14,-7h28" stroke="#C8102E" stroke-width="2.5"/>
+  </g>
+
+  <!-- Orange Free State (center) -->
+  <g transform="translate(79,51)">
+    <rect width="7.33" height="18" fill="#E35205"/>
+    <rect x="7.33" width="7.33" height="18" fill="#FFFFFF"/>
+    <rect x="14.67" width="7.33" height="18" fill="#00247D"/>
+  </g>
+
+  <!-- Transvaal Vierkleur (right) -->
+  <g transform="translate(105,53)">
+    <rect width="28" height="4.67" fill="#C8102E"/>
+    <rect y="4.67" width="28" height="4.67" fill="#FFFFFF"/>
+    <rect y="9.33" width="28" height="4.67" fill="#00247D"/>
+    <rect width="7" height="14" fill="#007749"/>
+  </g>
+
+  <!-- Thin borders around inner flags -->
+  <rect x="47" y="53" width="28" height="14" fill="none" stroke="#333" stroke-width="0.5"/>
+  <rect x="79" y="51" width="22" height="18" fill="none" stroke="#333" stroke-width="0.5"/>
+  <rect x="105" y="53" width="28" height="14" fill="none" stroke="#333" stroke-width="0.5"/>
+</svg>
