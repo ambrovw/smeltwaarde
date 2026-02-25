@@ -233,15 +233,13 @@ function GoldCalculator() {
                             >
                                 {hideColumns ? `👁️ ${t('showDetails')}` : `🙈 ${t('hideDetailsGold')}`}
                             </button>
-                            {hasSaved && (
-                                <button
-                                    className="action-button"
-                                    onClick={resetGoldState}
-                                    title={t('resetTooltipGold')}
-                                >
-                                    🔄 {t('reset')}
-                                </button>
-                            )}
+                            <button
+                                className="action-button"
+                                onClick={resetGoldState}
+                                title={t('resetTooltipGold')}
+                            >
+                                🔄 {t('reset')}
+                            </button>
                         </div>
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => (

@@ -63,8 +63,23 @@ export default function useSilverPrice() {
         }
 
         fetchSilverPrice();
-        const interval = setInterval(fetchSilverPrice, 30000);
-        return () => clearInterval(interval);
+        let interval = setInterval(fetchSilverPrice, 30000);
+
+        const handleVisibility = () => {
+            if (document.hidden) {
+                clearInterval(interval);
+                interval = null;
+            } else {
+                fetchSilverPrice();
+                interval = setInterval(fetchSilverPrice, 30000);
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibility);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', handleVisibility);
+        };
     }, []);
 
     return {

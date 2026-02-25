@@ -33,9 +33,9 @@
 }
 
 html, body {
-    width: 100vw;
+    width: 100%;
     font-family: 'Inter', system-ui, sans-serif;
-    overflow: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     background-color: var(--bg);
@@ -43,7 +43,7 @@ html, body {
 }
 
 .scroll-wrapper {
-    width: 100vw;
+    width: 100%;
     flex: 1;
     overflow-y: auto;
     display: flex;

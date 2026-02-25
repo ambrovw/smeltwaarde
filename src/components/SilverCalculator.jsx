@@ -232,15 +232,13 @@ function SilverCalculator() {
                                 >
                                     {hideColumns ? `👁️ ${t('showDetails')}` : `🙈 ${t('hideDetailsSilver')}`}
                                 </button>
-                                {hasSaved && (
-                                    <button
-                                        className="action-button"
-                                        onClick={resetSilverState}
-                                        title={t('resetTooltipSilver')}
-                                    >
-                                        🔄 {t('reset')}
-                                    </button>
-                                )}
+                                <button
+                                    className="action-button"
+                                    onClick={resetSilverState}
+                                    title={t('resetTooltipSilver')}
+                                >
+                                    🔄 {t('reset')}
+                                </button>
 
                             </div>
 

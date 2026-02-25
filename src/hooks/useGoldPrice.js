@@ -64,8 +64,23 @@ export default function useGoldPrice() {
         }
 
         fetchGoldPrice();
-        const interval = setInterval(fetchGoldPrice, 60 * 1000);
-        return () => clearInterval(interval);
+        let interval = setInterval(fetchGoldPrice, 60 * 1000);
+
+        const handleVisibility = () => {
+            if (document.hidden) {
+                clearInterval(interval);
+                interval = null;
+            } else {
+                fetchGoldPrice();
+                interval = setInterval(fetchGoldPrice, 60 * 1000);
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibility);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', handleVisibility);
+        };
     }, []);
 
     return {
