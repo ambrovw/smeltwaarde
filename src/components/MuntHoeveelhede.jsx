@@ -98,7 +98,9 @@ function MuntHoeveelhede() {
                 <title>{t('mintageHelmetTitle')}</title>
                 <meta name="description" content={t('mintageDescription')} />
                 <meta name="keywords" content="munt hoeveelhede, mintage, South African coins, ZAR, Union, RSA, silver coin mintage, oplaagsyfers" />
-                <link rel="canonical" href="https://smeltwaarde.co.za/muntHoeveelhede" />
+                <link rel="canonical" href={`${window.location.origin}/muntHoeveelhede`} />
+                <link rel="alternate" hrefLang="af" href="https://smeltwaarde.co.za/muntHoeveelhede" />
+                <link rel="alternate" hrefLang="en" href="https://meltvalue.co.za/muntHoeveelhede" />
             </Helmet>
             <div className="container">
                 <h1 className="page-title">{t('mintageTitle')}</h1>

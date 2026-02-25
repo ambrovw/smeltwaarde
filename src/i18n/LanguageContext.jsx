@@ -9,7 +9,8 @@ export function LanguageProvider({ children }) {
     const [lang, setLangState] = useState(() => {
         try {
             const saved = localStorage.getItem('lang');
-            return saved === 'en' ? 'en' : 'af';
+            if (saved) return saved;
+            return window.location.hostname === 'meltvalue.co.za' ? 'en' : 'af';
         } catch { return 'af'; }
     });
 

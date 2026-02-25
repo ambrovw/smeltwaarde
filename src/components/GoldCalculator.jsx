@@ -187,7 +187,9 @@ function GoldCalculator() {
                 <title>{t('goldTitle')}</title>
                 <meta name="description" content={t('goldDescription')} />
                 <meta name="keywords" content="smeltwaarde, goud, Krugerrand, gold coins, melt value, ZAR Pond, gold scrap, South African gold" />
-                <link rel="canonical" href="https://smeltwaarde.co.za/gold" />
+                <link rel="canonical" href={`${window.location.origin}/gold`} />
+                <link rel="alternate" hrefLang="af" href="https://smeltwaarde.co.za/gold" />
+                <link rel="alternate" hrefLang="en" href="https://meltvalue.co.za/gold" />
             </Helmet>
             <div className="container">
                 {error ? (

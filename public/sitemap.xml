@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://smeltwaarde.co.za/silver</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/silver"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/silver"/>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://smeltwaarde.co.za/gold</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/gold"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/gold"/>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://smeltwaarde.co.za/muntHoeveelhede</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/muntHoeveelhede"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/muntHoeveelhede"/>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://meltvalue.co.za/silver</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/silver"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/silver"/>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://meltvalue.co.za/gold</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/gold"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/gold"/>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://meltvalue.co.za/muntHoeveelhede</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/muntHoeveelhede"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/muntHoeveelhede"/>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://smeltwaarde.co.za/sitemap.xml
+Sitemap: https://meltvalue.co.za/sitemap.xml

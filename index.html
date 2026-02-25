@@ -9,6 +9,10 @@
     <meta property="og:image" content="/smeltwaarde_logo_transparent_bgfill.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://smeltwaarde.co.za/" />
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/" />
+    <link rel="alternate" hreflang="en" href="https://meltvalue.co.za/" />
+    <link rel="alternate" hreflang="x-default" href="https://smeltwaarde.co.za/" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Smeltwaarde" />
@@ -25,6 +29,15 @@
         gtag('js', new Date());
         gtag('config', 'G-BWGJV426YF');
     </script>
+    <!-- Dynamic OG/lang based on domain -->
+    <script>
+        (function(){
+            var isEn = location.hostname === 'meltvalue.co.za';
+            document.documentElement.lang = isEn ? 'en' : 'af';
+            var og = document.querySelector('meta[property="og:url"]');
+            if (og) og.content = location.origin + '/';
+        })();
+    </script>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -40,7 +53,8 @@
             "price": "0",
             "priceCurrency": "ZAR"
         },
-        "inLanguage": ["af", "en"]
+        "inLanguage": ["af", "en"],
+        "sameAs": ["https://smeltwaarde.co.za", "https://meltvalue.co.za"]
     }
     </script>
 </head>

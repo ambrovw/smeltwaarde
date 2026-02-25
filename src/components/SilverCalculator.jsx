@@ -167,7 +167,9 @@ function SilverCalculator() {
                     <title>{t('silverTitle')}</title>
                     <meta name="description" content={t('silverDescription')} />
                     <meta name="keywords" content="smeltwaarde, silwer munte, silver coins, melt value, junk silver, ZAR coins, Union coins, Krugerrand, South African coins" />
-                    <link rel="canonical" href="https://smeltwaarde.co.za/silver" />
+                    <link rel="canonical" href={`${window.location.origin}/silver`} />
+                    <link rel="alternate" hrefLang="af" href="https://smeltwaarde.co.za/silver" />
+                    <link rel="alternate" hrefLang="en" href="https://meltvalue.co.za/silver" />
                 </Helmet>
 
                 <div className="container">
