@@ -49,3 +49,4 @@ src/
 
 - **Hosting:** S3 static site (bucket: `smeltwaarde.ncah.co.za`, region: af-south-1)
 - **Source control:** AWS CodeCommit (af-south-1)
+- **AWS CLI profile:** Always use `--profile ambro` for all AWS commands in this project

@@ -24,6 +24,14 @@
     h1 {
         color: #fff;
     }
+
+    .nav-element {
+        color: var(--fg);
+    }
+
+    .nav-element:hover {
+        color: #fff;
+    }
 }
 
 /* LIGHT MODE */

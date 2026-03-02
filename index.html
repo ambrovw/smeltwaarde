@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Open Graph -->
     <meta property="og:title" content="Smeltwaarde" />
-    <meta property="og:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte. Calculate the melt value of South African silver and gold coins." />
+    <meta property="og:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte." />
     <meta property="og:image" content="/smeltwaarde_logo_transparent_bgfill.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://smeltwaarde.co.za/" />
@@ -16,9 +16,9 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Smeltwaarde" />
-    <meta name="twitter:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte. Calculate the melt value of South African silver and gold coins." />
+    <meta name="twitter:description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte." />
     <meta name="twitter:image" content="/smeltwaarde_logo_transparent_bgfill.png" />
-    <meta name="description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte. Calculate the melt value of South African silver and gold coins." />
+    <meta name="description" content="Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte." />
     <title>Smeltwaarde</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <!-- Google tag (gtag.js) -->
@@ -29,13 +29,35 @@
         gtag('js', new Date());
         gtag('config', 'G-BWGJV426YF');
     </script>
-    <!-- Dynamic OG/lang based on domain -->
+    <!-- Dynamic meta/OG/structured data based on domain -->
     <script>
         (function(){
             var isEn = location.hostname === 'meltvalue.co.za';
+            var title = isEn ? 'Melt Value' : 'Smeltwaarde';
+            var desc = isEn
+                ? 'Calculate the melt value of South African silver and gold coins.'
+                : 'Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte.';
             document.documentElement.lang = isEn ? 'en' : 'af';
-            var og = document.querySelector('meta[property="og:url"]');
-            if (og) og.content = location.origin + '/';
+            document.title = title;
+            function setMeta(attr, key, value) {
+                var el = document.querySelector('meta[' + attr + '="' + key + '"]');
+                if (el) el.content = value;
+            }
+            setMeta('property', 'og:title', title);
+            setMeta('property', 'og:description', desc);
+            setMeta('property', 'og:url', location.origin + '/');
+            setMeta('name', 'twitter:title', title);
+            setMeta('name', 'twitter:description', desc);
+            setMeta('name', 'description', desc);
+            // Structured data
+            var ld = document.querySelector('script[type="application/ld+json"]');
+            if (ld) {
+                var data = JSON.parse(ld.textContent);
+                data.name = title;
+                data.url = location.origin;
+                data.description = desc;
+                ld.textContent = JSON.stringify(data);
+            }
         })();
     </script>
     <!-- Structured Data -->
@@ -45,7 +67,7 @@
         "@type": "WebApplication",
         "name": "Smeltwaarde",
         "url": "https://smeltwaarde.co.za",
-        "description": "Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte. Calculate the melt value of South African silver and gold coins.",
+        "description": "Bereken die smeltwaarde van Suid-Afrikaanse silwer en goue munte.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {

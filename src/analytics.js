@@ -9,6 +9,12 @@ export function trackEvent(eventName, params = {}) {
     }
 }
 
+export function setUserProperty(name, value) {
+    if (window.gtag) {
+        window.gtag('set', 'user_properties', { [name]: value });
+    }
+}
+
 export function trackPageView(path, title) {
     if (window.gtag) {
         window.gtag('event', 'page_view', {

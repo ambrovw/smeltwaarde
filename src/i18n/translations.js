@@ -56,8 +56,7 @@ export const af = {
     'Skroot': 'Skroot',
 
     // Banner
-    banner: 'Verskoning vir die onlangse stilstand — ons is weer aanlyn en reg om te gaan!',
-    bannerEngels: 'Nou ook beskikbaar in Engels!',
+    banner: 'Help ons verbeter — sien jy nie jou munt op die lys nie? Kontak ons!',
 
     // Footer
     footerCta: 'Wil jy dit vir jou webwerf hê? Kontak my.',
@@ -130,17 +129,17 @@ export const en = {
     'Skroot': 'Scrap',
 
     // Banner
-    banner: 'Apologies for the recent downtime — we are back online and ready to go!',
+    banner: 'Help us improve — not seeing your coin on the list? Contact us!',
 
     // Footer
     footerCta: 'Want this for your website? Contact me.',
     footerModalText: 'Send me an email and I\'ll help you set it up:',
 
     // Helmet
-    silverTitle: 'Smeltwaarde | Silver coin melt value calculator',
+    silverTitle: 'Melt Value | Silver coin melt value calculator',
     silverDescription: 'Calculate the melt value of old South African silver coins — ZAR, Union, RSA, British, and USA.',
-    goldTitle: 'Smeltwaarde | Gold coin melt value calculator',
+    goldTitle: 'Melt Value | Gold coin melt value calculator',
     goldDescription: 'Calculate the melt value of Krugerrands, ZAR Ponds, and gold scrap.',
-    mintageHelmetTitle: 'Smeltwaarde | Mintage Figures — SA silver coin mintage data',
+    mintageHelmetTitle: 'Melt Value | Mintage Figures — SA silver coin mintage data',
     mintageDescription: 'South African silver coin mintage figures — ZAR, Union, and RSA decimal series.',
 }

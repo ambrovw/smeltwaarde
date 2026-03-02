@@ -12,6 +12,7 @@ DIST_DIR="dist"
 
 echo "Building and deploying to s3://$BUCKET/..."
 npm run build
+node scripts/generate-en-index.cjs
 aws s3 sync "$DIST_DIR/" "s3://$BUCKET/" \
   --profile "$PROFILE" \
   --region "$REGION" \
