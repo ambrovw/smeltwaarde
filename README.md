@@ -127,4 +127,4 @@ The calculators are South Africa–specific. If you're adapting this for a diffe
 
 ## License
 
-No license file currently — treat as all rights reserved unless one is added.
+[MIT](LICENSE) © Abraham van Wyk
