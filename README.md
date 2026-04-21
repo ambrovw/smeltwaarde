@@ -6,7 +6,7 @@ Live:
 - **[smeltwaarde.co.za](https://smeltwaarde.co.za/)** (Afrikaans)
 - **[meltvalue.co.za](https://meltvalue.co.za/)** (English)
 
-Both sites are served from a single S3 bucket and a single build — see [Infrastructure](#infrastructure) below.
+Both sites are served from a single S3 bucket and a single build — see [Infrastructure](#infrastructure).
 
 ## Features
 
@@ -31,7 +31,7 @@ Both sites are served from a single S3 bucket and a single build — see [Infras
 
 ## Infrastructure
 
-The interesting part. Single SPA build → two domains → two languages, from one S3 bucket.
+Single SPA build → two domains → two languages, from one S3 bucket.
 
 ```
                     ┌─────────────────────┐
@@ -59,16 +59,72 @@ The result: one React codebase, one build artifact, two localized sites with pro
 ## Running locally
 
 ```bash
+git clone https://github.com/ambrovw/smeltwaarde.git
+cd smeltwaarde
 npm install
-npm run dev       # dev server
+npm run dev       # dev server at http://localhost:5173
 npm run build     # production build → dist/
 npm run lint
 ```
 
-## Deploying
+No configuration needed for local dev — prices are fetched from public endpoints.
 
-```bash
-./scripts/deploy_s3.sh
+## Self-hosting your own instance
+
+If you want to fork and deploy your own copy (whether under different domains or for a different set of coins), here's what to change.
+
+### 1. Analytics ID (required)
+
+`index.html` contains a hardcoded GA4 measurement ID. **Replace it or remove the gtag block entirely** — otherwise your visits will be logged to the original site's analytics.
+
+```
+# in index.html — search for:
+G-BWGJV426YF
 ```
 
-Requires the `ambro` AWS profile (or edit the script). Invalidation of the CloudFront distribution is handled separately.
+### 2. Domain names (required for bilingual hosting)
+
+The dual-language setup is tied to specific hostnames. If you want the same Afrikaans/English split under your own domains, update:
+
+- `index.html` — `og:url`, `hreflang` alternate links, JSON-LD `url` / `sameAs`, and the inline `isEn = location.hostname === ...` check
+- `scripts/cf-function-lang-router.js` — the English-domain check: `host === 'meltvalue.co.za'`
+- `scripts/generate-en-index.cjs` — domain strings in the replacement pairs
+- `public/sitemap.xml` and `public/robots.txt` — any URLs
+
+If you only want a single-language site, it's simpler: drop the `generate-en-index.cjs` step and the CloudFront function, and serve `index.html` directly.
+
+### 3. S3 deploy target (required for deploying)
+
+The deploy script reads from environment variables:
+
+```bash
+BUCKET=my-bucket \
+AWS_PROFILE=my-profile \
+AWS_REGION=eu-west-1 \
+  ./scripts/deploy_s3.sh
+```
+
+Or edit the defaults in [`scripts/deploy_s3.sh`](scripts/deploy_s3.sh).
+
+### 4. AWS infrastructure (one-time setup)
+
+You'll need:
+- An S3 bucket configured for static website hosting (or a private bucket behind CloudFront with OAC)
+- A CloudFront distribution with the bucket as origin
+- A CloudFront Function (viewer-request type) published with the contents of `scripts/cf-function-lang-router.js`, and attached to the distribution
+- DNS records pointing your domain(s) at CloudFront
+- ACM certificate(s) in `us-east-1` for any custom domains
+
+AWS CLI profile with permissions to `s3:PutObject` / `s3:DeleteObject` on the bucket.
+
+### 5. Coin data (if repurposing)
+
+The calculators are South Africa–specific. If you're adapting this for a different country or coin set, the relevant data is in:
+- `src/coinData.js` — silver coins
+- `src/goldCoinData.js` — gold coins
+- `src/muntHoeveelhedeData.js` — mintage quantities
+- `src/i18n/translations.js` — UI strings
+
+## License
+
+No license file currently — treat as all rights reserved unless one is added.
