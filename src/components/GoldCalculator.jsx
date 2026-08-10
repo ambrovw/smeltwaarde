@@ -247,12 +247,15 @@ function GoldCalculator() {
 
                         {Object.entries(coinList).map(([groupLabel, coins]) => {
                             const groupTotal = coins.reduce((sum, c) => sum + (Number(c.quantity) || 0), 0);
+                            const visibleCoins = collapsedEras[groupLabel]
+                                ? coins.filter((c) => Number(c.quantity) > 0)
+                                : coins;
                             return (
                             <div key={groupLabel}>
                                 <h2 className={`era-header ${groupTotal > 0 ? 'era-header--active' : ''}`} onClick={() => toggleEra(groupLabel)}>
                                     {collapsedEras[groupLabel] ? '▸' : '▾'} {t(groupLabel) || groupLabel}{groupTotal > 0 && ` (${groupTotal})`}
                                 </h2>
-                                 {!collapsedEras[groupLabel] && (
+                                 {visibleCoins.length > 0 && (
                                      <table className="coin-table">
                                          <colgroup>
                                              <col className="col-name" />
@@ -277,7 +280,7 @@ function GoldCalculator() {
                                              </tr>
                                          </thead>
                                          <tbody>
-                                            {coins.map((coin, index) => {
+                                            {visibleCoins.map((coin, index) => {
                                                 const fineGrams = coin.purity * coin.weight * coin.quantity
                                                 const fineOunces = fineGrams / 31.1034768
                                                 const value = (adjustedGoldPrice || 0) * fineOunces
@@ -289,7 +292,7 @@ function GoldCalculator() {
                                                         {!hideColumns && <td>{coin.era}</td>}
                                                         {!hideColumns && <td>{coin.purity}</td>}
                                                         {!hideColumns && <td>{coin.weight}</td>}
-                                                        {!hideColumns && <td>{fineGrams.toFixed(6)}</td>}
+                                                        {!hideColumns && <td>{fineGrams.toFixed(3)}</td>}
                                                         <td className="calc-each">R{perItemValue.toFixed(2)}</td>
                                                         <td>
                                                             <div className="quantity-control">
