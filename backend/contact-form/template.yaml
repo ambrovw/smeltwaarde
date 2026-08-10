@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Contact form email sender for the smeltwaarde.co.za koop/verkoop page.
+  Public Lambda Function URL -> SES (identity smeltwaarde.co.za, eu-west-1).
+
+Resources:
+  ContactFormFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: smeltwaarde-contact-form
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 10
+      ReservedConcurrentExecutions: 2
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - https://smeltwaarde.co.za
+            - https://meltvalue.co.za
+            - https://qa.smeltwaarde.co.za
+            - http://localhost:5173
+          AllowMethods:
+            - POST
+          AllowHeaders:
+            - content-type
+          MaxAge: 3600
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource: arn:aws:ses:eu-west-1:379589691905:identity/smeltwaarde.co.za
+
+Outputs:
+  FunctionUrl:
+    Description: Public endpoint for the contact form (paste into src/components/ContactForm.jsx)
+    Value: !GetAtt ContactFormFunctionUrl.FunctionUrl

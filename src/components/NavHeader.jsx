@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FaCoins } from 'react-icons/fa';
+import { FaCoins, FaHandshake } from 'react-icons/fa';
 
 import '../styles/components/NavHeader.css';
 import { trackEvent } from '../analytics.js';
@@ -45,6 +45,14 @@ function NavHeader() {
                 onClick={() => handleTabClick(t('mintageNav'))}
             >
                 <FaCoins title={t('mintageNav')} />
+            </NavLink>
+
+            <NavLink
+                to="/koopVerkoop"
+                className={({ isActive }) => `nav-element ${isActive ? 'active' : ''}`}
+                onClick={() => handleTabClick(t('koopVerkoopNav'))}
+            >
+                <FaHandshake title={t('koopVerkoopNav')} />
             </NavLink>
 
             <button className="lang-toggle" onClick={toggleLang} title="Toggle language">

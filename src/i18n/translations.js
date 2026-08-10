@@ -34,6 +34,10 @@ export const af = {
     share: 'Deel',
     shareTooltip: "Deel jou berekening as 'n skakel",
     shareMessage: 'My munte se smeltwaarde is {value} 🪙 Bereken joune hier:',
+    verkoopKnop: 'Verkoop',
+    verkoopTooltip: 'Stuur jou munte se besonderhede vir ons om te koop',
+    kvVerkoopIntro: 'Ek wil graag die volgende munte verkoop:',
+    kvVerkoopDisclaimer: 'Lees eers ons pryse en voorwaardes op die Koop/Verkoop-blad.',
 
     // Totals
     totalSilver: 'Totale silwer:',
@@ -45,6 +49,43 @@ export const af = {
     priceUnavailable: 'Prysdata nie beskikbaar nie',
     fetchFailedSilver: 'Kon nie silwerprys laai nie',
     fetchFailedGold: 'Kon nie goue prysdata laai nie',
+
+    // Koop/Verkoop
+    koopVerkoopNav: 'Koop/Verkoop',
+    kvTitle: 'Koop & Verkoop',
+    kvHelmetTitle: 'Smeltwaarde | Koop & verkoop silwer munte',
+    kvDescription: 'Ons koop en verkoop Suid-Afrikaanse silwer munte teen deursigtige pryse relatief tot smeltwaarde.',
+    kvIntro: 'Ons koop en verkoop munte teen die volgende persentasies relatief tot die huidige smeltwaarde.',
+    kvCategory: 'Kategorie',
+    kvBuy: 'Ons koop',
+    kvSell: 'Ons verkoop',
+    kv999: '999 bullion munte (Maple, Eagle, ens.)',
+    kvZar: 'ZAR 1892–1898',
+    kvR1: 'R1 1965–1976',
+    kvKrone: 'Unie Krone (5S) 1947–1950',
+    kvKleinmunt: 'Unie 80% kleinmunt (1923–1950)',
+    kv50: 'Unie/RSA 50% munte (1951–1964)',
+    kvSterling: 'Brits ≤1919 en S.Rhod 1932–1942 sterling',
+    kvBuitelands: 'Buitelands (VSA, Thalers, ens.)',
+    kvSkroot: 'Skroot',
+    kvDisclaimerTitle: 'Belangrik',
+    kvDisc1: 'Pryse geld vir gemiddelde gesirkuleerde munte; die finale aanbod volg na inspeksie.',
+    kvDisc2: 'Beskadigde munte (gebuig, gate, randskade, gepoleer) sal \'n laer aanbod ontvang.',
+    kvDisc3: 'Munte in uitsonderlike kondisie (XF/AU/UNC), asook skaars munte, word per munt geëvalueer — tot bo smeltwaarde.',
+    kvDisc4: 'Erg verslete munte word teen werklike gewig geprys.',
+    kvDisc5: 'Alle pryse beweeg saam met die huidige silwerprys.',
+    kvCta: 'Wil jy koop of verkoop? Kontak ons.',
+    kvFormNaam: 'Naam',
+    kvFormEpos: 'E-pos',
+    kvFormBoodskap: 'Boodskap',
+    kvFormNotas: 'Notas (opsioneel — bv. kondisie van die munte)',
+    kvFormSel: 'Selnommer (opsioneel)',
+    kvFormMetode: 'Kontakmetode',
+    kvFormBel: 'Bel',
+    kvFormStuur: 'Stuur',
+    kvFormSending: 'Stuur tans...',
+    kvFormSukses: 'Dankie! Jou boodskap is gestuur — ons kontak jou binne 24h.',
+    kvFormFout: 'Kon nie stuur nie. Probeer asseblief weer.',
 
     // MuntHoeveelhede
     mintageTitle: 'Munt Hoeveelhede',
@@ -62,7 +103,6 @@ export const af = {
     banner: 'Help ons verbeter — sien jy nie jou munt op die lys nie? Kontak ons!',
 
     // Footer
-    footerCta: 'Wil jy dit vir jou webwerf hê? Kontak my.',
     footerModalText: 'Stuur vir my \'n e-pos en ek sal jou help om dit op te stel:',
 
     // Helmet
@@ -110,6 +150,10 @@ export const en = {
     share: 'Share',
     shareTooltip: 'Share your calculation as a link',
     shareMessage: "My coins' melt value is {value} 🪙 Calculate yours here:",
+    verkoopKnop: 'Sell',
+    verkoopTooltip: 'Send us the details of your coins to buy',
+    kvVerkoopIntro: 'I would like to sell the following coins:',
+    kvVerkoopDisclaimer: 'Please first read our prices and terms on the Buy/Sell page.',
 
     // Totals
     totalSilver: 'Total silver:',
@@ -121,6 +165,43 @@ export const en = {
     priceUnavailable: 'Price data unavailable',
     fetchFailedSilver: 'Failed to fetch silver price',
     fetchFailedGold: 'Failed to fetch gold price',
+
+    // Koop/Verkoop
+    koopVerkoopNav: 'Buy/Sell',
+    kvTitle: 'Buy & Sell',
+    kvHelmetTitle: 'Melt Value | Buy & sell silver coins',
+    kvDescription: 'We buy and sell South African silver coins at transparent prices relative to melt value.',
+    kvIntro: 'We buy and sell coins at the following percentages relative to the current melt value.',
+    kvCategory: 'Category',
+    kvBuy: 'We buy',
+    kvSell: 'We sell',
+    kv999: '999 bullion coins (Maple, Eagle, etc.)',
+    kvZar: 'ZAR 1892–1898',
+    kvR1: 'R1 1965–1976',
+    kvKrone: 'Union Crowns (5S) 1947–1950',
+    kvKleinmunt: 'Union 80% minor coinage (1923–1950)',
+    kv50: 'Union/RSA 50% coins (1951–1964)',
+    kvSterling: 'British ≤1919 & S.Rhod 1932–1942 sterling',
+    kvBuitelands: 'Foreign (USA, Thalers, etc.)',
+    kvSkroot: 'Scrap',
+    kvDisclaimerTitle: 'Important',
+    kvDisc1: 'Prices apply to average circulated coins; the final offer follows after inspection.',
+    kvDisc2: 'Damaged coins (bent, holed, rim damage, polished) will receive a lower offer.',
+    kvDisc3: 'Coins in exceptional condition (XF/AU/UNC), as well as scarce coins, are evaluated individually — up to above melt value.',
+    kvDisc4: 'Heavily worn coins are priced by actual weight.',
+    kvDisc5: 'All prices move with the live silver price.',
+    kvCta: 'Want to buy or sell? Contact us.',
+    kvFormNaam: 'Name',
+    kvFormEpos: 'Email',
+    kvFormBoodskap: 'Message',
+    kvFormNotas: 'Notes (optional — e.g. condition of the coins)',
+    kvFormSel: 'Cellphone (optional)',
+    kvFormMetode: 'Contact method',
+    kvFormBel: 'Call',
+    kvFormStuur: 'Send',
+    kvFormSending: 'Sending...',
+    kvFormSukses: "Thank you! Your message has been sent — we'll contact you within 24h.",
+    kvFormFout: 'Could not send. Please try again.',
 
     // MuntHoeveelhede
     mintageTitle: 'Mintage Figures',
@@ -138,7 +219,6 @@ export const en = {
     banner: 'Help us improve — not seeing your coin on the list? Contact us!',
 
     // Footer
-    footerCta: 'Want this for your website? Contact me.',
     footerModalText: 'Send me an email and I\'ll help you set it up:',
 
     // Helmet

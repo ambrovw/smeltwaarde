@@ -60,6 +60,15 @@ html, body {
     padding: 0.0rem 2rem;
 }
 
+/* Pages without the calculators' logo header: push the whole card below the fixed
+   banner+nav stack (~5.4rem tall) so its top edge is visible with a gap, instead of
+   hiding behind the nav like the default .container margin does. Double class
+   selector so this also wins over the mobile .container margin-top override. */
+.container.page-container {
+    margin-top: 7.4rem;
+    padding-top: 0.5rem;
+}
+
 h1 {
     font-size: 1.6rem;
     font-weight: 500;

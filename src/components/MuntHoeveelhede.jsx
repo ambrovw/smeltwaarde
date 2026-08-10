@@ -102,8 +102,13 @@ function MuntHoeveelhede() {
                 <link rel="alternate" hrefLang="af" href="https://smeltwaarde.co.za/muntHoeveelhede" />
                 <link rel="alternate" hrefLang="en" href="https://meltvalue.co.za/muntHoeveelhede" />
             </Helmet>
-            <div className="container">
-                <h1 className="page-title">{t('mintageTitle')}</h1>
+            <div className="container page-container">
+                <div className="header-row">
+                    <img src="/smeltwaarde_logo_transparent_bgfill.webp" alt="Smeltwaarde Logo" className="logo" />
+                    <div className="header-text">
+                        <h1>{t('mintageTitle')}</h1>
+                    </div>
+                </div>
                 <p className="source-note">
                     <span>{t('source')}</span>
                     <a

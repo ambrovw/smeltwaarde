@@ -5,8 +5,8 @@ import '../styles/components/SilverCalculator.css';
 import {Helmet} from "react-helmet";
 import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
-import ContactLink from './ContactLink.jsx';
 import ShareButton from './ShareButton.jsx';
+import VerkoopButton from './VerkoopButton.jsx';
 import { decodeShareState } from '../shareState.js';
 
 function SilverCalculator() {
@@ -259,8 +259,6 @@ function SilverCalculator() {
 
                             </div>
 
-                            <ContactLink />
-
                             {Object.entries(coinList).map(([groupLabel, coins]) => {
                                 const groupTotal = coins.reduce((sum, c) => sum + (Number(c.quantity) || 0), 0);
                                 const visibleCoins = collapsedEras[groupLabel]
@@ -353,6 +351,12 @@ function SilverCalculator() {
                                     💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                                 </div>
                                 <ShareButton
+                                    metal="silver"
+                                    coinList={coinList}
+                                    adjustmentInput={adjustmentInput}
+                                    totalValue={totalValue}
+                                />
+                                <VerkoopButton
                                     metal="silver"
                                     coinList={coinList}
                                     adjustmentInput={adjustmentInput}

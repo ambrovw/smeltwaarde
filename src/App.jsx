@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import MetalTabs from './components/MetalTabs.jsx';
 import MuntHoeveelhede from './components/MuntHoeveelhede.jsx';
+import KoopVerkoop from './components/KoopVerkoop.jsx';
 import NavHeader from './components/NavHeader';
 import { trackPageView } from './analytics.js';
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx';
@@ -58,6 +59,7 @@ function App() {
                             <Route path="/silver" element={<MetalTabs initialTab="silver" />} />
                             <Route path="/gold" element={<MetalTabs initialTab="gold" />} />
                             <Route path="/muntHoeveelhede" element={<MuntHoeveelhede />} />
+                            <Route path="/koopVerkoop" element={<KoopVerkoop />} />
                             <Route path="*" element={<Navigate to="/" />} />
                         </Routes>
                     </div>

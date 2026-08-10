@@ -29,8 +29,11 @@ export function ContactModalProvider({ children }) {
         <ContactModalContext.Provider value={{ openModal }}>
             {children}
             {showModal && email && createPortal(
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div
+                    className="modal-overlay"
+                    onMouseDown={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+                >
+                    <div className="modal-content">
                         <button className="modal-close" onClick={closeModal}>&times;</button>
                         <p>{t('footerModalText')}</p>
                         <a href={`mailto:${email}`} className="modal-email">

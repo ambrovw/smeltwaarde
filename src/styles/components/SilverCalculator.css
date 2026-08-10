@@ -273,6 +273,13 @@
     color: var(--card-bg);
 }
 
+.share-button:disabled {
+    border-color: var(--highlight-plus);
+    color: var(--highlight-plus);
+    background-color: var(--card-bg);
+    cursor: not-allowed;
+}
+
 .share-button svg {
     width: 1em;
     height: 1em;
