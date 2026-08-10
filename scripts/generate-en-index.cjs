@@ -30,6 +30,14 @@ html = html.replace(
   'og:url" content="https://smeltwaarde.co.za/"',
   'og:url" content="https://meltvalue.co.za/"'
 );
+html = html.replace(
+  'og:image" content="https://smeltwaarde.co.za/og-image.png"',
+  'og:image" content="https://meltvalue.co.za/og-image-en.png"'
+);
+html = html.replace(
+  'twitter:image" content="https://smeltwaarde.co.za/og-image.png"',
+  'twitter:image" content="https://meltvalue.co.za/og-image-en.png"'
+);
 
 // Twitter
 html = html.replace(
