@@ -228,6 +228,12 @@
         text-align: center;
         align-items: center;
     }
+
+    .totals-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
 }
 
 .quantity-input::-webkit-outer-spin-button,

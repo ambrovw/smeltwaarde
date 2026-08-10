@@ -347,7 +347,7 @@ function SilverCalculator() {
 
                             <div className="totals-row">
                                 <div className="totals-item">
-                                    🪙 {t('totalSilver')} <span>{totalFineSilverGrams.toFixed(6)}g</span>
+                                    🪙 {t('totalSilver')} <span>{totalFineSilverGrams.toFixed(3)}g</span>
                                 </div>
                                 <div className="totals-item">
                                     💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
