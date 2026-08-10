@@ -5,7 +5,7 @@ export const categories = [
     { key: 'kv999', koop: 12.5, verkoop: 25 },
     { key: 'kvZar', koop: -5, verkoop: 7.5 },
     { key: 'kvR1', koop: -12.5, verkoop: 0 },
-    { key: 'kvKrone', koop: -15, verkoop: -2.5 },
+    { key: 'kvKrone', koop: -12.5, verkoop: 0 },
     { key: 'kvKleinmunt', koop: -15, verkoop: -2.5 },
     { key: 'kv50', koop: -20, verkoop: -7.5 },
     { key: 'kvSterling', koop: -15, verkoop: -2.5 },

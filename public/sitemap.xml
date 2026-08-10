@@ -23,6 +23,13 @@
         <priority>0.7</priority>
     </url>
     <url>
+        <loc>https://smeltwaarde.co.za/koopVerkoop</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/koopVerkoop"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/koopVerkoop"/>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://meltvalue.co.za/silver</loc>
         <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/silver"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/silver"/>
@@ -42,5 +49,12 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/muntHoeveelhede"/>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://meltvalue.co.za/koopVerkoop</loc>
+        <xhtml:link rel="alternate" hreflang="af" href="https://smeltwaarde.co.za/koopVerkoop"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://meltvalue.co.za/koopVerkoop"/>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
     </url>
 </urlset>
