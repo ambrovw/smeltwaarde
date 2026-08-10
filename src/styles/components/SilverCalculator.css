@@ -249,6 +249,29 @@
     text-align: center;
 }
 
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: var(--highlight);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: calc(1em + 2pt);
+    cursor: pointer;
+}
+
+.share-button:hover {
+    background-color: var(--accent);
+    color: var(--card-bg);
+}
+
+.share-button svg {
+    width: 1em;
+    height: 1em;
+}
+
 .action-button.koop {
     border-color: var(--accent);
     color: var(--accent);

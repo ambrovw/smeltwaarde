@@ -6,6 +6,8 @@ import { Helmet } from 'react-helmet';
 import { trackEvent, trackQuantityChangeDebounced } from '../analytics.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import ContactLink from './ContactLink.jsx';
+import ShareButton from './ShareButton.jsx';
+import { decodeShareState } from '../shareState.js';
 
 function GoldCalculator() {
     const { t } = useLanguage();
@@ -19,21 +21,25 @@ function GoldCalculator() {
         error,
     } = useGoldPrice();
 
-    const [adjustmentInput, setAdjustmentInput] = useState('0');
-    const [adjustmentPercent, setAdjustmentPercent] = useState(0);
-    const adjustedGoldPrice = goldPrice
-        ? goldPrice * (1 + adjustmentPercent / 100)
-        : null;
-
     const initializedGroups = Object.fromEntries(
         Object.entries(groupedCoins).map(([groupLabel, coins]) => [
             groupLabel,
             coins.map((coin) => ({ ...coin, quantity: 0 }))
         ])
     )
+    // State from a shared link (?deel=...) takes precedence and is never persisted,
+    // so opening someone else's link doesn't overwrite your own saved coins.
+    const [shared] = useState(() => decodeShareState(window.location.search, initializedGroups));
+
+    const [adjustmentInput, setAdjustmentInput] = useState(shared ? shared.adjustmentInput : '0');
+    const [adjustmentPercent, setAdjustmentPercent] = useState(0);
+    const adjustedGoldPrice = goldPrice
+        ? goldPrice * (1 + adjustmentPercent / 100)
+        : null;
 
     // Try to restore persisted state (coin counts, collapsed eras, adjustment input)
     const [coinList, setCoinList] = useState(() => {
+        if (shared) return shared.coinList;
         try {
             const raw = localStorage.getItem('gold_state');
             if (raw) {
@@ -47,6 +53,14 @@ function GoldCalculator() {
     })
 
     const [collapsedEras, setCollapsedEras] = useState(() => {
+        if (shared) {
+            // Collapse everything: shared rows stay visible, the rest tucks away
+            const allCollapsed = {}
+            Object.keys(groupedCoins).forEach((groupLabel) => {
+                allCollapsed[groupLabel] = true
+            })
+            return allCollapsed
+        }
         try {
             const raw = localStorage.getItem('gold_state');
             if (raw) {
@@ -101,6 +115,7 @@ function GoldCalculator() {
     // Persist state to localStorage when relevant pieces change.
     // Save only when state differs from defaults; otherwise remove saved state.
     useEffect(() => {
+        if (shared) return; // viewing a shared link: don't touch saved state
         try {
             if (isDefaultState(coinList, collapsedEras, adjustmentInput)) {
                 localStorage.removeItem('gold_state');
@@ -336,6 +351,12 @@ function GoldCalculator() {
                             <div className="totals-item">
                                 💰 {t('totalValue')} <span className={flashPrice ? 'flash' : ''}>R {totalValue.toFixed(2)}</span>
                             </div>
+                            <ShareButton
+                                metal="gold"
+                                coinList={coinList}
+                                adjustmentInput={adjustmentInput}
+                                totalValue={totalValue}
+                            />
                         </div>
                     </>
                 ) : (

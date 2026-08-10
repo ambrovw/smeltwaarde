@@ -31,6 +31,9 @@ export const af = {
     reset: 'Herstel',
     resetTooltipSilver: 'Herstel silwer blad na verstek state',
     resetTooltipGold: 'Herstel goud blad na verstek state',
+    share: 'Deel',
+    shareTooltip: "Deel jou berekening as 'n skakel",
+    shareMessage: 'My munte se smeltwaarde is {value} 🪙 Bereken joune hier:',
 
     // Totals
     totalSilver: 'Totale silwer:',
@@ -104,6 +107,9 @@ export const en = {
     reset: 'Reset',
     resetTooltipSilver: 'Reset silver page to defaults',
     resetTooltipGold: 'Reset gold page to defaults',
+    share: 'Share',
+    shareTooltip: 'Share your calculation as a link',
+    shareMessage: "My coins' melt value is {value} 🪙 Calculate yours here:",
 
     // Totals
     totalSilver: 'Total silver:',
