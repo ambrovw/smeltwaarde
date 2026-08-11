@@ -19,8 +19,9 @@ Resources:
         Variables:
           # Webhook URLs live in SSM Parameter Store (eu-west-1), resolved at deploy time —
           # never commit the real URLs to this file.
-          DISCORD_WEBHOOK: '{{resolve:ssm:/smeltwaarde/discord-webhook-clicks}}'
-          DISCORD_WEBHOOK_NAVRAE: '{{resolve:ssm:/smeltwaarde/discord-webhook-navrae}}'
+          # Version-pinned: bump the :N after rotating a parameter so the stack redeploys the new value
+          DISCORD_WEBHOOK: '{{resolve:ssm:/smeltwaarde/discord-webhook-clicks:1}}'
+          DISCORD_WEBHOOK_NAVRAE: '{{resolve:ssm:/smeltwaarde/discord-webhook-navrae:2}}'
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
