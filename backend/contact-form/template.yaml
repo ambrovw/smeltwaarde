@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Contact form email sender for the smeltwaarde.co.za koop/verkoop page.
-  Public Lambda Function URL -> SES (identity smeltwaarde.co.za, eu-west-1).
+  Discord notifier for smeltwaarde.co.za: koop/verkoop contact form
+  submissions and Deel/Verkoop click events. Public Lambda Function URL.
 
 Resources:
   ContactFormFunction:
@@ -15,6 +15,9 @@ Resources:
       MemorySize: 128
       Timeout: 10
       ReservedConcurrentExecutions: 2
+      Environment:
+        Variables:
+          DISCORD_WEBHOOK: https://discord.com/api/webhooks/1536734234369069167/vbbvFEOcGPdzNfnwnJbjrP2NU1zy_CEKXSe-4nR9qXiOBsqq7oVMEz6efD93_fDVOlWD
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
@@ -28,12 +31,6 @@ Resources:
           AllowHeaders:
             - content-type
           MaxAge: 3600
-      Policies:
-        - Statement:
-            - Effect: Allow
-              Action: ses:SendEmail
-              Resource: arn:aws:ses:eu-west-1:379589691905:identity/smeltwaarde.co.za
-
 Outputs:
   FunctionUrl:
     Description: Public endpoint for the contact form (paste into src/components/ContactForm.jsx)

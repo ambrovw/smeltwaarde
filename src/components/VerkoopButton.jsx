@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import { trackEvent } from '../analytics.js';
 import { encodeShareState } from '../shareState.js';
+import { notifyEvent } from '../notify.js';
 import ContactForm from './ContactForm.jsx';
 
 function VerkoopButton({ metal, coinList, adjustmentInput, totalValue }) {
@@ -28,6 +29,11 @@ function VerkoopButton({ metal, coinList, adjustmentInput, totalValue }) {
 
     const openModal = () => {
         trackEvent('verkoop_click', { metal, total_value: Math.round(totalValue) });
+        const params = encodeShareState(coinList, adjustmentInput);
+        const url = params
+            ? `${window.location.origin}${window.location.pathname}?${params.toString()}`
+            : '';
+        notifyEvent('verkoop', metal, coinList, totalValue, url);
         setShow(true);
     };
 

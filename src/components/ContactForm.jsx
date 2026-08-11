@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import { trackEvent } from '../analytics.js';
 
-const ENDPOINT = 'https://nw4p7lq2hyrj2ja44bgtciope40arrlq.lambda-url.eu-west-1.on.aws/';
+import { CONTACT_ENDPOINT as ENDPOINT } from '../notify.js';
 
 function ContactForm({ initialBoodskap = '' }) {
     const { t } = useLanguage();

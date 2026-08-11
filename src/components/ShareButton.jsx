@@ -1,6 +1,7 @@
 import { trackEvent } from '../analytics.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import { encodeShareState } from '../shareState.js';
+import { notifyEvent } from '../notify.js';
 
 function ShareButton({ metal, coinList, adjustmentInput, totalValue }) {
     const { t } = useLanguage();
@@ -13,6 +14,7 @@ function ShareButton({ metal, coinList, adjustmentInput, totalValue }) {
         const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
         const text = t('shareMessage').replace('{value}', `R${totalValue.toFixed(2)}`);
         trackEvent('share_click', { metal, total_value: Math.round(totalValue) });
+        notifyEvent('deel', metal, coinList, totalValue, url);
         if (navigator.share) {
             navigator.share({ text, url }).catch(() => {});
         } else {

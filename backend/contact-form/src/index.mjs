@@ -1,9 +1,3 @@
-import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
-
-const ses = new SESv2Client({ region: 'eu-west-1' });
-
-const TO = 'admin@smeltwaarde.co.za';
-const FROM = 'webvorm@smeltwaarde.co.za';
 const MAX = { naam: 100, epos: 200, boodskap: 3000, selnommer: 30 };
 
 const respond = (statusCode, body) => ({
@@ -12,27 +6,88 @@ const respond = (statusCode, body) => ({
     body: JSON.stringify(body),
 });
 
-// Per-container rate limit; with reserved concurrency 2 this caps
+// Per-container rate limits; with reserved concurrency 2 this caps
 // total throughput to a trickle no matter the attack volume.
-const RATE = { windowMs: 60_000, max: 3 };
-let windowStart = 0;
-let windowCount = 0;
+// Event pings (Deel/Verkoop clicks) get a higher budget than form posts.
+const LIMITS = {
+    vorm: { windowMs: 60_000, max: 3, start: 0, count: 0 },
+    event: { windowMs: 60_000, max: 20, start: 0, count: 0 },
+};
+
+const overLimit = (limit, now) => {
+    if (now - limit.start > limit.windowMs) {
+        limit.start = now;
+        limit.count = 0;
+    }
+    return ++limit.count > limit.max;
+};
+
+const postDiscord = async (content) => {
+    if (!process.env.DISCORD_WEBHOOK) return;
+    try {
+        await fetch(process.env.DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ content: content.slice(0, 1900) }),
+        });
+    } catch {
+        // best effort
+    }
+};
+
+const handleEvent = async (data, event, now) => {
+    if (overLimit(LIMITS.event, now)) {
+        return respond(429, { ok: false, error: 'too many requests' });
+    }
+    const aksie = data.aksie === 'verkoop' ? 'Verkoop' : 'Deel';
+    const metaal = String(data.metaal || '?').slice(0, 20);
+    const totaal = Number(data.totaal) || 0;
+    const soorte = Number(data.soorte) || 0;
+    const stuks = Number(data.stuks) || 0;
+    const url = String(data.url || '').slice(0, 500);
+    const taal = String(data.taal || '?').slice(0, 5);
+    const host = String(data.host || '?').slice(0, 50);
+    const ua = event.requestContext?.http?.userAgent || '?';
+    const ip = event.requestContext?.http?.sourceIp || '?';
+
+    // Rough location from IP; best effort, never holds up the ping for long
+    let ligging = '';
+    try {
+        const res = await fetch(`https://ipwho.is/${ip}`, { signal: AbortSignal.timeout(1500) });
+        const geo = await res.json();
+        if (geo && geo.success) {
+            ligging = ` · ${[geo.city, geo.country].filter(Boolean).join(', ')}`;
+        }
+    } catch {
+        // geo lookup is optional
+    }
+
+    const ikoon = aksie === 'Verkoop' ? '💰' : '🔗';
+    await postDiscord([
+        `${ikoon} **${aksie}** geklik — ${metaal}, R${totaal.toLocaleString('en-ZA')}`,
+        `Munte: ${soorte} soorte, ${stuks} stuks`,
+        url ? `Skakel: ${url}` : null,
+        `Blad: ${host} (${taal}) · IP: ${ip}${ligging}`,
+        `Toestel: ${ua.slice(0, 120)}`,
+    ].filter((line) => line !== null).join('\n'));
+
+    return respond(200, { ok: true });
+};
 
 export const handler = async (event) => {
     const now = Date.now();
-    if (now - windowStart > RATE.windowMs) {
-        windowStart = now;
-        windowCount = 0;
-    }
-    if (++windowCount > RATE.max) {
-        return respond(429, { ok: false, error: 'too many requests' });
-    }
 
     let data;
     try {
         data = JSON.parse(event.body || '{}');
     } catch {
         return respond(400, { ok: false, error: 'invalid json' });
+    }
+
+    if (data.tipe === 'event') return handleEvent(data, event, now);
+
+    if (overLimit(LIMITS.vorm, now)) {
+        return respond(429, { ok: false, error: 'too many requests' });
     }
 
     // Honeypot: real users never fill this hidden field
@@ -55,23 +110,13 @@ export const handler = async (event) => {
         return respond(400, { ok: false, error: 'missing or invalid fields' });
     }
 
-    const selLine = selnommer ? `Selnommer: ${selnommer} (verkies ${kontakMetode})\n` : '';
-
-    await ses.send(new SendEmailCommand({
-        FromEmailAddress: FROM,
-        Destination: { ToAddresses: [TO] },
-        ReplyToAddresses: [epos],
-        Content: {
-            Simple: {
-                Subject: { Data: `Koop/Verkoop navraag van ${naam}` },
-                Body: {
-                    Text: {
-                        Data: `Naam: ${naam}\nE-pos: ${epos}\n${selLine}\n${boodskap}\n\n--\nGestuur vanaf die smeltwaarde.co.za koop/verkoop vorm.`,
-                    },
-                },
-            },
-        },
-    }));
+    await postDiscord([
+        `📥 **Koop/Verkoop navraag van ${naam}**`,
+        `E-pos: ${epos}`,
+        selnommer ? `Selnommer: ${selnommer} (verkies ${kontakMetode})` : null,
+        '',
+        boodskap,
+    ].filter((line) => line !== null).join('\n'));
 
     return respond(200, { ok: true });
 };
