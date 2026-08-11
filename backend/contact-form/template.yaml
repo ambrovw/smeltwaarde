@@ -17,10 +17,10 @@ Resources:
       ReservedConcurrentExecutions: 2
       Environment:
         Variables:
-          # Deel/Verkoop click pings — REPLACE before deploying (do not commit real URLs)
-          DISCORD_WEBHOOK: REPLACE_WITH_CLICKS_WEBHOOK_URL
-          # Contact form inquiries (navrae) — REPLACE before deploying
-          DISCORD_WEBHOOK_NAVRAE: REPLACE_WITH_NAVRAE_WEBHOOK_URL
+          # Webhook URLs live in SSM Parameter Store (eu-west-1), resolved at deploy time —
+          # never commit the real URLs to this file.
+          DISCORD_WEBHOOK: '{{resolve:ssm:/smeltwaarde/discord-webhook-clicks}}'
+          DISCORD_WEBHOOK_NAVRAE: '{{resolve:ssm:/smeltwaarde/discord-webhook-navrae}}'
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
