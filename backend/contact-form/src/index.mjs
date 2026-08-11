@@ -22,10 +22,10 @@ const overLimit = (limit, now) => {
     return ++limit.count > limit.max;
 };
 
-const postDiscord = async (content) => {
-    if (!process.env.DISCORD_WEBHOOK) return;
+const postDiscord = async (webhook, content) => {
+    if (!webhook) return;
     try {
-        await fetch(process.env.DISCORD_WEBHOOK, {
+        await fetch(webhook, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ content: content.slice(0, 1900) }),
@@ -63,7 +63,7 @@ const handleEvent = async (data, event, now) => {
     }
 
     const ikoon = aksie === 'Verkoop' ? '💰' : '🔗';
-    await postDiscord([
+    await postDiscord(process.env.DISCORD_WEBHOOK, [
         `${ikoon} **${aksie}** geklik — ${metaal}, R${totaal.toLocaleString('en-ZA')}`,
         `Munte: ${soorte} soorte, ${stuks} stuks`,
         url ? `Skakel: ${url}` : null,
@@ -110,7 +110,7 @@ export const handler = async (event) => {
         return respond(400, { ok: false, error: 'missing or invalid fields' });
     }
 
-    await postDiscord([
+    await postDiscord(process.env.DISCORD_WEBHOOK_NAVRAE, [
         `📥 **Koop/Verkoop navraag van ${naam}**`,
         `E-pos: ${epos}`,
         selnommer ? `Selnommer: ${selnommer} (verkies ${kontakMetode})` : null,

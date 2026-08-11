@@ -17,7 +17,10 @@ Resources:
       ReservedConcurrentExecutions: 2
       Environment:
         Variables:
+          # Deel/Verkoop click pings
           DISCORD_WEBHOOK: https://discord.com/api/webhooks/1536734234369069167/vbbvFEOcGPdzNfnwnJbjrP2NU1zy_CEKXSe-4nR9qXiOBsqq7oVMEz6efD93_fDVOlWD
+          # Contact form inquiries (navrae)
+          DISCORD_WEBHOOK_NAVRAE: https://discord.com/api/webhooks/1536759203631468544/yS5W0eCLb_xzVvK4BhjjG1TAdFJJeUd2QbDBOoGBqG6yyaY2ivdCRFGfQaYltQC3U2Rz
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
